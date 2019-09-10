@@ -1,0 +1,188 @@
+\newcommand{\wb}[1]{\overline{#1}}
+\newcommand{\rr}{\mathbf{r}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cK}{\mathcal{K}}
+\newcommand{\ham}{\mathrm{dist}}
+%\newcommand{\ssize}[1]{|#1|}
+
+
+\newcommand{\oh}{\overline{\cH}}
+\newcommand{\oC}{\overline{\cC}}
+
+\section{Our Techniques}\label{sec:Technique}
+In this section, we outline our techniques for proving our results. We start with explaining our bound for first-round halting of arbitrary protocols (\cref{thm:intro:FirstRound}). We then move to second-round halting, starting with the weaker bound for arbitrary protocols (\cref{thm:intro:SecondRound:Arb}), and then move to the much stronger bound for public-randomness protocols (\cref{thm:intro:SecondRound:PR}).
+
+%\subsection{Notations}\label{sec:notations}
+\paragraph{Notations}%\label{sec:notations}
+We use calligraphic letters to denote sets, uppercase for random variables, lowercase for values, boldface for vectors, and sans-serif (\eg \Ac) for algorithms (\ie Turing Machines).
+For $n\in\N$, let $[n]=\set{1,\cdots,n}$ and $(n)=\set{0,1,\cdots,n}$. Let $\ham(x, y)$ denote the hamming distance between $x$ and $y$. For a set $\cS \subseteq [n]$ let $\oS = [n]\setminus \cS$. For a set $\cR\subseteq \zo^n$, let $\cR|_{\cS}=\sset{\vx_\cS \in \zo^{\size{\cS}}\st \vx\in \cR}$, \ie $\cR|_{\cS}$ is the projection of $\cR$ on the index-set $\cS$.
+
+Fix an $n$-party randomized BA protocol $\Pi = (\Pc_1,\ldots,\Pc_n)$. For presentation purposes, we assume that
+validity and agreement
+%the validity and agreement of $\Pi$
+hold \emph{perfectly}, and consider no setup parameters (in the subsequent sections, we remove these assumptions). Furthermore, we only address here the case where the security threshold is $t>n/3$. The case $t>n/4$ requires an additional generic step that we defer to the technical sections of the paper. We denote by $\Pi(\vv;\vr)$ the output of an honest execution of $\Pi$ on input $\vv \in \zn$ and randomness $\vr$ (each party $\Party_i$ holds input $v_i$ and randomness $r_i$). We let $\Pi(\vv)$ denote the resulting random variable determined by the parties' random coins, and we write $\Pi(\vv) =\o$ to denote the event that the parties output $\o$ in an honest execution of $\Pi$ on input $\vv$. All corrupt parties described below are locally consistent (see \cref{sec:intro:model}).
+
+\subsection{First-Round Halting}\label{sec:technique:1}
+Assume the honest parties of $\Pi$ halt at the end of the first round with probability $\gamma>0$ when facing $t$ corruptions (on every input).
+Our goal is to upperbound the value of $\gamma$. Our approach is inspired by the analogous lower-bound for deterministic protocols (\cf \cite{FL82,DS83}). Namely, we start with a configuration in which validity assures the common output is $0$, and, while maintaining the same output, we gradually adjust it into a configuration in which validity assures the common output is $1$, thus obtaining a contradiction. For randomized protocols, the challenge is to maintain the invariant of the output, even when the probability of halting is far from $1$. We make the following observations:
+
+\begin{align} \label{eq:maj}
+%&\text{Supermajority execution:} \quad \ham(\vv,\o^n) \le t \implies \Pi(\vv)=\o.
+&\text{Almost pre-agreement:} \quad \ham(\vv,\o^n) \le t \implies \Pi(\vv)=\o.
+\end{align}
+That is, in an honest execution of $\Pi$, if the parties almost start with preagreement, \ie with at least $n-t$ of $\o$'s in the input vector,
+%there is a supermajority ($\ge n-t$) of $\o$'s in the input vector,
+then the parties output $\o$ with probability $1$. \cref{eq:maj} follows from \emph{agreement} and \emph{validity} by considering an adversary corrupting exactly those parties with input $v_i\neq b$, and otherwise not deviating from the protocol.
+
+
+\begin{align}\label{eq:nei}
+&\text{Neighboring executions (N1):} \quad \ham(\vz,\vo)\le t \implies \ppr{\vr}{\Pi(\vz;\vr)=\Pi(\vo;\vr)}\ge \gamma.
+\end{align}
+That is, for two input vectors that are at most $t$-far (\ie the resiliency threshold), the probability that the executions on these vectors yield the same output when using the same randomness is bounded below by the halting probability. To see why \cref{eq:nei} holds, consider the following adversary corrupting subset $\cC$, for $\cC$ being the set of indices where $\vv$ and $\vv'$ disagree. For an arbitrary partition $\sset{\oC_0,\oC_1}$ of $\oC$, the adversary instructs $\cC$ to send messages according to $\vz$ to $\oC_0$ and according to $\vo$ to $\oC_1$, respectively. With probability at least $\gamma$, all parties halt at the first round, and, by perfect agreement, all parties compute the same output.\footnote{In the above, we have chosen to ignore a crucial subtlety. In an execution of the protocol, it may be the case that there is a suitable message (according to $\vz$ or $\vo$) to prevent halting, yet the adversary cannot determine which one to send. In further sections, we address this issue by taking a random partition of $\oC$ (rather than an arbitrary one). By doing so, we introduce an error-term of $1/2^{n-t}$ when we upper bound the halting probability $\gamma$.} Since parties in $\oC_\o$ cannot distinguish this execution from a halting execution of $\Pi(\vv_\o;\vr)$, \cref{eq:nei} follows.
+
+
+We deduce that if there are more than $n/3$ corrupt parties, then the halting probability is $0$; this follows by combining the two observations above for $\vz=0^{n-t}1^{t}$ and $\vo=0^{t}1^{n-t}$. Namely, by \cref{eq:maj}, it holds that $\ppr{\vr}{\Pi(\vz;\vr)=\Pi(\vo;\vr)}=0$. Thus, by \cref{eq:nei}, $\gamma=0$.
+
+\subsection{Second-Round Halting -- Arbitrary Protocols}\label{sec:technique:2}
+
+%In this subsection
+We proceed to explain our bound for second-round halting of arbitrary protocols. Assume the honest parties of $\Pi$ halt at the end of the second round with probability $\gamma>0$ when facing $t$ corruptions (on every input). Let $t=(1/3+\eps)\cdot n$, for an arbitrary small constant $\eps>0$. In spirit, the attack follows the footsteps of the single-round case described above; we show that neighboring executions compute the same output with good enough probability (related to the halting probability), and lower-bound the latter using the \emph{almost pre-agreement}
+%supermajority 
+observation. There is, however, a crucial difference between the first-round and second-round cases; the honest parties can use the second round to detect whether (some) parties are sending inconsistent messages. Thus, the second round of the protocol can be used to ``catch-and-discard'' parties that are pretending to have different inputs to different parties, and so our previous attack breaks down. (In the one-round case, we exploit the fact that the honest parties cannot verify the consistency of the messages they received.) Still, we show that there is a suitable variant of the attack that violates the agreement of any ``too-good'' scheme.
+
+%\nnote{I changed this paragraph ->}
+At a very high level, the idea for proving the \emph{neighboring} property is to \emph{gradually} increase the set of honest parties towards which the adversary behaves according to $\vo$ (for the remainder it behaves according to $\vz$, which is a decreasing set of parties). While the honest parties might identify the attacking parties and discard their messages, they should still agree on the output and halt at the conclusion of the second round with high probability. We exploit this fact to show that at the two extremes (where the adversary is merely playing honestly according to $\vz$ and $\vo$, respectively), the honest parties behave essentially the same. Therefore, if at one extreme (for $\vz$) the honest parties output $\o$, it follows that they also output $\o$ at the other extreme (for $\vo$), which proves the \emph{neighboring} property for the second-round case.
+
+
+We implement the above by augmenting the one-round attack as follows. In addition to corrupting a set of parties that feign different inputs to different parties, the adversary corrupts an extra set of parties that is inconsistent with regards to the messages it received from the first set of corrupted parties. To distinguish between the two sets of corrupted parties, the former (first) will be referred to as ``pivot'' parties (since they pivot their input) and will be denoted $\cP$, and the latter will be referred to as ``propagating'' parties (since they carefully choose what message to propagate at the second round) and will be denoted $\cL$. We emphasize that the propagating parties deviate from the protocol only at the second round and only with regards to the messages received by the pivot parties (not with regards to their input -- as is the case for the pivot parties). In more detail, we partition $\oP = [n]\setminus \cP$ into $\ell=\lceil 1/\eps\rceil$ sets $\sset{\cL_1,\ldots,\cL_\ell}$, and we show that, unless there exists $i$ such that parties in $\cC= \cP\cup \cL_i$ violate agreement (explained below), the following must hold for neighboring executions.
+
+\begin{align} \label{eq:nei2}
+&\text{Neighbouring executions (N2):} \quad \ham(\vz,\vo)\le n/3 \implies \\
+& \pr{\Pi(\vz)=\o\text{ in two rounds}} \ge \pr{ \Pi(\vo)=\o\text{ in two rounds}} - 2 (\ell +1)^2 \cdot (1-\gamma). \nonumber
+\end{align}
+That is, for two input vectors that are at most $n/3$--far, the difference in probability that two distinct executions (for each input vector) yield the same output within two rounds is roughly upper-bounded by the quantity $(1-\gamma)/\eps^2$ (\ie non-halting probability divided by $\eps^2$). To see that \cref{eq:nei2} holds true, fix $\vz,\vo\in \zn$ of hamming distance at most $n/3$, and let $\cP$ be the set of indices where $\vz$ and $\vo$ differ. Consider the following $\ell+1$ distinct variants of $\Pi$, denoted $\set{\Pi_0,\ldots, \Pi_\ell}$; in protocol $\Pi_i$, parties in $\cP$ send messages to $\cL_1,\ldots, \cL_i$ according to the input prescribed by $\vo$ and to $\cL_{i+1},\ldots, \cL_\ell$ according to the input prescribed by $\vz$, respectively. All other parties follow the instructions of $\Pi$ for input $\vz$. We write $\Pi_i=\o$ to denote the event that the parties not in $\cP$ output $\o$. Notice that the endpoint executions $\Pi_0$ and $\Pi_{\ell}$ are identical to honest executions with input $\vz$ and $\vo$, respectively. Let $\halt_i$ denote the event that the parties not in $\cP$ halt at the second round in an execution of $\Pi_{i}$. We point out that $\pr{ \neg \halt_i}\le (\ell+1)\cdot (1-\gamma)$, since otherwise the adversary corrupting $\cP$ and running $\Pi_i$, for a random $i\in (\ell) \assign \set{0,\ldots,\ell}$, prevents halting with probability greater than $1-\gamma$. Next, we inductively show that
+\begin{align}
+\pr{\Pi_i=\o \land \halt_i} \ge \pr{\Pi_{0} =\o \land \halt_0} - 2i\cdot (\ell+1) \cdot (1-\gamma),\label{eq:teke}
+\end{align}
+for every $i\in (\ell)$, which yields the desired expression for $i=\ell$. In pursuit of contradiction, assume \cref{eq:teke} does not hold, and let $i$ denote the smallest index for which it does not hold (observe that $i\ne 0$, by definition). Notice that
+\begin{align*}
+& \hspace*{-2cm}\pr{(\Pi_{i-1}= \o \land \halt_{i-1}) \land (\Pi_{i }\neq \o\land \halt_i)}\\
+&\ge \pr{\Pi_{i-1}=\o \land \halt_{i-1}}-\pr{ \Pi_{i }= \o\vee \neg \halt_i}\\
+&\ge \pr{\Pi_{i-1}=\o \land \halt_{i-1}}-\pr{ \Pi_{i }= \o\land \halt_i} - \pr{ \neg \halt_i}\\
+&> 2\cdot (\ell+1) \cdot (1-\gamma) - \pr{ \neg \halt_i} \\
+&\ge (\ell+1) \cdot (1-\gamma) > 0.
+\end{align*}
+The second inequality follows from union bound and $A\lor \neg B\equiv (A\land B) \lor \neg B$, the third inequality is by induction hypothesis, and the last inequality by the bound $\pr{ \neg \halt_i}\le (\ell+1)\cdot (1-\gamma)$.
+
+It follows that an adversary corrupting $\cC=\cP \cup \cL_i$ causes disagreement with non-zero probability by acting as follows: parties in $\cP$ and $\cL_i$ send messages according to $\Pi_i$ and $\Pi_{i-1}$ to $\oC_0$ and $\oC_1$, respectively, where $\sset{\oC_0,\oC_1}$ is an arbitrary partition of $\oC= [n]\setminus \cP\cup \cL_i$. Since disagreement is ruled out by assumption, we deduce \cref{eq:teke,eq:nei2}. To conclude, we combine the \emph{almost pre-agreement}
+%supermajority 
+property (\cref{eq:maj}) with the \emph{neighboring} property (\cref{eq:nei2}) with
+$\vz=0^{n-t}1^{t}$, $\vo=0^{t}1^{n-t}$, and $\o=1$.
+Namely, $\pr{\Pi(\vz)=1\text{ in two rounds}}=0$, by \emph{almost pre-agreement}
+%supermajority, 
+and $\pr{\Pi(\vo)=1\text{ in two rounds}}\ge\gamma$, by \emph{almost pre-agreement}
+%supermajority 
+and \emph{halting}. It follows that $0 \ge \gamma - 2 (\ell +1)^2 \cdot (1-\gamma)$, by \cref{eq:nei2}, and thus $1-\frac{1}{2(\ell+1)^2+1} \ge \gamma$, which yields the desired expression.
+
+
+\remove{
+twice; once with $(\vz,\vv^\star)=(0^{n-t}1^{t},0^{\lfloor n/2\rfloor} 1^{ \lceil n/2 \rceil}) $ and $\o=0$ and once with $(\vv^\star,\vo)=(0^{\lfloor n/2\rfloor} 1^{ \lceil n/2 \rceil}, 0^{t}1^{n-t})$ and $\o=1$. Namely, for both $\o\in\zo$, we have $\pr{\Pi(\vv^\star)=\o^n\text{ in two rounds}} \ge \pr{ \Pi(\vo)=1^n\text{ in two rounds}} - 2 (\ell +1)^2 \cdot (1-\gamma) \ge \gamma - 2 (\ell +1)^2 \cdot (1-\gamma)$ and thus $1-(\eps/5)^2\ge 1-\frac{1}{2(\ell+1)^2+1} \ge \gamma$.
+}
+
+\subsection{Second-Round Halting -- Public-Randomness Protocols}\label{sec:technique:3}
+
+In \cref{sec:technique:2}, we ruled out ``very good'' second-round halting for arbitrary protocols via an efficient locally consistent attack. Recall that if the halting probability is too good (probability almost one), then there is a somewhat simple attack that violates agreement and/or validity. In this subsection, we discuss ruling out \emph{any} second-round halting, \ie halting probability bounded away from zero, for public-randomness protocols.
+
+We first explain why the attack -- as is -- does not rule out second-round halting. Suppose that at the first round the parties of $\Pi$ send a deterministic function of their input, and at the second round they send the messages they received at the first round together with a uniform random bit. On input $\vv$ and randomness $\vr$, the parties are instructed \emph{not} to halt at the second round (\ie carry on beyond the second round until they reach agreement with validity) if a super-majority ($\ge n-t$) of the $v_i$'s are in agreement and $\maj(r_1,\ldots, r_n)\neq \maj(v_1,\ldots, v_n)$, \ie the majority of the random bits does not agree with the super-majority of the inputs. In all other cases, the parties are instructed to output $\maj(r_1,\ldots, r_n)$.
+It is not hard to see that this protocol will halt with probability $1/2$, even in the presence of the previous locally consistent adversary (regardless of the choice of propagating parties $\cL_i$). More generally, if the randomness uniquely determines the output, the protocol designer can ensure that halting does not result in disagreement, by partitioning the randomness appropriately, and thus foiling the previous attack.\footnote{In \cref{sec:technique:2}, halting was close to $1$ and thus the randomness was necessarily ambiguous regarding the output.}
+
+To overcome the above apparent obstacle, we introduce another dimension to our locally consistent attack; we instruct an extra set of corrupted parties to abort at the second round without sending their second-round messages. By utilizing aborting parties, the adversary can potentially decouple the output/halting from the parties' randomness and thus either prevent halting or cause disagreement.
+In \cref{sec:technique:3:1}, we explain how to rule out second-round halting for a rather unrealistic class of public-randomness protocol. What makes the class of protocols unrealistic is that we assume security holds against unbounded locally consistent adversaries, and the protocol prescribes only a single bit of randomness per party per round. That being said, this case illustrates nicely our attack, and it also makes an interesting connection to Boolean functions analysis (namely, the KKL theorem~\cite{KKL88}). For general public-randomness protocols, we only know how to analyze the aforementioned attack assuming \cref{con:intro:IsoBot}, as explained in \cref{sec:technique:3:2}.
+
+\subsubsection{``Superb'' Single-Coin Protocols}\label{sec:technique:3:1}
+A BA protocol $\Pi$ is $t$-\emph{superb} if agreement and validity hold perfectly against an adaptive \emph{unbounded} locally consistent adversary corrupting at most $t$ parties, \ie the probability that such an adversary violates agreement or validity
+%via a locally consistent attack
+is $0$. A public-randomness protocol is \emph{single-coin}, if, at any given round, each party samples a single unbiased bit.
+
+\begin{theorem}[Second-round halting, superb single-coin protocols]\label{bound:KKL}
+For every $\eps> 0$ there exists $c>0$ such that the following holds for large enough $n$. For $t=(1/3+\eps) \cdot n$, let $\Pi$ be a $t$-superb, single-coin, $n$-party public-randomness Byzantine agreement protocol and let $\gamma$ denote the probability that the protocol halts in the second round under a locally consistent attack. Then, $\gamma\le n^{-c}$.
+\end{theorem}
+
+%Recall that a protocol admits public randomness if the parties' messages consist of their randomness together with some arbitrary function of their view.
+
+We assume for simplicity that the parties do not sample any randomness at the first round, and write $\vr\in \zn$ for the vector of bits sampled by the parties at the second round, \ie $r_i$ is a uniform random bit sampled by $\Party_i$.
+
+
+
+
+As discussed above, our attack uses an additional set of corrupted parties of size $\sigma\cdot n$, dubbed the ``aborting'' parties and denoted $\cS$, that abort indiscriminately at the second round (the value of $\sigma$ is set to $\lfloor \eps/4 \rfloor$ and $\ell=2\cdot \lceil1/\eps\rceil$ to accommodate for the new set of corrupted parties, \ie $\size{\cL_i}\le n\cdot \eps /2$). In more detail, analogously to the previous analysis, we consider $(\ell+1)\cdot \binom{n}{\sigma n}$ distinct variants of $\Pi$, denoted $\sset{\Pi^{\cS}_i}_{i,\cS}$ and indexed by $i\in (\ell)$ and $\cS \subseteq[n]$ of size $\sigma n$, as follows. In protocol $\Pi_i^\cS$, parties in $\cP$ send messages to $\cL_1,\ldots, \cL_i$ according to the input prescribed by $\vo$, and to $\cL_{i+1},\ldots, \cL_\ell$ according to the input prescribed by $\vz$ (recall that $\cP$ is exactly those indices where $\vz$ and $\vo$ differ). Parties in $\cS$ act according to $\cP$ or $\cL_j$, for the relevant $j$, except that they abort at the second round without sending their second-round messages. We write $\Pi^{\cS}_i(\vr)=\o$ to denote the event that the parties not in $\cP\cup \cS$ output $\o$, where the parties' second-round randomness is equal to $\vr$. Let $\halt^{\cS}_i$ denote the event that all parties not in $\cP\cup \cS$ halt at the second round in an execution of $\Pi^{\cS}_i$, and define $\cR_{i }^{\cS}(\o)=\sset{\vr\in \zn\st \Pi^{\cS}_i(\vr)=\o \land \halt^{\cS}_i}$. The following holds:
+
+\begin{align}\label{eq:nei3}
+&\text{Neighbouring executions (N2$\dagger$):}\\
+&\quad \forall \vz,\vo \in \zn \text{ with } \ham(\vz,\vo)\le n/3, \quad \forall \o\in \zo,i\in [\ell] \assign \set{1,\ldots,\ell}\colon\nonumber\\
+&\qquad\qquad \left (\forall \cS\colon \pr{\Pi^\cS_{i-1}=\o \land \halt^{\cS}_{i-1}} \ge \gamma/2 \right) \implies \left(\forall \cS\colon\pr{\Pi^\cS_{i}=\o \land \halt^{\cS}_{i}}\ge \gamma/2\right). \nonumber
+\end{align}
+
+\noindent
+In words, for both $\o\in \zo$: if $\Pi_{i-1}^\cS=\o$ and halts in two rounds with large probability ($\ge \gamma/2$), for every $\cS$, then $\Pi_i^\cS=\o$ and halts in two rounds with large probability, for every $\cS$. Before proving \cref{eq:nei3}, we show how to use it to derive \cref{bound:KKL}. We apply \cref{eq:nei3} for
+$\vz=0^{n-t}1^{t}$, $\vo=0^{t}1^{n-t}$, $\o=0$, and $i=\ell$, in combination with the properties of \emph{validity} and \emph{almost pre-agreement}
+%supermajority 
+(\cref{eq:maj}). Namely, by these properties,
+a random execution of $\Pi$ on input $\vz$ where the parties in $\cS$ abort at the second round yields output $0$ with probability at least $\gamma/2$, for every $\cS\in {\binom{[n]}{\sigma n}}$.
+Therefore, by \cref{eq:nei3},
+we deduce that a random execution of $\Pi$ on input $\vo$ where the parties in $\cS$ abort at the second round yields output $0$ with probability at least $\gamma/2$, for every $\cS\in {\binom{[n]}{\sigma n}}$. The latter violates either \emph{validity} or \emph{almost pre-agreement} -- contradiction.
+%supermajority 
+To conclude the proof of \cref{bound:KKL}, we prove \cref{eq:nei3} by using the following corollary of the seminal KKL theorem \cite{KKL88} from \citet{BKK14}.
+%We conclude the proof of \cref{bound:KKL} by proving \cref{eq:nei3}. We prove \cref{eq:nei3} using the following corollary of the seminal KKL theorem \cite{KKL88} from \citet{BKK14}.
+%\citeauthor{BKK14}~\cite{BKK14}.
+(Recall that $\cR|_{\wb{\cS}}$ is the projection of $\cR$ on the index-set $\wb{\cS}$.)
+
+\begin{lemma}\label{lem:KKL} For every $\sigma, \delta\in (0,1)$, there exists $c>0$ s.t.\
+%such that
+the following holds for large enough~$n$. Let $\cR \subseteq \zn$ be s.t.\
+%such that
+$\ssize{\cR|_{\wb{\cS}}}\le (1-\delta)\cdot 2^{(1-\sigma)n}$, for every $\cS\subseteq [n]$ of size $\sigma n$. Then, $\size{\cR}\le n^{-c}\cdot 2^n$.
+\end{lemma}
+
+Loosely speaking, \cref{lem:KKL} states that for a set $\cR\subseteq \zn$, if the size of every projection on a constant fraction of indices is bounded away from one (in relative size), then the size of $\cR$ is vanishingly small
+(again, in relative size).\footnote{In the jargon of Boolean functions analysis, since every large set has a $o(n)$-size index-set of influence almost one, it follows that some projection on a constant fraction of indices is almost full.}
+
+Going back to the proof, in pursuit of contradiction, let $i\ge 1$ denote the smallest index for which \cref{eq:nei3} does not hold, and without loss of generality suppose $b=0$, \ie there exists $\cS$ such that $\ssize{\cR_{i}^{\cS}(0)}< \gamma/2 \cdot 2^{n}$, and $\ssize{\cR_{i-1}^{\cS'}(0)}\ge \gamma/2 \cdot 2^n$, for every relevant $\cS'$. We prove \cref{eq:nei3} by proving \cref{eq:halt,eq:proj}, which result in contradiction via \cref{lem:KKL}.
+
+\begin{align}
+\text{Halting:}&\qquad \ssize{\cR_{i }^{\cS}(1)}\ge \gamma/2 \cdot 2^{n} \label{eq:halt} \\
+\text{Perfect agreement:}&\qquad \forall \cS' \colon \quad \ssize{\cR_{i}^{\cS}(1)|_{\wb{\cS}'}}\le (1-\gamma/2)\cdot 2^{(1-\sigma) n} \label{eq:proj}
+\end{align}
+\noindent
+%\Inote{too technical? \rnote{yes!\nnote{made some adjustments below}}}
+\cref{eq:halt} follows by the \emph{halting} property of $\Pi_{i}^\cS$, since the execution halts if and only if $\vr\in \cR_{i }^{\cS}(1)\cup \cR_{i }^{\cS}(0)$, and, by assumption, $\ssize{\cR_{i }^{\cS}(0)}< \gamma/2 \cdot 2^{n}$. 
+%We conclude by proving \cref{eq:proj}. We first observe 
+To conclude, we prove \cref{eq:proj} by observing that for every $\cS'$ and $b\in \zo$, and every $\vr$ and $\vr'$, if $\vr\in \cR_{i-1}^{\cS'}(0)$ and $\vr|_{\wb{\cS}'}=\vr'|_{\wb{\cS}'}$, then $\vr'\in \cR_{i-1}^{\cS'}(0)$ (by definition), \ie membership to $\cR_{i-1}^{\cS'}(0)$ does not depend on the indices of $\cS'$. 
+It follows that $\ssize{\cR_{i-1}^{\cS}(0)|_{\wb{\cS}'}}\ge \gamma/2 \cdot 2^{(1-\sigma) n}$, for every $\cS'$, and therefore $\ssize{\cR_{i}^{\cS}(1)|_{\wb{\cS}'}}\le (1-\gamma/2)\cdot 2^{(1-\sigma) n}$, since the sets $\cR_{i}^{\cS}(1)|_{\wb{\cS}'}$ and $\cR_{i-1}^{\cS}(0)|_{\wb{\cS}'}$ are non-intersecting for every $\cS'$. 
+% If not, 
+Otherwise, if $\cR_{i}^{\cS}(1)|_{\wb{\cS}'}\cap \cR_{i-1}^{\cS}(0)|_{\wb{\cS}'}\neq \emptyset$, then the following attack violates the superb quality of the protocol. Fix $\cS'$ and $\vr$ such that $\vr\in \cR_{i}^{\cS}(1)$ and $\vr|_{\wb{\cS}'}\in \cR_{i}^{\cS}(1)|_{\wb{\cS}'}\cap \cR_{i-1}^{\cS}(0)|_{\wb{\cS}'}$, and consider the attacker controlling $\cP$, $\cL_{i}$, $\cS$, and $\cS'$ that sends
+%and sending
+messages according to $\Pi_{i}^{\cS}$ and $\Pi_{i-1}^{\cS'}$ to $\oC_0$ and $\oC_1$, respectively, where $\sset{\oC_0,\oC_1}$ is an arbitrary partition of $\oC=[n]\setminus \cP\cup \cL_{i} \cup \cS\cup \cS'$. It is not hard to see the attacker violates agreement, whenever the randomness lands on $\vr$.
+
+
+
+\begin{remark}
+For superb, single-coin, public-randomness protocol, repeated application of \cref{eq:nei,lem:KKL} rules out second-round halting for arbitrary (constant) fraction of corrupted parties (and not only $n/3$ fraction).
+\end{remark}
+
+\subsubsection{General (Public-Randomness) Protocols}\label{sec:technique:3:2}
+The analysis above crucially relies on the superb properties of the protocol. While it can be generalized for protocols with near-perfect statistical security and constant-bit randomness, we only manage to analyze the most general case (\ie protocols with non-perfect computational security and arbitrary-size randomness) assuming \cref{con:intro:IsoBot}. Very roughly (and somewhat inaccurately), when applying the above attack on general public-randomness protocols, the following happens for some $\delta>0$ and both values of $\o\in \zo$: for $(1-\delta)$-fraction of possible aborting subsets $\cS$, the probability that the honest parties halt in two rounds and output the same value $\o$, whether parties in $\cS$ all abort or not, is bounded below by the halting probability. Assuming \cref{con:intro:IsoBot}, it follows that with probability $\delta$ over the randomness and $\cS$, the honest parties under the attack output opposite values depending whether the parties in $\cs$ abort or not. We conclude that the agreement of the protocol is at most $\delta$. We refer the reader to \cref{sec:TwoRoundProtcol:PR} for the full details.
+
+
+\remove{
+
+\Inote{remove from submission}
+
+For reference, we restate here the conjecture (see \cref{sec:intro:ourResult} for a further discussion about the conjecture itself.). Recall that for $\vx\in \sn$ and $\cS \subseteq [n]$, vector $\bot_\cS(\vx) \in \set{\Sigma \cup \bot}^n$ is obtained by assigning all entries indexed by $\cS$ with the value $\bot$, and all other entries according to $\vx$, and $\bns$ denotes the distribution induced over subsets of $[n]$ by choosing each element with probability $\sigma$ independently at random.
+
+
+\begin{conjecture}[Restatement of \cref{con:intro:IsoBot}]
+\MainConj
+\end{conjecture}
+
+} 

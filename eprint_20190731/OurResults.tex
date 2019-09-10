@@ -1,0 +1,135 @@
+\section{Our Lower Bounds}\label{sec:OurResult}
+
+In this section, we formally state our lower bounds on the round complexity of Byzantine agreement protocols. The communication and adversarial models as well as the notion of Byzantine agreement protocols we consider are given in \cref{sec:OurResults:Model}, and our bounds are formally stated in \cref{sec:OurResult:Bounds}.
+
+\subsection{The Model}\label{sec:OurResults:Model}
+
+\subsubsection{Protocols}
+All protocols considered in this paper are \ppt (probabilistic polynomial time): the running time of every party is polynomial in the (common) security parameter (given as a unary string). We only consider boolean-input boolean-output protocols: apart from the common security parameter, all parties have a single input bit, and each of the honest parties outputs a single bit. For an $n$-party protocol $\Pi$, an input vector $\vv\in \zn$ and randomness $\vr$, let $\Pi(\vv; \vr)$ denote the output vector of the parties in an (honest) execution with party $\Party_i$'s input being $\vv_i$ and randomness $\vr_i$.
+For a set of parties $\cP \subseteq [n]$, we denote by $\Pi(\vv; \vr)_\cP$ the output vector of the parties in $\cP$.
+
+The protocols we consider might have a \emph{setup phase} in which before interaction starts a trusted party distributes (correlated) values between the parties. We only require the security to hold for a \emph{single} use of the setup parameters (in reality, these parameters are set once and then used for many interactions). This, however, only makes our lower bound stronger.
+
+The communication model is \emph{synchronous}, meaning that the protocols proceed in rounds. In each round every party can send a message to every other party over a private and authenticated channel. (Allowing the protocol to be executed over private channels makes our lower bounds stronger.) It is guaranteed that all of the messages that are sent in a round will arrive at their destinations by the end of that round.
+
+\subsubsection{Adversarial Model}\label{sec:OurResults:Adv}
+
+We consider both \adaptive and \nonadaptive (\aka static) adversaries. An \adaptive adversary can choose which parties to corrupt for the next round immediately after the conclusion of the previous round but before seeing the next round's messages. If a party has been corrupted then it is considered corrupt for the rest of the execution. A \nonadaptive (static) adversary chooses which parties to corrupt \emph{before} the execution of the protocol begins (\ie before the setup phase, if such exists). We measure the success probability of the latter adversaries as the expectation over their choice of corrupted parties.
+
+We consider both \emph{rushing} and \emph{non-rushing} adversaries. A non-rushing adversary chooses the corrupted parties' messages in a given round based on the messages sent in the \emph{previous} rounds. In contrast, a rushing adversary can base the corrupted parties' messages on the messages sent in the previous rounds, and on those sent by the honest parties in the \emph{current} round.
+
+\paragraph{Locally consistent adversaries.}
+As discussed in \cref{sec:intro:model}, our attack requires very limited capabilities from each corrupted party: to prematurely abort, and to lie about its input bit and incoming messages from other corrupted parties. In particular, a corrupted party tosses its local coins honestly and does not lie about incoming messages from honest parties. We now present the formal definition.
+
+\begin{definition}[locally consistent adversaries]\label{def:Semi-ConssitentParties}
+Let $\Pi=(\Pc_1,\ldots,\Pc_n)$ be an $n$-party protocol and let $\sset{\nxtmsg_{i,i'}^j}_{i,i' \in [n],j\in \N}$ be its set of next-message functions, \ie
+\[
+m^j_{i,i'}=\nxtmsg_{i,i'}^j\left(b;r;(m^1_{1,i},\ldots,m^1_{n,i}),\ldots, (m^{j-1}_{1,i},\ldots,m^{j-1}_{n,i})\right)
+\]
+is the message party $\Pc_i$ sends to party $\Pc_{i'}$ in the \jth round, given that its input bit is $b$, the random coins it flipped till now are $r$, and in round $j' < j$, it got the message $m^{j'}_{i'',i}$ from party $\Pc_{i''}$. An adversary taking the role of $\Pc_i$ is said to be {\sf locally consistent} \wrt $\Pi$, if it \emph{flips its random coins honestly}, and the message it sends in the \jth round to party $\Pc_{i'}$ takes one of the following two forms:
+
+\begin{description}
+	\item[Abort:] the message $\perp$.
+	
+	\item[Input and message selection:] a set of messages $\set{m_\ell}_{\ell=1}^k$, for some $k$, such that for each $\ell \in [k]$:
+\[
+m_\ell = \nxtmsg_{i,i'}^j\left(b_\ell;r;((m^1_{1})_1,\ldots,(m^1_{n})_1),\ldots, ((m^{j-1}_{1})_\ell,\ldots,(m^{j-1}_{n})_\ell)\right),
+\]
+where $b_\ell\in \zo$, $r$ are the coins $\Pc_i$ tossed (honestly) until now, and $(m^{j'}_{i''})_\ell$, for each $j'<j$ and $i''\neq i$, is one of the messages it received from party $\Pc_{i''}$ in the \iith{j} round.
+\end{description}
+\end{definition}
+That is, a locally consistent party $\Pc_{i}$ might send party $\Pc_{i'}$ a sequence of messages
+(and not just one as instructed), each consistent with a possible choice of its input bit, and some of the messages it received in the previous round. In turn, this will enable party $\Pc_{i'}$, if corrupted, the freedom to choose in the next rounds the message of $\Pc_{i}$ it would like to act according to. Note that \wlg, $\Pc_{i}$ will always sends a single message to the honest parties, as otherwise they will discard the messages.
+
+A few remarks are in place.
+\begin{enumerate}
+	\item While the above definition does not enforce between-rounds consistency (a party might send to another party a first-round message consistent with input $0$ and a second-round message consistent with input $1$), compiling a given protocol so that every message party $\Pc_{i}$ sends to $\Pc_{i'}$ contains the previous messages $\Pc_{i}$ sent to $\Pc_{i'}$, will enforce such between-rounds consistency on locally consistent parties.
+	
+	\item Using standard cryptographic techniques, a protocol secure against locally consistent adversaries can be compiled into one secure against arbitrary malicious adversaries, without hurting the efficiency and round complexity of the protocol ``too much.'' If the protocol is \emph{public randomness} (see \cref{def:PR}) this reduction can be made extremely efficient, and in particular preserve the round complexity (see \cref{sec:intro:LocalToFull}).
+	
+	\item The locally consistent parties considered in \cref{sec:FirstRound,sec:SecondRound} do not take full advantage of the generality of \cref{def:Semi-ConssitentParties}. Rather, the parties considered either act honestly but abort at the conclusion of the first round, cheat in the first round and then abort, or cheat only in the second round and then abort.
+\end{enumerate}
+
+\subsubsection{Public-Randomness Protocols}\label{sec:OurResults:PR}
+In \cref{sec:intro:model}, we showed that the description of many natural protocols can be simplified when security is required to hold only against locally consistent adversaries. In this relaxed description a trusted setup phase and cryptographic assumptions are not required, and every party can publish the coins it locally tossed in each round.
+
+\begin{definition}[Public-randomness protocols]\label{def:PR}
+A protocol has {\sf public randomness}, if every party's message consists of two parts: the randomness it sampled in that round, and an arbitrary message which is a function of its view (input, incoming messages, and coins tossed up to and including that point). The party's first message also contains its setup parameters, if such exist.
+\end{definition}
+
+\subsubsection{Byzantine Agreement}\label{sec:BA}
+
+We now formally define the notion of Byzantine agreement. Since we focus on lower bounds we will consider only the case of a single input bit and a single output bit. A more general notion of Byzantine agreement will include string input and string outputs. A generic reduction shows that the cost of agreeing on strings rather than bits is two additional rounds~\cite{TC84}.
+
+\begin{definition}[Byzantine Agreement]\label{def:BA}
+We associate the following properties with a \ppt $n$-party Boolean input/output protocol $\Pi$.
+
+\begin{description}
+	\item[Agreement.] Protocol $\Pi$ has {\sf $(t,\alpha)$-\Agr}, if the following holds \wrt any \ppt adversary controlling at most $t$ parties in $\Pi$ and any value of the non-corrupted parties' input bits: in a random execution of $\Pi$ on sufficiently large security parameter, all non-corrupted parties output the \emph{same} bit with probability at least $1-\alpha$.\footnote{A more general definition would allow the parameter $\alpha$ (and the parameters $\beta,\gamma$ below) to depend on the protocol's security parameter. But in this paper we focus on the case that $\alpha$ is a fixed value.}
+	
+	\item[Validity.] Protocol $\Pi$ has {\sf $(t,\beta)$-\Vld}, if the following holds \wrt any \ppt adversary controlling at most $t$ parties in $\Pi$ and an input bit $b$ given as input to all non-corrupted parties: in a random execution of $\Pi$ on sufficiently large security parameter, all non-corrupted parties output $b$ with probability at least $1-\beta$.
+	
+	\item[Halting.] Protocol $\Pi$ has {\sf $(t,q,\gamma)$-\Halt}, if the following holds \wrt any \ppt adversary controlling at most $t$ parties in $\Pi$ and any value of the non-corrupted parties' input bits: in a random execution of $\Pi$ on sufficiently large security parameter, all non-corrupted parties halt within $q$ rounds with probability at least $\gamma$.
+\end{description}
+	
+\noindent
+Protocol $\Pi$ is a $(t,\alpha,\beta,q,\gamma)$-\BA, if it has $(t,\alpha)$-\Agr, $(t,\beta)$-\Vld, and $(t,q,\gamma)$-\Halt. If the protocol has a setup phase, then the above probabilities are taken \wrt this phase as well.
+\end{definition}
+
+\begin{remark}[Concrete security]
+Since we care about fixed values of a protocol's characteristics (\ie agreement), the role of the security parameter in the above definition is to enable us to bound the running time of the parties and adversaries in consideration in a meaningful way, and to parametrize the cryptographic tools used by the parties (if there are any). Since the attacks we present are efficient assuming the protocol is efficient (in any reasonable sense), the bounds we present are applicable for a fixed protocol that might use a \emph{fixed} cryptographic primitive, \eg SHA-256.
+\end{remark}
+
+\subsection{The Bounds}\label{sec:OurResult:Bounds}
+We proceed to present the formal statements of the three lower bounds.
+
+\paragraph{First-round halting, arbitrary protocols.}
+The first result bounds the halting probability of arbitrary protocols after a single round. Namely, for ``small'' values of $\alpha$ and $\beta$, the halting probability is ``small'' for $t\geq n/3$ and ``close to $1/2$'' for $t\geq n/4$.
+
+\def\ThmFirstRoundArb
+{
+Let $\Pi$ be a \ppt $n$-party protocol that is $(t,\alpha,\beta,1,\gamma)$-\BA against locally consistent, static, non-rushing adversaries. Then,
+\begin{itemize}
+	\item $t \ge n/3$ implies $\gamma \le 5\alpha + 2\beta +\err$
+	\item $t \ge n/4$ implies $\gamma \le 1/2 + 5\alpha + \beta + \err$,
+\end{itemize}
+for $\err= \FirstErr$ ($\err=0$ for public-randomness protocols whose security holds against rushing adversaries).
+}
+\begin{theorem}[restating \cref{thm:intro:FirstRound}]\label{thm:FirstRound:Arb}
+	\ThmFirstRoundArb
+\end{theorem}
+\paragraph{Second-round halting, arbitrary protocols.}
+The second result bounds the halting probability of arbitrary protocols after two rounds.
+
+\def\ThmSecondRoundArb
+{
+Let $\Pi$ be a \ppt $n$-party protocol that is a $(t,\alpha,\beta,2,\gamma)$-\BA against locally consistent, static, non-rushing adversaries for $t > n/4$. Then $\gamma \le 1 + 2\alpha + \frac\beta{w^2} -\frac1{2w^2}$ for $w = \ceil{(n-\ceil{n/4})/\floor{t - n/4}}+1$.
+}
+\begin{theorem}[restating \cref{thm:intro:SecondRound:Arb}]\label{thm:SecondRound:Arb}
+	\ThmSecondRoundArb
+\end{theorem}
+
+In particular, for $t = (1/4 + \eps)\cdot n$ and ``small'' $\alpha$ and $\beta$, the protocol might not halt at the conclusion of the second round with probability $\approx 1/\eps^2$.
+
+
+\paragraph{Second-round halting, public-randomness protocols.}
+The third result bounds the halting probability of public-randomness protocols after two rounds. The result requires adaptive and rushing adversaries, and is based on \cref{con:IsoBot} (stated in \cref{sec:Iso} below).
+
+\newcommand{\ept}{\eps_t}
+\newcommand{\epg}{\eps_\gamma}
+
+\def\ThmSeconRoundPR
+{
+Assume \cref{con:IsoBot} holds. Then, for any (constants) $\ept,\epg>0$ there exists $\alpha> 0$ such that the following holds for large enough $n$: let $\Pi$ be a \ppt $n$-party, public-randomness protocol that is $(t,\alpha,\beta= \epg^2/200,2,\gamma)$-\BA against locally consistent, rushing, adaptive adversaries. Then,
+	\begin{itemize}
+		\item $t \ge (1/3 + \ept)\cdot n$ implies $\gamma < \epg$.
+		\item $t \ge (1/4 + \ept)\cdot n$ implies $\gamma < \frac12 + \epg$.
+	\end{itemize}
+}
+
+\begin{theorem}[restating \cref{thm:intro:SecondRound:PR}] \label{thm:SecondRound:PR}
+\ThmSeconRoundPR
+\end{theorem}
+In particular, assuming the protocol has perfect agreement and validity, the protocol never halts in two rounds if the fraction of corrupted parties is greater than $1/3$, and halts in two rounds with probability at most $1/2$ if the fraction of corrupted parties is greater than $1/4$.
+
+The value of $\alpha$ in the theorem is (roughly) $\delta\cdot \ept\cdot \epg^2$ where $\delta$ is the constant guaranteed by \cref{con:IsoBot}. We were not trying to optimize over the constants in the above statement, and in particular it seems that $\beta$ can be pushed to $\epg^2$.

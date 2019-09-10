@@ -1,0 +1,116 @@
+
+\section{Lower Bounds on First-Round Halting}\label{sec:FirstRound}
+
+In this section, we present our lower bound for the probability of first-round halting in Byzantine agreement protocols.
+\begin{theorem}[Bound on first-round halting. \cref{thm:FirstRound:Arb} restated]\label{thm:FirstRound:Arb:Res}
+\ThmFirstRoundArb
+\end{theorem}
+
+Let $\Pi$ be as in \cref{thm:FirstRound:Arb:Res}. We assume for ease of notation that an honest party that runs more than one round outputs $\perp$ (it will be clear that the attack, described below, does not benefit from this change).
+%Finally, we
+We also omit the security parameter from the parties' input list, it will be clear though that the adversaries we present are efficient \wrt the security parameter.
+
+
+\begin{lemma}[Neighboring executions]\label{lemma:FirstRound:Arb}
+	Let $\vv,\vv' \in \zn$ be with $\ham(\vv,\vv') \le t$. Then for both $\o\in \zo$:
+	\[
+	\pr{\Pi(\vv') \in \omin^n \setminus \mon} \ge	\pr{\Pi(\vv) \in \omin^n} - (1- \gamma) - 4\alpha - \err.
+	\]
+\end{lemma}
+Namely, the lemma bounds from below the probability that in a random honest execution of the protocol on input $\vv'$, at least one party halts in the first round while outputting $\o$.
+
+We prove \cref{lemma:FirstRound:Arb} below, but first use it to prove \cref{thm:FirstRound:Arb:Res}. We also make use of the following immediate observation.
+\begin{claim}[Almost pre-agreement]\label{claim:FirstRoundound:Arb:Validity}
+Let $\vv \in \zn$ and $\o \in \zo$ be such that $\ham(\vv,\o^n) \le t$. Then, $\pr{\Pi(\vv) \in \omin^n} \ge 1 - \alpha - \beta$.
+\end{claim}
+\begin{proof}
+Let $\cA \subset [n]$ be a subset of size $n-t$ such that $\vv_\cA = \o^{\size{\cA}}$. The claimed validity of $\Pi$ yields that
+\begin{align*}
+\pr{\Pi(\vv)_\cA \notin \omin^{\size{\cA}}} < \beta
+\end{align*}
+This follows from $\beta$-validity of $\Pi$ and the fact that an honest party cannot distinguish between an execution of $\Pi(\vv)$ and an execution of $\Pi(b^n)$ in which all parties not in $\cA$ act as if their input bit is as in $\vv$. Hence, by the claimed agreement of $\Pi$,
+
+\begin{align*}
+\pr{\Pi(\vv) \notin \omin^n} < \alpha + \beta
+\end{align*}
+\end{proof}
+
+
+
+
+\begin{proof}[Proof of \cref{thm:FirstRound:Arb:Res}]~
+We separately prove the theorem for $t \ge n/3$ and for $t \ge n/4$.
+
+\paragraph{The case $t \ge n/3$.}
+We assume for simplicity that $(n-t)/2\in \N$, let $\vz= 0^t 1^{\cnt} 0^{\fnt} $ and let $\vo = 1^t 1^{\cnt} 0^{\fnt}$. Note that $\ham(\vz,\vo) = t$, and that for both $\o\in \zo$ it holds that $\ham(\vv_\o,\o^n)\le t$. Hence, by \cref{claim:FirstRoundound:Arb:Validity},
+%validity (\cref{claim:FirstRoundound:Arb:Validity}),
+for both $\o\in \zo$:
+\begin{align*}
+\pr{\Pi(\vv_\o) \in \omin^n} \ge 1 - \alpha - \beta.
+\end{align*}
+Applying \cref{lemma:FirstRound:Arb} to $\vv= \vz$ and $\vv'= \vo$ yields that
+\begin{align*}
+\pr{\Pi(\vo) \in \set{0,\perp}^n \setminus \mon} \ge 1 - 5\alpha - \beta - (1- \gamma) - \err,
+\end{align*}
+yielding that $5\alpha + 2\beta + (1-\gamma) + \err\ge 1$.
+
+\paragraph{The case $t \ge n/4$.} In this case there are no two vectors that are $t$ apart in Hamming distance, and still each of them has $n-t$ entries of opposite values. Rather, we consider the two vectors $\vz= 0^t 0^t 0^t 1^{n-3t}$ and $\vo= 1^t 1^t 0^t 1^{n-3t}$ of distance $2t$. For both $\o\in \zo$, the vector $\vv_\o$ has at least $n-t$ entries with $\o$ and is of distance $t$ from the vector $\vstar =1^t 0^t 0^t 1^{n-3t}$.
+%\rnote{as a result, for every $b\in\zo$, $\pr{\Pi(\vstar) \in \omin^n \setminus \mon}\leq 1/2$ \Inote{I don't think it is needed, but add it if you like}}
+
+As in the first part of the proof, Applying \cref{claim:FirstRoundound:Arb:Validity,lemma:FirstRound:Arb} on $\vv_b$ and $\vstar$, for both $b\in \zo$, yields that
+\begin{align*}
+\pr{\Pi(\vstar) \in \omin^n \setminus \mon} \ge 1 - 5\alpha - \beta - (1- \gamma) - \err,
+\end{align*}
+yielding that $2(5\alpha + \beta + (1- \gamma) + \err) \ge 1$.
+\end{proof}
+	
+	
+\newcommand{\PPf}{\Pi^\cP}	
+\subsection{Proving Lemma~\ref{lemma:FirstRound:Arb}}
+\begin{proof}[Proof of \cref{lemma:FirstRound:Arb}]
+Fix $b \in \zo$ and let $\delta = \pr{\Pi(\vv) \in \omin^n}$. Let $\cP$ be the coordinates in which $\vv$ and $\vv'$ differ, and let $\oP = n \setminus \cP$. Let $I$ be the index (a function of the parties' coins and setup parameters) of the smallest party in $\oP$ that halts in the first round and outputs the same value, both if the parties in $\cP$ send their messages according to input $\vv$ and if they do that according to $\vv'$. We let $I=0$ if there is no such party, and (abusing notation) sometimes identify $I$ with the event that $I\neq 0$, \eg $\pr{I}$ stands for $\pr{I\ne 0}$. Clearly,
+
+
+%and let $\gamma'$ be the probability that $\Pc_1$ halts in the first round of $\Pi(\vv)$. Recall that by our convention, an honest party outputs value in $\zo$ iff it halts in the first round.
+
+\begin{align*}
+\delta \le \pr{\Pi(\vv) \in \omin^n \qand I}+ (1- \pr{I})
+\end{align*}
+%Since $\gamma' \ge \gamma$,
+and thus
+\begin{align}\label{eq:FirstRound:Arb:1}
+\pr{\Pi(\vv) \in \omin^n \qand I} \ge \delta - (1-\pr{I})
+\end{align}
+	
+It follows that
+\begin{align}\label{eq:FirstRound:Arb:2}
+\pr{\Pi(\vv') \in \omin^n \setminus \mon} &\ge \pr{\Pi(\vv') \in \omin^n \qand I}\\
+&=\pr{\Pi(\vv') \in \omin^n \qand \Pi(\vv')_I= b}\nonumber\\
+&\ge \pr{\Pi(\vv')_I= b} - \alpha\nonumber\\
+&= \pr{\Pi(\vv)_I = \o} - \alpha\nonumber\\
+&\ge \pr{\Pi(\vv) \in \omin^n \qand \Pi(\vv)_I = \o} - 2\alpha\nonumber\\
+&= \pr{\Pi(\vv) \in \omin^n \qand I} - 2\alpha\nonumber\\
+&\ge \delta - (1-\pr{I}) - 2\alpha.\nonumber
+\end{align}
+The first inequality and the equalities hold by the definition of $I$. The second and third inequalities hold by agreement, and the last inequality holds by \cref{eq:FirstRound:Arb:1}. We conclude the proof showing that:
+\begin{align}\label{claim:FirstRound:Arb}
+	\pr{I} \ge \gamma - \err - 2\alpha
+\end{align}
+
+Let $E_h$ be the event that each party in $\oP$ either does not halt when the parties in $\cP$ act according to $\vv$ or does not halt when they act according to $\vv'$. Let $E_a$ be the event that $E_h$ does not occur, but $I = 0$. Clearly $I = 0 \Longleftrightarrow E_h \lor E_a$.
+
+Consider the adversary that in the first round acts toward a random subset of $\oP$ according to input $\vv$ and towards the remaining parties according to $\vv'$, and aborts at the end of this round. It is clear that if $E_a$ occurs, the above adversary violates agreement with probability $1/2$. Thus, $\pr{E_a} \le 2\alpha$.
+
+It is also clear that when $E_h$ occurs, the above attacker fails to prevent an honest party
+%parties
+in $\oP$ from halting in the first round only if the following event happens: each party in $\oP $ does not halt in $\Pi(\vv'')$ for some $\vv'' \in \set{\vv,\vv'}$, but the adversary acts towards each of these parties on the input in which it does halt. The latter event happens with probability at most $2^{-\size{\oP}} \le \FirstErr = \err$. Thus, $\pr{E_h} \le 1 - (\gamma - \err)$. We conclude that
+\begin{align}
+	\pr{I} \ge 1 - \pr{E_h} - \pr{E_a} \ge \gamma - \err - 2\alpha
+\end{align}
+Finally, we note that if the protocol has public randomness, the (now rushing) attacker does not have to guess what input to act upon.
+Rather, after seeing the first-round randomness, it \emph{finds} an input $\vv'' \in\set{\vv,\vv'}$ such that at least one party in $\oP$ does not halt in $\Pi(\vv'')$ or violates agreement, and acts according to this input. Hence, the bound on $I$ changes to
+\begin{align*}
+\pr{I} \ge \gamma - \alpha,
+\end{align*}
+proving the theorem statement for such protocols.
+\end{proof}

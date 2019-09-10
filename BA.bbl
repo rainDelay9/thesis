@@ -1,0 +1,435 @@
+\begin{thebibliography}{66}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Abraham et~al.(2019{\natexlab{a}})Abraham, Chan, Dolev, Nayak, Pass,
+  Ren, and Shi]{ACDNPRS19}
+I.~Abraham, T.~H. Chan, D.~Dolev, K.~Nayak, R.~Pass, L.~Ren, and E.~Shi.
+\newblock Communication complexity of {Byzantine} agreement, revisited.
+\newblock In \emph{Proceedings of the 38th Annual ACM Symposium on Principles
+  of Distributed Computing (PODC)}, pages 317--326, 2019{\natexlab{a}}.
+
+\bibitem[Abraham et~al.(2019{\natexlab{b}})Abraham, Devadas, Dolev, Nayak, and
+  Ren]{ADDNR19}
+I.~Abraham, S.~Devadas, D.~Dolev, K.~Nayak, and L.~Ren.
+\newblock Synchronous {Byzantine} agreement with expected {O(1)} rounds,
+  expected o(n\({}^{\mbox{2)}}\) communication, and optimal resilience.
+\newblock In \emph{Financial Cryptography and Data Security},
+  2019{\natexlab{b}}.
+
+\bibitem[Attiya and Censor(2008)]{AC08}
+H.~Attiya and K.~Censor.
+\newblock Tight bounds for asynchronous randomized consensus.
+\newblock \emph{Journal of the ACM}, 55\penalty0 (5):\penalty0 20:1--20:26,
+  2008.
+
+\bibitem[Attiya and Censor{-}Hillel(2010)]{AH10}
+H.~Attiya and K.~Censor{-}Hillel.
+\newblock Lower bounds for randomized consensus under a weak adversary.
+\newblock \emph{SIAM Journal on Computing}, 39\penalty0 (8):\penalty0
+  3885--3904, 2010.
+
+\bibitem[Bar{-}Joseph and Ben{-}Or(1998)]{BB98}
+Z.~Bar{-}Joseph and M.~Ben{-}Or.
+\newblock A tight lower bound for randomized synchronous consensus.
+\newblock In \emph{Proceedings of the 17th Annual ACM Symposium on Principles
+  of Distributed Computing (PODC)}, pages 193--199, 1998.
+
+\bibitem[Ben{-}Or(1983)]{Ben-Or83}
+M.~Ben{-}Or.
+\newblock Another advantage of free choice: Completely asynchronous agreement
+  protocols (extended abstract).
+\newblock In \emph{Proceedings of the 2nd Annual ACM Symposium on Principles of
+  Distributed Computing (PODC)}, pages 27--30, 1983.
+
+\bibitem[Ben{-}Or and Linial(1985)]{BL85}
+M.~Ben{-}Or and N.~Linial.
+\newblock Collective coin flipping, robust voting schemes and minima of banzhaf
+  values.
+\newblock In \emph{Proceedings of the 26th Annual Symposium on Foundations of
+  Computer Science (FOCS)}, pages 408--416, 1985.
+
+\bibitem[{Ben-Or} et~al.(1988){Ben-Or}, Goldwasser, and Wigderson]{BGW88}
+M.~{Ben-Or}, S.~Goldwasser, and A.~Wigderson.
+\newblock Completeness theorems for non-cryptographic fault-tolerant
+  distributed computation (extended abstract).
+\newblock In \emph{Proceedings of the 20th Annual ACM Symposium on Theory of
+  Computing (STOC)}, pages 1--10, 1988.
+
+\bibitem[Ben{-}Or et~al.(2006)Ben{-}Or, Pavlov, and Vaikuntanathan]{BPV06}
+M.~Ben{-}Or, E.~Pavlov, and V.~Vaikuntanathan.
+\newblock {Byzantine} agreement in the full-information model in o(log n)
+  rounds.
+\newblock In \emph{Proceedings of the 38th Annual ACM Symposium on Theory of
+  Computing (STOC)}, pages 179--186, 2006.
+
+\bibitem[Ben{-}Sasson et~al.(2015)Ben{-}Sasson, Chiesa, Green, Tromer, and
+  Virza]{BCGTV15}
+E.~Ben{-}Sasson, A.~Chiesa, M.~Green, E.~Tromer, and M.~Virza.
+\newblock Secure sampling of public parameters for succinct zero knowledge
+  proofs.
+\newblock In \emph{{IEEE} Symposium on Security and Privacy}, pages 287--304,
+  2015.
+
+\bibitem[Bourgain et~al.(2014)Bourgain, Kahn, and Kalai]{BKK14}
+J.~Bourgain, J.~Kahn, and G.~Kalai.
+\newblock Influential coalitions for {B}oolean functions.
+\newblock In \emph{CoRR}, 2014.
+\newblock https://arxiv.org/abs/1409.3033.
+
+\bibitem[Bowe et~al.(2018)Bowe, Gabizon, and Green]{BGG18}
+S.~Bowe, A.~Gabizon, and M.~D. Green.
+\newblock A multi-party protocol for constructing the public parameters of the
+  pinocchio zk-snark.
+\newblock In \emph{Financial Cryptography and Data Security {FC}}, pages
+  64--77, 2018.
+
+\bibitem[Bracha(1984)]{Bracha84}
+G.~Bracha.
+\newblock An asynchronou [(n-1)/3]-resilient consensus protocol.
+\newblock In \emph{Proceedings of the 3rd Annual ACM Symposium on Principles of
+  Distributed Computing (PODC)}, pages 154--162, 1984.
+
+\bibitem[Canetti(2001)]{Canetti01}
+R.~Canetti.
+\newblock Universally composable security: {A} new paradigm for cryptographic
+  protocols.
+\newblock In \emph{Proceedings of the 42nd Annual Symposium on Foundations of
+  Computer Science (FOCS)}, pages 136--145, 2001.
+
+\bibitem[Castro and Liskov(1999)]{CL99}
+M.~Castro and B.~Liskov.
+\newblock Practical {Byzantine} fault tolerance.
+\newblock In \emph{Proceedings of the Third {USENIX} Symposium on Operating
+  Systems Design and Implementation (OSDI)}, pages 173--186, 1999.
+
+\bibitem[Chaum et~al.(1988)Chaum, Cr{\'{e}}peau, and Damg{\aa}rd]{CCD88}
+D.~Chaum, C.~Cr{\'{e}}peau, and I.~Damg{\aa}rd.
+\newblock Multiparty unconditionally secure protocols (extended abstract).
+\newblock In \emph{Proceedings of the 20th Annual ACM Symposium on Theory of
+  Computing (STOC)}, pages 11--19, 1988.
+
+\bibitem[Chen and Micali(2016)]{SM16}
+J.~Chen and S.~Micali.
+\newblock Algorand.
+\newblock In \emph{CoRR}, 2016.
+\newblock http://arxiv.org/abs/1607.01341.
+
+\bibitem[Chor and Coan(1984)]{CC84}
+B.~Chor and B.~A. Coan.
+\newblock A simple and efficient randomized {Byzantine} agreement algorithm.
+\newblock In \emph{Fourth Symposium on Reliability in Distributed Software and
+  Database Systems, {SRDS}}, pages 98--106, 1984.
+
+\bibitem[Chor et~al.(1989)Chor, Merritt, and Shmoys]{CMS89}
+B.~Chor, M.~Merritt, and D.~B. Shmoys.
+\newblock Simple constant-time consensus protocols in realistic failure models.
+\newblock \emph{Journal of the ACM}, 36\penalty0 (3):\penalty0 591--614, 1989.
+
+\bibitem[Cohen et~al.(2016)Cohen, Coretti, Garay, and Zikas]{CCGZ16}
+R.~Cohen, S.~Coretti, J.~A. Garay, and V.~Zikas.
+\newblock Probabilistic termination and composability of cryptographic
+  protocols.
+\newblock In \emph{Advances in Cryptology -- CRYPTO 2016, part {III}}, pages
+  240--269, 2016.
+
+\bibitem[Cohen et~al.(2017)Cohen, Coretti, Garay, and Zikas]{CCGZ17}
+R.~Cohen, S.~Coretti, J.~Garay, and V.~Zikas.
+\newblock Round-preserving parallel composition of probabilistic-termination
+  cryptographic protocols.
+\newblock In \emph{Proceedings of the 44th International Colloquium on
+  Automata, Languages, and Programming (ICALP)}, pages 37:1--37:15, 2017.
+
+\bibitem[Dolev and Strong(1983)]{DS83}
+D.~Dolev and R.~Strong.
+\newblock Authenticated algorithms for {Byzantine} agreement.
+\newblock \emph{SIAM Journal on Computing}, 12\penalty0 (4):\penalty0 656--666,
+  1983.
+
+\bibitem[Dolev et~al.(1990)Dolev, Reischuk, and Strong]{DRS90}
+D.~Dolev, R.~Reischuk, and H.~R. Strong.
+\newblock Early stopping in {Byzantine} agreement.
+\newblock \emph{Journal of the ACM}, 37\penalty0 (4):\penalty0 720--741, 1990.
+
+\bibitem[Feldman and Micali(1997)]{FM97}
+P.~Feldman and S.~Micali.
+\newblock An optimal probabilistic protocol for synchronous {Byzantine}
+  agreement.
+\newblock \emph{SIAM Journal on Computing}, 26\penalty0 (4):\penalty0 873--933,
+  1997.
+
+\bibitem[Fischer and Lynch(1982)]{FL82}
+M.~J. Fischer and N.~A. Lynch.
+\newblock A lower bound for the time to assure interactive consistency.
+\newblock \emph{Information Processing Letters}, 14\penalty0 (4):\penalty0
+  183--186, 1982.
+
+\bibitem[Fischer et~al.(1985)Fischer, Lynch, and Merritt]{FLM85}
+M.~J. Fischer, N.~A. Lynch, and M.~Merritt.
+\newblock Easy impossibility proofs for distributed consensus problems.
+\newblock In \emph{Proceedings of the 23th Annual ACM Symposium on Principles
+  of Distributed Computing (PODC)}, pages 59--70, 1985.
+
+\bibitem[Fitzi and Garay(2003)]{FG03}
+M.~Fitzi and J.~A. Garay.
+\newblock Efficient player-optimal protocols for strong and differential
+  consensus.
+\newblock In \emph{Proceedings of the 22th Annual ACM Symposium on Principles
+  of Distributed Computing (PODC)}, pages 211--220, 2003.
+
+\bibitem[Friedgut(1998)]{Friedgut98}
+E.~Friedgut.
+\newblock Boolean functions with low average sensitivity depend on few
+  coordinates.
+\newblock \emph{Combinatorica}, 18\penalty0 (1):\penalty0 27--35, 1998.
+
+\bibitem[Garay and Moses(1993)]{GM93}
+J.~A. Garay and Y.~Moses.
+\newblock Fully polynomial {Byzantine} agreement in t+1 rounds.
+\newblock In \emph{Proceedings of the 25th Annual ACM Symposium on Theory of
+  Computing (STOC)}, pages 31--41, 1993.
+
+\bibitem[Garay et~al.(2007)Garay, Katz, Koo, and Ostrovsky]{GKKO07}
+J.~A. Garay, J.~Katz, C.~Koo, and R.~Ostrovsky.
+\newblock Round complexity of authenticated broadcast with a dishonest
+  majority.
+\newblock In \emph{Proceedings of the 48th Annual Symposium on Foundations of
+  Computer Science (FOCS)}, pages 658--668, 2007.
+
+\bibitem[Gilad et~al.(2017)Gilad, Hemo, Micali, Vlachos, and
+  Zeldovich]{GHMVZ17}
+Y.~Gilad, R.~Hemo, S.~Micali, G.~Vlachos, and N.~Zeldovich.
+\newblock Algorand: Scaling {B}yzantine agreements for cryptocurrencies.
+\newblock In \emph{Proceedings of the 26th Symposium on Operating Systems
+  Principles (SOSP)}, pages 51--68, 2017.
+
+\bibitem[Goldreich(2004)]{Goldreich04}
+O.~Goldreich.
+\newblock \emph{The Foundations of Cryptography - Volume 2: Basic
+  Applications}.
+\newblock Cambridge University Press, 2004.
+\newblock ISBN 0-521-83084-2.
+
+\bibitem[Goldreich et~al.(1987)Goldreich, Micali, and Wigderson]{GMW87}
+O.~Goldreich, S.~Micali, and A.~Wigderson.
+\newblock How to play any mental game or a completeness theorem for protocols
+  with honest majority.
+\newblock In \emph{Proceedings of the 19th Annual ACM Symposium on Theory of
+  Computing (STOC)}, pages 218--229, 1987.
+
+\bibitem[Goldreich et~al.(1998)Goldreich, Goldwasser, and Linial]{GGL98}
+O.~Goldreich, S.~Goldwasser, and N.~Linial.
+\newblock Fault-tolerant computation in the full information model.
+\newblock \emph{SIAM Journal on Computing}, 27\penalty0 (2):\penalty0 506--544,
+  1998.
+
+\bibitem[Goldwasser et~al.(1985)Goldwasser, Micali, and Rackoff]{GMR85}
+S.~Goldwasser, S.~Micali, and C.~Rackoff.
+\newblock The knowledge complexity of interactive proof-systems (extended
+  abstract).
+\newblock In \emph{Proceedings of the 17th Annual ACM Symposium on Theory of
+  Computing (STOC)}, pages 291--304, 1985.
+
+\bibitem[Goldwasser et~al.(1988)Goldwasser, Micali, and Rivest]{GMR88}
+S.~Goldwasser, S.~Micali, and R.~L. Rivest.
+\newblock A digital signature scheme secure against adaptive chosen-message
+  attacks.
+\newblock \emph{SIAM Journal on Computing}, 17\penalty0 (2):\penalty0 281--308,
+  1988.
+
+\bibitem[Goldwasser et~al.(2006)Goldwasser, Pavlov, and Vaikuntanathan]{GPV06}
+S.~Goldwasser, E.~Pavlov, and V.~Vaikuntanathan.
+\newblock Fault-tolerant distributed computing in full-information networks.
+\newblock In \emph{Proceedings of the 47th Annual Symposium on Foundations of
+  Computer Science (FOCS)}, pages 15--26, 2006.
+
+\bibitem[Goldwasser et~al.(2015)Goldwasser, Kalai, and Park]{GKP15}
+S.~Goldwasser, Y.~T. Kalai, and S.~Park.
+\newblock Adaptively secure coin-flipping, revisited.
+\newblock In \emph{Proceedings of the 42th International Colloquium on
+  Automata, Languages, and Programming (ICALP), part {II}}, pages 663--674,
+  2015.
+
+\bibitem[Hadzilacos(1987)]{Hadzilacos87}
+V.~Hadzilacos.
+\newblock Connectivity requirements for {Byzantine} agreement under restricted
+  types of failures.
+\newblock \emph{Distributed Computing}, 2\penalty0 (2):\penalty0 95--103, 1987.
+
+\bibitem[Hofheinz and Jager(2016)]{HJ16}
+D.~Hofheinz and T.~Jager.
+\newblock Verifiable random functions from standard assumptions.
+\newblock In \emph{Proceedings of the 13th Theory of Cryptography Conference,
+  TCC 2016-A, part {I}}, pages 336--362, 2016.
+
+\bibitem[Kahn et~al.(1988)Kahn, Kalai, and Linial]{KKL88}
+J.~Kahn, G.~Kalai, and N.~Linial.
+\newblock The influence of variables on {B}oolean functions (extended
+  abstract).
+\newblock In \emph{Proceedings of the 29th Annual Symposium on Foundations of
+  Computer Science (FOCS)}, pages 68--80, 1988.
+
+\bibitem[Kapron et~al.(2008)Kapron, Kempe, King, Saia, and Sanwalani]{KKKSS08}
+B.~M. Kapron, D.~Kempe, V.~King, J.~Saia, and V.~Sanwalani.
+\newblock Fast asynchronous {Byzantine} agreement and leader election with full
+  information.
+\newblock In \emph{Proceedings of the Nineteenth Annual {ACM-SIAM} Symposium on
+  Discrete Algorithms, {SODA}}, pages 1038--1047, 2008.
+
+\bibitem[Karlin and Yao(1986)]{KY86}
+A.~R. Karlin and A.~C. Yao.
+\newblock Probabilistic lower bounds for {Byzantine} agreement and clock
+  synchronization.
+\newblock Unpublished manuscript, 1986.
+
+\bibitem[Katz and Koo(2006)]{KK06}
+J.~Katz and C.~Koo.
+\newblock On expected constant-round protocols for {Byzantine} agreement.
+\newblock In \emph{Advances in Cryptology -- CRYPTO 2006}, pages 445--462,
+  2006.
+
+\bibitem[King and Saia(2013)]{KS13}
+V.~King and J.~Saia.
+\newblock {Byzantine} agreement in polynomial expected time: [extended
+  abstract].
+\newblock In \emph{Proceedings of the 45th Annual ACM Symposium on Theory of
+  Computing (STOC)}, pages 401--410, 2013.
+
+\bibitem[Kubiatowicz et~al.(2000)Kubiatowicz, Bindel, Chen, Czerwinski, Eaton,
+  Geels, Gummadi, Rhea, Weatherspoon, Weimer, Wells, and Zhao]{KBCCEGGRWWWZ00}
+J.~Kubiatowicz, D.~Bindel, Y.~Chen, S.~E. Czerwinski, P.~R. Eaton, D.~Geels,
+  R.~Gummadi, S.~C. Rhea, H.~Weatherspoon, W.~Weimer, C.~Wells, and B.~Y. Zhao.
+\newblock Oceanstore: An architecture for global-scale persistent storage.
+\newblock In \emph{{ASPLOS-IX} Proceedings of the 9th International Conference
+  on Architectural Support for Programming Languages and Operating Systems},
+  pages 190--201, 2000.
+
+\bibitem[Lamport et~al.(1982)Lamport, Shostak, and Pease]{LSP82}
+L.~Lamport, R.~E. Shostak, and M.~C. Pease.
+\newblock The {Byzantine} generals problem.
+\newblock \emph{ACM Transactions on Programming Languages and Systems},
+  4\penalty0 (3):\penalty0 382--401, 1982.
+
+\bibitem[Lewko(2011)]{Lewko11}
+A.~B. Lewko.
+\newblock The contest between simplicity and efficiency in asynchronous
+  {Byzantine} agreement.
+\newblock In \emph{Proceedings of the 25th International Symposium on
+  Distributed Computing (DISC)}, pages 348--362, 2011.
+
+\bibitem[Lewko and Lewko(2013)]{LL13}
+A.~B. Lewko and M.~Lewko.
+\newblock On the complexity of asynchronous agreement against powerful
+  adversaries.
+\newblock In \emph{Proceedings of the 32th Annual ACM Symposium on Principles
+  of Distributed Computing (PODC)}, pages 280--289, 2013.
+
+\bibitem[Lindell et~al.(2006)Lindell, Lysyanskaya, and Rabin]{LLR06}
+Y.~Lindell, A.~Lysyanskaya, and T.~Rabin.
+\newblock On the composition of authenticated {Byzantine} agreement.
+\newblock \emph{Journal of the ACM}, 53\penalty0 (6):\penalty0 881--917, 2006.
+
+\bibitem[Micali(2017)]{Micali17}
+S.~Micali.
+\newblock Very simple and efficient {Byzantine} agreement.
+\newblock In \emph{Proceedings of the 8th Annual Innovations in Theoretical
+  Computer Science (ITCS) conference}, pages 6:1--6:1, 2017.
+
+\bibitem[Micali and Vaikuntanathan(2017)]{MV17}
+S.~Micali and V.~Vaikuntanathan.
+\newblock Optimal and player-replaceable consensus with an honest majority.
+\newblock Unpublished manuscript, 2017.
+
+\bibitem[Micali et~al.(1999)Micali, Rabin, and Vadhan]{MRV99}
+S.~Micali, M.~O. Rabin, and S.~P. Vadhan.
+\newblock Verifiable random functions.
+\newblock In \emph{Proceedings of the 40th Annual Symposium on Foundations of
+  Computer Science (FOCS)}, pages 120--130, 1999.
+
+\bibitem[Mossel et~al.(2006)Mossel, O'Donnell, Regev, Steif, and
+  Sudakov]{MosselORSS2006}
+E.~Mossel, R.~O'Donnell, O.~Regev, J.~E. Steif, and B.~Sudakov.
+\newblock Non-interactive correlation distillation, inhomogeneous {M}arkov
+  chains, and the reverse {B}onami-{B}eckner inequality.
+\newblock \emph{Israel Journal of Mathematics}, 154\penalty0 (1):\penalty0
+  299--336, 2006.
+
+\bibitem[Mossel et~al.(2013)Mossel, Oleszkiewicz, and Sen]{MosselOS2013}
+E.~Mossel, K.~Oleszkiewicz, and A.~Sen.
+\newblock On reverse hypercontractivity.
+\newblock \emph{Geometric and Functional Analysis}, 23\penalty0 (3):\penalty0
+  1062--1097, 2013.
+
+\bibitem[Neiger and Toueg(1990)]{NT90}
+G.~Neiger and S.~Toueg.
+\newblock Automatically increasing the fault-tolerance of distributed
+  algorithms.
+\newblock \emph{Journal of Algorithms}, 11\penalty0 (3):\penalty0 374--419,
+  1990.
+
+\bibitem[O'Donnell(2014)]{Odonnel14}
+R.~O'Donnell.
+\newblock \emph{Analysis of Boolean Functions}.
+\newblock Cambridge University Press, 2014.
+
+\bibitem[Pass(2004)]{Pass04}
+R.~Pass.
+\newblock Bounded-concurrent secure multi-party computation with a dishonest
+  majority.
+\newblock In \emph{Proceedings of the 36th Annual ACM Symposium on Theory of
+  Computing (STOC)}, pages 232--241, 2004.
+
+\bibitem[Pass and Shi(2017)]{PS17}
+R.~Pass and E.~Shi.
+\newblock Hybrid consensus: Efficient consensus in the permissionless model.
+\newblock In \emph{Proceedings of the 31st International Symposium on
+  Distributed Computing (DISC)}, pages 39:1--39:16, 2017.
+
+\bibitem[Pass and Shi(2018)]{PS18}
+R.~Pass and E.~Shi.
+\newblock Thunderella: Blockchains with optimistic instant confirmation.
+\newblock In \emph{Advances in Cryptology -- EUROCRYPT 2018, part {II}}, pages
+  3--33, 2018.
+
+\bibitem[Pease et~al.(1980)Pease, Shostak, and Lamport]{PSL80}
+M.~C. Pease, R.~E. Shostak, and L.~Lamport.
+\newblock Reaching agreement in the presence of faults.
+\newblock \emph{Journal of the ACM}, 27\penalty0 (2):\penalty0 228--234, 1980.
+
+\bibitem[Pfitzmann and Waidner(1992)]{PW92}
+B.~Pfitzmann and M.~Waidner.
+\newblock Unconditional {Byzantine} agreement for any number of faulty
+  processors.
+\newblock In \emph{Proceedings of the 9th Annual Symposium on Theoretical
+  Aspects of Computer Science (STACS)}, pages 339--350, 1992.
+
+\bibitem[Rabin(1983)]{Rabin83}
+M.~O. Rabin.
+\newblock Randomized {Byzantine} generals.
+\newblock In \emph{Proceedings of the 24th Annual Symposium on Foundations of
+  Computer Science (FOCS)}, pages 403--409, 1983.
+
+\bibitem[Santha and Vazirani(1984)]{SV84}
+M.~Santha and U.~V. Vazirani.
+\newblock Generating quasi-random sequences from slightly-random sources
+  (extended abstract).
+\newblock In \emph{Proceedings of the 25th Annual Symposium on Foundations of
+  Computer Science (FOCS)}, pages 434--440, 1984.
+
+\bibitem[Turpin and Coan(1984)]{TC84}
+R.~Turpin and B.~A. Coan.
+\newblock Extending binary {Byzantine} agreement to multivalued {Byzantine}
+  agreement.
+\newblock \emph{Information Processing Letters}, 18\penalty0 (2):\penalty0
+  73--76, 1984.
+
+\bibitem[Yao(1982)]{Yao82}
+A.~C. Yao.
+\newblock Protocols for secure computations (extended abstract).
+\newblock In \emph{Proceedings of the 23th Annual Symposium on Foundations of
+  Computer Science (FOCS)}, pages 160--164, 1982.
+
+\end{thebibliography}

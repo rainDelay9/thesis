@@ -1,0 +1,121 @@
+
+
+\subsection{The Combinatorial Conjecture}\label{sec:Iso}
+Next, we provide the formal statement for the combinatorial conjecture used in \cref{thm:SecondRound:PR}.
+For $n\in \N$ and $\sigma \in [0,1]$, let $\bns$ be the distribution induced on the subsets of $[n]$ by sampling each element independently with probability $\sigma$.
+For a finite alphabet $\Sigma$, a vector $\vx\in \sn$, and a subset $\cS \subseteq [n]$, define the vector $\bot_\cS(\vx) \in \sn$ by 
+\[
+\bot_\cS(\vx)_i=
+\begin{cases}
+\bot, & i\in \cs,\\
+\vx_i, & \text{otherwise}.
+\end{cases}
+\]
+
+%\begin{notation}\label{not:IsoBot}
+%	For $\vx\in \sn$ and $\cS \subseteq [n]$, define  $\bot_\cS(x) \in \sn$ by $
+%	\bot_\cS(x)_i=
+%	\begin{cases}
+%	\bot, & i\in \cs,\\
+%	x_i, & \text{otherwise}.
+%	\end{cases}
+%	$.
+%\end{notation}
+
+\begin{conjecture}\label{con:IsoBot}
+For any $\sigma,\lambda >0$ there exists $\delta>0$ such that the following holds for large enough $n\in \N$. Let  $\Sigma$ be a finite alphabet and let $\cA_0,\cA_1 \subseteq \sbn$  be  two  sets such that for both $b\in \zo$:
+\begin{align*}%\label{eq:1}
+\ppr{\cs\gets \bns}{\ppr{\vr \gets \Sigma^n}{\vr,\bot_{\cS}(\vr) \in \cA_b} \ge  \lambda } \ge 1-\delta.
+\end{align*}
+Then,
+\begin{align*}%\label{eq:2}
+\ppr{\substack{\vr\gets \Sigma^n\\ \cS \gets \bns}}{\forall b\in \zo\colon  \set{\vr,\bot_{\cS}(\vr)}  \cap \cA_b \neq \emptyset} \ge  \delta.
+\end{align*}
+\end{conjecture}
+
+
+\remove{
+\begin{remark}\label{rem:IsoBot}
+	We make the following observations.
+	\begin{enumerate}
+		
+		\item The conjecture trivially holds then  the set $\cA_0,\cA_1$ are restricted to hamming balls and prefix sets
+		
+		\Inote{explain}
+		
+		\item  For our application, \cref{thm:SecondRound:PR}, we can weaken the conjecture allowing $\delta$ to be noticeable (\ie inverse polynomial) function of $n$ and $\size{\Sigma}$.
+		
+	
+	\end{enumerate}
+\end{remark}
+
+
+\subsubsection{Towards Proving \cref{con:IsoBot}}
+\Inote{the following theorem was proven by Alex}
+\begin{notation}\label{not:Iso}
+	For $n\in \N$, finite set $\Sigma$, $\vr\in \Sigma^n$ and $\cS\subseteq [n]$, let $F_\cS(\vr)$ denote the random variable  defined by
+	%	\begin{align*}
+	$F_\cS(\vr)_i=\begin{cases} \vr_i & \text{if } i\notin \cS \\ \wt{r}_i\la \Sigma &\text{ otherwise}.\end{cases}$.
+	%\end{align*}
+\end{notation}
+
+\begin{theorem}[Alex]\label{thm:Iso}
+	For every $\sigma, \lambda>0$ there exists $\eps>0$ such that the following holds for large enough $n\in \N$. Let  $\Sigma$ be a finite alphabet, and let $\cB_0,\cB_1 \subseteq \Sigma^n$ such that $\size{\cB_b}\ge \lambda \cdot \size{\Sigma}^n $, for both $b\in \zo$. Then, $$\ppr{\substack{\vr\la \Sigma^n\\ \cS\la \bns}}{\vr\in \cB_0 \land F_\cS(\vr)\in \cB_1}\ge \eps.$$
+\end{theorem}
+
+\Inote{I believe that the following variant of \cref{thm:Iso} should do for proving \cref{con:IsoBot}.}
+\begin{conjecture}\label{con:Iso}
+	For every $\sigma, \lambda,\delta>0$  the following holds for large enough $n\in \N$. Let  $\Sigma$ be a finite alphabet, and let $\cB_0,\cB_1 \subseteq \Sigma^n$ such that $\size{\cB_b}\ge \lambda \cdot \size{\Sigma}^n $, for both $b\in \zo$.
+	Then, there exists a distribution $\bns'$ with $\ppr{\cs \gets  \bns'}{\size{\cs} \ge 2\sigma n} \in o(1)$ such that
+	$$\ppr{\substack{\vr\la \Sigma^n\\ \cS\la \bns'}}{\vr_\oS\in (\cB_0)_\oS \cap (\cB_1)_\oS}\ge 1-\delta.$$
+\end{conjecture}
+
+
+}
+
+
+
+\remove{
+	
+	
+	
+	
+	
+\cref{thmn:Iso} yields the following corollary.
+
+\begin{corollary}\label{cor:IsoBot}
+	For any $\sigma,\lambda >0$, there exists $\delta>0$ such that the following holds for large enough $n\in \N$. Let  $\Sigma$ be a finite alphabet, and let $\cA_0,\cA_1 \subseteq \sbn$  be  two  sets such that for both $b\in \zo$:
+	
+	\begin{align*}%\label{eq:1}
+	\ppr{\vr \gets \Sigma^n}{\ppr{\cs\gets \bns}{\vr,\bot_{\cS}(\vr) \in \cA_b} \ge  1-\delta } \ge \lambda.
+	\end{align*}
+	Then,
+	\begin{align*}%\label{eq:2}
+	\ppr{\substack{\vr\gets \Sigma^n\\ \cS \gets \bns}}{\forall b\in \zo\colon  \set{\vr,\bot_{\cS}(\vr)}  \cap \cA_b \neq \emptyset} \ge  \delta.
+	\end{align*}
+\end{corollary}
+
+\begin{proof}
+	For $\sigma, \lambda>0$, let $\eps>0$ be the constant guaranteed by \cref{thmn:Iso} for the same $\sigma$, $\lambda$, and fix $\delta=\eps/2$. We assume that $\ppr{\vr \gets \Sigma^n}{\ppr{\cs\gets \bns}{\vr,\bot_{\cS}(\vr) \in \cA_b} \ge  1-\delta } \ge \lambda$, for both $z\in \zo$, and we show that $\ppr{\vr,\cS}{\vr\in \cA_0\land \bot_{\cS}(\vr)\in \cA_1 } \ge \delta$. For $z\in \zo$, we define $\cB_z=\set{\vr\in \Sigma^n \st \ppr{\cs\gets \bns}{\vr,\bot_{\cS}(\vr) \in \cA_z} \ge  1-\delta }$ and notice that $\size{\cB_z}\ge \lambda \cdot \size{\Sigma}^n$, for both $z\in \zo$. Next, observe that
+	
+	\begin{align}
+	&\ppr{\substack{\vr\la \Sigma^n\\ \cS\la \bns}}{\vr\in \cA_0\land \bot_{\cS}(\vr)\in \cA_1 } \ge  \ppr{\substack{\vr\la \Sigma^n\\ \cS\la \bns}}{\vr\in \cB_0\land F_\cS(\vr)\in \cB_1 \land \bot_{\cS}(\vr)\in \cA_1 } =  \nonumber\\
+	&\hspace*{2cm}\ppr{\substack{\vr\la \Sigma^n\\ \cS\la \bns}}{\vr\in \cB_0\land F_\cS(\vr)\in \cB_1 } - \ppr{\substack{\vr\la \Sigma^n\\ \cS\la \bns}}{\vr\in \cB_0\land F_\cS(\vr)\in \cB_1 \land \bot_{\cS}(\vr)\notin \cA_1 }\nonumber
+	\end{align}
+	and, by \cref{thmn:Iso},
+	\begin{align}
+	&\ppr{\substack{\vr\la \Sigma^n\\ \cS\la \bns}}{\vr\in \cA_0\land \bot_{\cS}(\vr)\in \cA_1 } \ge     \label{eq:low2} \eps - \ppr{\substack{\vr\la \Sigma^n\\ \cS\la \bns}}{\vr\in \cB_0\land F_\cS(\vr)\in \cB_1 \land \bot_{\cS}(\vr)\notin \cA_1 }.
+	\end{align}
+	Finally, by the definition of $\cB_z$, it holds that $\ppr{\cS}{\bot_{\cS}(\vr)\notin \cA_1 \mid \vr\in \cB_1 }\le \delta $. Thus,
+	\begin{align}\label{eq:bad} \ppr{\substack{\vr\la \Sigma^n\\ \cS\la \bns}}{\vr\in \cB_0\land F_\cS(\vr)\in \cB_1 \land \bot_{\cS}(\vr)\notin \cA_1 } \le \ppr{\substack{\vr\la \Sigma^n\\ \cS\la \bns}}{\vr\in \cB_1 \land \bot_{\cS}(\vr)\notin \cA_1 }\le \delta.
+	\end{align}
+	Given our choice of $\delta$, we combine \cref{eq:low2,eq:bad}, and we conclude that $$\ppr{\substack{\vr\la \Sigma^n\\ \cS\la \bns}}{\vr\in \cA_0\land \bot_{\cS}(\vr)\in \cA_1 } \ge \delta.$$
+\end{proof}
+\subsection{Proving \cref{thmn:Iso}}
+}
+
+
+
+
+
+

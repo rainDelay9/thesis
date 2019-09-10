@@ -1,0 +1,25 @@
+
+
+\subsection{The Combinatorial Conjecture}\label{sec:Iso}
+Next, we provide the formal statement for the combinatorial conjecture used in \cref{thm:SecondRound:PR}.
+For $n\in \N$ and $\sigma \in [0,1]$, let $\bns$ be the distribution induced on the subsets of $[n]$ by sampling each element independently with probability $\sigma$.
+For a finite alphabet $\Sigma$, a vector $\vx\in \sn$, and a subset $\cS \subseteq [n]$, define the vector $\bot_\cS(\vx) \in \sn$ by
+\[
+\bot_\cS(\vx)_i=
+\begin{cases}
+\bot, & i\in \cs,\\
+\vx_i, & \text{otherwise}.
+\end{cases}
+\]
+
+\begin{conjecture}[restating \cref{con:intro:IsoBot}]\label{con:IsoBot}
+For any $\sigma,\lambda >0$ there exists $\delta>0$ such that the following holds for large enough $n\in \N$. Let  $\Sigma$ be a finite alphabet and let $\cA_0,\cA_1 \subseteq \sbn$  be  two  sets such that for both $b\in \zo$:
+\begin{align*}
+\ppr{\cs\gets \bns}{\ppr{\vr \gets \Sigma^n}{\vr,\bot_{\cS}(\vr) \in \cA_b} \ge  \lambda } \ge 1-\delta.
+\end{align*}
+Then,
+\begin{align*}
+\ppr{\substack{\vr\gets \Sigma^n\\ \cS \gets \bns}}{\forall b\in \zo\colon  \set{\vr,\bot_{\cS}(\vr)}  \cap \cA_b \neq \emptyset} \ge  \delta.
+\end{align*}
+\end{conjecture}
+

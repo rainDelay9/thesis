@@ -1,0 +1,19 @@
+\section{Preliminaries}\label{sec:Preliminaries}
+
+
+\subsection{Notations}\label{sec:notations}
+We use calligraphic letters to denote sets, uppercase for random variables, lowercase for values, boldface for vectors, and sans-serif (\eg \Ac) for algorithms (\ie Turing Machines).
+%All logarithms considered here are in base two, where $\conc$ denotes string concatenation.
+For $n\in\N$, let $[n]=\set{1,\cdots,n}$ and $(n)=\set{0,1,\cdots,n}$. Let $\poly$ denote the set all positive polynomials and let \ppt denote a probabilistic algorithm that runs in \emph{strictly} polynomial time. A function $\nu \colon \N \mapsto [0,1]$ is \textit{negligible}, denoted $\nu(\secParam) = \negl(\secParam)$, if $\nu(\secParam)<1/p(\secParam)$ for every $p\in\poly$ and large enough $\secParam$.
+
+For $n\in \N$ and $\sigma \in [0,1]$, let $\bns$ be the distribution induced on the subsets of $[n]$ by taking each element independently with probability $\sigma$. 
+
+
+\subsection{Protocols}
+All protocol considered in this paper are \ppt (probabilistic polynomial time): the randomized parties running time is polynomial in the (common) security parameter (given in unary). We only consider Boolean input, Boolean output protocols: apart from the common security parameter, all parties get a single bit input, and each of the honest parties outputs single bit. For an $n$-party protocol $\Pi$, an input vector $\vv\in \zn$ and randomness $\vr$, let $\Pi(\vv; \vr)$ denote the output vector of the parties in an (honest) execution with party $\Party _i$'s input being $\vv_i$ and randomness $\vr_i$. Hence, for a set of parties $\cP \subseteq [n]$, $\Pi(\vv; \vr)_\cP$ stands for the output vector of the parties in $\cP$.
+
+
+
+
+
+

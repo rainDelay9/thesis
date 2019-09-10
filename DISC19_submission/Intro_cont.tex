@@ -1,0 +1,25 @@
+\subsection{Locally Consistent Security to Malicious Security}\label{sec:intro:LocalToFull}
+
+
+As briefly mentioned in \cref{sec:intro:model}, protocols that are secure against locally consistent adversaries can be compiled to tolerate arbitrary malicious adversaries. We now elaborate on this transformation.
+%Security against locally consistent adversaries  may seem somewhat weak at first sight. Nevertheless, protocols achieving such level of security can compiled into protocols secure against arbitrary adversaries.
+The compiler requires a PKI for signatures and VRF. Every party $\Party_i$ computes the messages for round $r$ using the random coins obtained by evaluating the VRF over $(i,r)$. Next, $\Party_i$ signs and sends the messages, and proves to each receiver in zero knowledge that (1) it acted consistently with some input bit, the random coins computed by the VRF, and correctly signed incoming messages from some of the parties, and (2) that all prior messages sent by $\Party_i$ are consistent \wrt the same input bit, random coins, and incoming messages from previous rounds.
+
+When a public-randomness protocol can be executed over authenticated yet non-private channels, the compilation presented above can be made much more efficient. Instead of proving in zero knowledge the consistency of each message, each party concatenates to each message all of its incoming messages from the previous round. A receiver can now locally verify the coins are proper (as assured by the VRF), that the incoming messages are properly signed, and that the message is correctly generated from the internal state of the sender.
+
+%\rnote{the VRF keys should be honestly generated, or alternatively we need a common random string that is independent of the PKI and is used as an additional seed for the VRF}
+\begin{theorem}[Locally consistent to malicious security, folklore, informal]
+	Assume PKI for digital signatures and VRF, then a BA protocol secure against locally consistent adversaries, can be compiled into a maliciously secure BA protocol with the same parameters, apart from a constant blowup in the round complexity (no blowup for public-randomness protocols).
+\end{theorem}
+
+\subsection{Additional Related Work}\label{sec:relatedWork}
+
+Following the work of \citet{FM97} in the two-thirds majority setting, \citet{KK06} improved the expected round complexity to $23$, and \citet{Micali17} to $9$. In the honest-majority setting, \citet{FG03} showed expected-constant-round protocol and \citet{KK06} expected $56$ rounds. \citet{MV17} adjusted the technique from \cite{Micali17} to the honest majority case. \citet{ADDNR19} achieved expected $10$ rounds assuming static corruptions and expected $16$ rounds assuming adaptive corruptions. \citet{ACDNPRS19} constructed an expected-constant-round protocol tolerating $(1/2-\epsilon)n$ adaptive corruptions with sublinear communication complexity. In the dishonest-majority setting, \citet{GKKO07} constructed a broadcast protocol with expected $O(k)$ rounds, tolerating $t<n/2+k$ corruptions.
+
+\ifdefined\IsFullVersion
+In the asynchronous setting, \citet{CR93} gave the first analogue result to \cite{FM97}. \rnote{add asynchronous BA references}
+\fi
+
+\citet{AH10} extended the results of \citet{CMS89} and of \citet{KY86} on guaranteed termination of randomized BA protocols to the asynchronous setting, and provided a tight lower bound.
+
+Randomized protocols with expected constant round complexity have \emph{probabilistic termination}, which requires delicate care \wrt composition (\ie their usage as subroutines by higher-level protocols). Parallel composition of randomized BA protocols was analyzed in \cite{Ben-Or83,FG03}, sequential composition in \cite{LLR06}, and universal composition in \cite{CCGZ16,CCGZ17}.

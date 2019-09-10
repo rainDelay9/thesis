@@ -1,0 +1,140 @@
+%%&pdflatex
+\def\IsDraft{} % set for draft version
+%\def\IsSubmission{} % set for submission version (no ToC)
+%\def\IsLLNCS{} % set for LNCS version
+%\def\IsAnon{} % set for anonymous version
+
+\ifdefined\IsLLNCS
+\documentclass{llncs}
+\usepackage{amsfonts,amsmath,amssymb,boxedminipage,color,url,nccmath}
+\pagestyle{plain}
+\else
+\documentclass[11pt]{article}
+\usepackage{amsfonts,amsmath,amssymb,boxedminipage,color,url,fullpage,nccmath}
+\fi
+
+\usepackage{enumerate,paralist,comment}
+%\usepackage{enumitem}
+\usepackage[hypcap=false]{caption}
+%\usepackage[labelfont=bf]{caption}
+\usepackage{nameref}
+
+%\usepackage{lmodern}% to remove LaTeX font warnings (Using lmodern removes this restriction by allowing font sizes at arbitrary sizes)
+\usepackage[T1]{fontenc}
+\usepackage{lmodern} \normalfont %to load T1lmr.fd
+\DeclareFontShape{T1}{lmr}{bx}{sc} { <-> ssub * cmr/bx/sc }{}
+
+\usepackage[bottom]{footmisc} % to make the footnote stay at the bottom of the page... (load before hyperref)
+
+% pageanchor=false solves the warning "pdfTeX warning (ext4): destination with the same identifier (name{page.}) has been already used, duplicate ignored"
+\usepackage[pageanchor=false,pdfstartview=FitH,colorlinks,linkcolor=blue,filecolor=blue,citecolor=blue,urlcolor=blue]{hyperref} % blue links
+
+\ifdefined\IsLLNCS\else
+\usepackage{amsthm} % in order to remove warnings such as "destination with the same identifier (name{corollary.1.3}) has been already used, duplicate ignored" the order of packages should be hyperref, amsthm, cleveref
+\fi
+
+\usepackage{aliascnt}
+\usepackage[numbers]{natbib} % \citet{foo} -> Foo et al. [5]
+\usepackage{cleveref}
+\usepackage{xspace}
+\usepackage{xstring}
+\usepackage{float}
+\usepackage{graphicx}
+\graphicspath{ {images/} }
+
+
+\usepackage{tikz}\usetikzlibrary{arrows}
+\usetikzlibrary{decorations.markings}
+\usepackage{subcaption}
+
+\ifdefined\IsLLNCS
+\setcounter{secnumdepth}{3} % needed in order to number subsubsection in SYNCS format
+\fi
+
+\input{macros}
+
+%%%%%%%
+\def\inote{\Inote}
+\def\rnote{\Rnote}
+\def\mnote{\Mnote}
+\def\nnote{\Nnote}
+\newcommand{\Inote}[1]{\authnote{Iftach}{#1}}
+\newcommand{\Mnote}[1]{\authnote{Matan}{#1}}
+\newcommand{\Rnote}[1]{\authnote{Ran}{#1}}
+\newcommand{\Nnote}[1]{\authnote{Nikos}{#1}}
+
+\newcommand{\iadded}[1]{\added{Iftach}{#1}}
+\newcommand{\radded}[1]{\added{Ran}{#1}}
+\newcommand{\madded}[1]{\added{Matan}{#1}}
+\newcommand{\nadded}[1]{\added{Nikos}{#1}}
+
+\newcommand{\ichanged}[2]{\changed{Iftach}{#1}{#2}}
+\newcommand{\rchanged}[2]{\changed{Ran}{#1}{#2}}
+\newcommand{\mchanged}[2]{\changed{Matan}{#1}{#2}}
+\newcommand{\nchanged}[2]{\changed{Nikos}{#1}{#2}}
+
+\newcommand{\ideleted}[1]{\deleted{Iftach}{#1}}
+\newcommand{\rdeleted}[1]{\deleted{Ran}{#1}}
+\newcommand{\mdeleted}[1]{\deleted{Matan}{#1}}
+\newcommand{\ndeleted}[1]{\deleted{Matan}{#1}}
+
+%\title{Lower Bounds on Expected Round Complexity of Byzantine Agreement Protocols
+\title{Lower Bounds on Expected Round Complexity\\ of Byzantine Agreement Protocols
+\Draft{\\{\small \sc Working Draft: Please Do Not Distribute}}
+}
+
+\ifdefined\IsAnon
+    \author{}
+    \date{}
+    \LLNCS{ \institute{}}
+\else
+    \ifdefined\IsLLNCS
+        \author{Ran Cohen\inst{1}\thanks{Research supported by ERC starting grant 638121.}
+        \and Iftach Haitner\inst{2}$^\ast$
+        \and Nikolaos Makriyannis\inst{3}
+        \and Matan Orland\inst{4}
+        }
+        \institute{MIT and Northeastern University\\ \email{rancohen@mit.edu}
+        \and School of Computer Science, Tel Aviv University\\ \email{iftachh@cs.tau.ac.il}
+        \and School of Computer Science, Tel Aviv University\\ \email{n.makriyannis@gmail.com}
+        \and School of Computer Science, Tel Aviv University\\ \email{matanorland@mail.tau.ac.il}
+        }
+    \else
+        \author{Ran Cohen\thanks{MIT and Northeastern University. E-mail: \texttt{rancohen@mit.edu}.}~\footnotemark[5]
+        \and Iftach Haitner\thanks{School of Computer Science, Tel Aviv University. E-mail: \texttt{iftachh@cs.tau.ac.il}. Member of the  Israeli Center of Research Excellence in Algorithms (ICORE) and the Check Point Institute for Information Security.}~\footnotemark[5] %
+        \and Nikolaos Makriyannis\thanks{School of Computer Science, Tel Aviv University. E-mail: \texttt{n.makriyannis@gmail.com}.}~\footnotemark[5]
+        \and Matan Orland\thanks{School of Computer Science, Tel Aviv University. E-mail: \texttt{matanorland@mail.tau.ac.il}.}
+        \footnote{Research supported by ERC starting grant 638121.}
+        }
+    \fi
+\fi
+
+\begin{document}
+
+\sloppy
+\maketitle
+\begin{abstract}
+\end{abstract}
+
+\ifdefined\IsLLNCS\else
+\vfill
+\fi
+\noindent\textbf{Keywords: Byzantine agreement; lower bound; round complexity.}
+
+\Tableofcontents
+
+%\input{Introduction}
+
+\input{Preliminaries}
+%\input{Model}
+%\input{LowerBound_FourParties}
+\input{LowerBound}
+%\input{MainTheorem}
+
+{\small{
+\bibliographystyle{abbrvnat}
+\bibliography{crypto}
+}}
+
+\end{document}
+

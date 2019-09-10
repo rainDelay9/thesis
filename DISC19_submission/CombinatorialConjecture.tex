@@ -1,0 +1,89 @@
+%\newcommand{\bls}{{\binom{[\ell]}{\floor{\sigma \ell}}}}
+
+
+\subsubsection{The Combinatorial Conjecture}\label{sec:CombinatorialConjectures}
+
+
+\Inote{motivate the conjecture}
+\begin{notation}
+For $\vx\in \sel$ and $\cS \subseteq [\ell]$, define  $\Del{\vx}{\cS} \in \sbl$ by $
+\Del{\vx}{\cS}_i=
+\begin{cases}
+\bot, & i\in \cs,\\
+x_i, & \text{otherwise}.
+\end{cases}
+$.% Let $\Dels{x}{\cS} = \set{x} \cup \set{\Del{x}{\cS}}$.
+\end{notation}
+	
+
+Recall that  $\bls$ is the distribution induced on the subset of $[n]$ by taking each element independently with probability $\sigma$.	
+\begin{conjecture}\label{conj:1}
+For any $\sigma,\lambda, \mu>0$, there exists $q \in \poly$ such that the following holds.  Let  $\Sigma$ be a finite alphabet and let $\cA_0,\cA_1 \subset \sbl$  be  two disjoint sets such that %for both 
+
+\begin{align*}%\label{eq:1}
+\ppr{\cS \gets \bls}{\forall b\in \zo \colon \ppr{\vr\gets \sel}{\vr, \Del{\vr}{\cS} \in \cA_b} \ge \lambda} \ge \mu.
+\end{align*}
+		
+Then,
+\begin{align*}%\label{eq:2}
+\ppr{\vr\gets \sel,\cS \gets \bls}{\forall b\in \zo\colon \set{\vr, \Del{r}{\cS}} \cap \cA_b \neq \emptyset} > 1/q(\ell,\log\size{\Sigma}).
+\end{align*}
+\end{conjecture}
+
+
+\paragraph{A weaker conjecture.}
+\cref{thm:mainPR} can be proven based on the following conjecture that is  weaker  than  (\ie implied by ) \cref{conj:1}, and implied by the conjecture used in the informal discussion on  \cref{sec:Technique}. Since, however,  the following conjecture is somewhat  harder to work with, and since we know how to prove neither, we chose the base \cref{thm:mainPR}  on   \cref{conj:1} above.
+
+\begin{notation}
+	For $x\in \sel$,  $\cS \subseteq [\ell]$ and $\cT \in \cP([\ell])$, define  $x^{\cs,\cT} \subseteq \sbl$ by $
+	x^{\cs,\cT}= \set{\Del{x}{\cS \cap \cS'}\colon \cS'\in \cT} 
+	$.% Let $\Dels{x}{\cS} = \set{x} \cup \set{\Del{x}{\cS}}$.
+\end{notation}
+
+\begin{conjecture}\label{conj:3}
+	For any $\sigma,\lambda, \mu>0$, there exists $q \in \poly$ such that the following holds.  Let $\cT$ be a  $q(\ell)$-size subset of $\cP([\ell])$, and let  $\Sigma$ be a finite alphabet and let $\cA_0,\cA_1 \subset \sbl$  be  two disjoint sets such that %for both $b\in \zo$:
+	%\begin{align}\label{eq:1}
+	%\ppr{\cS \gets {[n] \choose \sigma n}}{\ppr{r\gets \sel}{\Dels{r}{\cS} \subseteq \cA_b} \ge \delta} \ge \gamma
+	%\end{align}
+	
+	\begin{align*}%\label{eq:1}
+	\ppr{\cS \gets \bls}{\forall b\in \zo \colon \ppr{r\gets \sel}{  r^{\cs,\cT} \subseteq \cA_b} \ge \lambda} \ge \mu.
+	\end{align*}
+	
+	Then,
+	\begin{align*}%\label{eq:2}
+	\ppr{\vr\gets \sel,\cS \gets \bls}{\forall b\in \zo\colon r^{\cs,\cT} \cap \cA_b \neq \emptyset} > 1/q(\ell,\log\size{\Sigma}).
+	\end{align*}
+\end{conjecture}
+By letting $\cT = \set{\emptyset,[\ell]}$, we get \cref{conj:1}, and by letting $\cT = \set{\cs_1,\cs_2}$ for $\cs_1,\cs_2$ being an equal size partition of $[\ell]$, we get the conjecture from \cref{sec:Technique}.  
+\remove{
+The attack described in 
+\subsection{Other Variants and Generalized Conjecture}
+\Inote{need update}
+ 
+\paragraph*{Variant with two aborting sets.} The following conjecture also suffices for our purposes (albeit for a slightly different attack). 
+	
+\begin{conjecture}\label{conj:2}
+For any $\sigma,\lambda, \mu>0$, there exists $q \in \poly$ such that the following holds for large enough $\ell$.  Let  $\Sigma$ be a finite alphabet and let $\cA_0,\cA_1 \subset \sbl$  be  two disjoint sets such that %for both 
+
+\begin{align*}%\label{eq:1}
+\ppr{\cS_0,\cs_1 \gets {\binom{[\ell]}{\floor{\sigma \ell}}}}{\forall b\in \zo \colon \ppr{r\gets \sel}{\Del{r}{\cS_0},\Del{r}{\cS_1} \in \cA_b} \ge \lambda} \ge \mu.
+\end{align*}
+		
+Then,
+\begin{align*}%\label{eq:2}
+\ppr{r\gets \sel,\cS_0,\cs_1\gets {\binom{[\ell]}{\ceil{\sigma \ell}}}}{\forall b\in \zo\colon \set{\Del{r}{\cS_0},\Del{r}{\cS_1}}  \cap \cA_b \neq \emptyset} > 1/q(\ell,\log\size{\Sigma}).
+\end{align*}
+\end{conjecture}
+
+
+
+\Inote{motivate it}
+
+\paragraph*{Variant for inefficient attack.}  The following conjecture, while not sufficient for our purposes, is implied by all of the above.
+
+
+ 
+
+
+}

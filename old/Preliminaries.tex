@@ -1,0 +1,55 @@
+\section{Preliminaries}\label{sec:Preliminaries}
+
+\subsection{Notations}\label{sec:notations}
+We use calligraphic letters to denote sets, uppercase for random variables, lowercase for values, boldface for vectors, and sans-serif (\eg \Ac) for algorithms (\ie Turing Machines).
+%All logarithms considered here are in base two, where $\conc$ denotes string concatenation.
+For $n\in\N$, let $[n]=\set{1,\cdots,n}$. Let $\poly$ denote the set all positive polynomials and let \ppt denote a probabilistic algorithm that runs in \emph{strictly} polynomial time. A function $\nu \colon \N \mapsto [0,1]$ is \textit{negligible}, denoted $\nu(\secParam) = \negl(\secParam)$, if $\nu(\secParam)<1/p(\secParam)$ for every $p\in\poly$ and large enough $\secParam$.
+The statistical distance between two random variables $X$ and $Y$ over a finite set $\Uni$, denoted $\SD(X,Y)$, is defined as $\frac12 \cdot \sum_{u\in \Uni}\size{\pr{X = u}- \pr{Y = u}}$.
+Given a random variable $X$, we write $x\la X$ to indicate that $x$ is selected according to $X$.
+
+Two distribution ensembles $X=\set{X(a,\secParam)}_{a\in\zs,\secParam\in\N}$ and $Y=\set{Y(a,\secParam)}_{a\in\zs,\secParam\in\N}$ are computationally indistinguishable (denoted $X\ci Y$) if for every non-uniform polynomial-time distinguisher $\Adv$ there exists a function $\nu(\secParam) = \negl(\secParam)$, such that for every $a\in\zs$ and $\secParam\in\N$
+\[
+\abs{\pr{\Adv(X(a,\secParam),1^\secParam)=1} - \pr{\Adv(Y(a,\secParam),1^\secParam)=1}}\leq \nu(\secParam).
+\]
+The distribution ensembles $X$ and $Y$ are statistically close (denoted $X\statclose Y$) if $\SD(X,Y)\le \nu(\secParam)$ for a negligible function $\nu$.
+
+\subsection{Byzantine agreement}
+
+\begin{definition}[Byzantine Agreement]
+An $(n,t,\alpha,\beta)$-Byzantine Agreement (BA) is an $n$-party protocol in which each party begins with a single private input bit and must output a single bit under the following conditions:
+\begin{itemize}
+	\item $(t,\alpha)$-agreement: In the presence of no more than $t$ corrupt parties all honest parties output the same bit with probability at least $1-\alpha$.
+	\item $(t,\beta)$-validity: In the presence of no more than $t$ corrupt parties, if all honest parties began with input bit $b$, then they also output $b$ with probability at least $1-\beta$.
+\end{itemize}
+\mnote{This should be a definition of its own}
+We say that a BA has $(t,\delta)$-two-round-halting if in the presence of $t$ corrupt parties the probability of all honest parties to halt after two rounds is at least $\delta$.
+\end{definition}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% COMMENTED OUT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{comment}
+
+\begin{definition}[Byzantine Agreement]
+In an $n$-party, $t$-resilient, $\varepsilon$-sound Byzantine Agreement (BA) protocol, each party has an input bit and outputs a single bit, and the following properties are satisfied with probability $1-\varepsilon(n)$ when an adversary controls a subset of at most $t$ parties:
+\begin{enumerate}
+	\item \textbf{Agreement:} all honest parties output the same value.
+	\item \textbf{Validity:} if all honest parties start with the same input value $b$, they output $b$.
+\end{enumerate}
+\end{definition}
+
+%\begin{definition}[$t$-resilient $\varepsilon$-sound Byzantine Agreement]
+%	A Byzantine Agreement (BA) protocol is an $n$-party protocol in which each party has an input bit (we focus on the binary case), and outputs a single bit, under the following constraints:
+%	\begin{enumerate}
+%		\item Agreement - all honest parties output the same value.
+%		\item Validity - if all honest parties start with the same input value $b$, they output $b$.
+%	\end{enumerate}
+%	A BA protocol is said to be \emph{$t$-resilient} and \emph{$\varepsilon$-sound} if the above conditions hold when an adversary controls no more than $t$ parties, and the conditions hold with probability at least $1-\varepsilon$, respectively.
+%\end{definition}
+
+We will use the shorthand $(n,t,\varepsilon)$-BA to denote an \emph{$n$-party $t$-resilient $\varepsilon$-sound} Byzantine agreement, or $(n,t)$-BA when $\varepsilon = \negl(\secParam)$ (perfect soundness). We will mostly consider protocols for which $t < n/2$ (i.e honest majority), $t < n/3$ and $\varepsilon = \negl(\secParam)$, where $\secParam$ is a predefined security parameter. We should stress that by all of our definitions if \emph{agreement} holds then \emph{validity} holds.
+
+We define an \emph{execution} by an adversarial strategy, an input vector, the random coins of all honest parties, and any setup the given protocol requires. Given execution $\sigma$ we define  $\outps{j}{\sigma}$ as the output bit of $\Party_j$ given the adversarial strategy, honest-party random coins, input vector and setup of $\sigma$. We also define $\viewps{\Party_j}{\sigma}$ as the view of $\Party_j$ given the adversarial strategy, honest-party random coins and input vector of $\sigma$. The view includes the random coins, incoming messages and input vector of $\Party_j$. If the protocol uses any trusted parties (\eg setup, Random Oracle etc.) we include the communication between $\Party_j$ and said trusted party as part of its view. Lastly we also include any internal calculations (a counter for round number, for example) in the view. We call an execution of $\Pi$ \emph{honest} if all parties behave according to their next-message function defined in $\Pi$ throughout the entirety of the execution.
+
+In a similar fashion we can define a \emph{scenario} by an adversarial strategy and an input vector. Note that setting randomness given a scenario defines an execution. We say that two scenarios are \emph{witness equivalent} if there exists an honest party whose views are equivalent in all executions of both scenarios. \ie if you set a randomness for both scenarios then at least one honest party has the exact same view. We say they are \emph{output equivalent} if all honest parties output the same value in all matching (by randomness) executions of both scenarios. It is easy to see that conditioned on \agr and \val, witness equivalence implies output equivalence.
+\end{comment}

@@ -1,0 +1,204 @@
+
+\documentclass[a4paper,UKenglish,cleveref, autoref]{lipics-v2019}
+%This is a template for producing LIPIcs articles.
+%See lipics-manual.pdf for further information.
+%for A4 paper format use option "a4paper", for US-letter use option "letterpaper"
+%for british hyphenation rules use option "UKenglish", for american hyphenation rules use option "USenglish"
+%for section-numbered lemmas etc., use "numberwithinsect"
+%for enabling cleveref support, use "cleveref"
+%for enabling cleveref support, use "autoref"
+
+\usepackage{xspace}
+
+%\graphicspath{{./graphics/}}%helpful if your graphic files are in another directory
+
+\bibliographystyle{plainurl}% the mandatory bibstyle
+
+\title{On the Round Complexity of Randomized Byzantine Agreement} %TODO Please add
+
+%\titlerunning{On the Round Complexity of Randomized Byzantine Agreement}%optional, please use if title is longer than one line
+
+\author{Ran Cohen}{Boston University and Northeastern University, USA }
+{rancohen@ccs.neu.edu}
+{}{Research supported by the Northeastern University Cybersecurity and Privacy Institute Post-doctoral fellowship, IARPA under award 2019-19020700009 (ACHILLES), NSF grant TWC-1664445, NSF grant 1422965, and by the NSF MACS project. Some of this work was done while the author was a post-doc at Tel Aviv University, supported by ERC starting grant 638121.}
+%TODO mandatory, please use full name; only 1 author per \author macro; first two parameters are mandatory, other parameters can be empty. Please provide at least the name of the affiliation and the country. The full address is optional
+
+\author{Iftach Haitner}{School of Computer Science, Tel Aviv University, Israel}{iftachh@cs.tau.ac.il}{}{Member of the Check Point Institute for Information Security. Research supported by ERC starting grant 638121.}
+
+\author{Nikolaos Makriyannis}{Department of Computer Science, Technion, Israel}{n.makriyannis@gmail.com}{}{Research supported by ERC starting grant 638121 and by ERC advanced grant 742754.}
+
+\author{Matan Orland}{School of Computer Science, Tel Aviv University, Israel}{matanorland@mail.tau.ac.il}{}{Research supported by ERC starting grant 638121.}
+
+\author{Alex Samorodnitsky}{School of Engineering and Computer Science, The Hebrew University of Jerusalem, Israel}{salex@cs.huji.ac.il}{}{Research partially supported by ISF grant 1724/15.}
+
+\authorrunning{R.\ Cohen, I.\ Haitner, N.\ Makriyannis, M.\ Orland, and A.\ Samorodnitsky}
+%TODO mandatory. First: Use abbreviated first/middle names. Second (only in severe cases): Use first author plus 'et al.'
+
+\Copyright{Ran Cohen and Iftach Haitner and Nikolaos Makriyannis and Matan Orland and Alex Samorodnitsky}
+%TODO mandatory, please use full first names. LIPIcs license is "CC-BY";  http://creativecommons.org/licenses/by/3.0/
+
+%\ccsdesc[100]{General and reference~General literature}
+%\ccsdesc[100]{General and reference}%TODO mandatory: Please choose ACM 2012 classifications from https://dl.acm.org/ccs/ccs_flat.cfm
+\ccsdesc[500]{Theory of computation~Cryptographic protocols}
+
+\keywords{Byzantine agreement, lower bound, round complexity.}%TODO mandatory; please add comma-separated list of keywords
+
+\category{}%optional, e.g. invited paper
+
+%\relatedversion{}%optional, e.g. full version hosted on arXiv, HAL, or other respository/website
+\relatedversion{A full version of the paper is available at \url{https://arxiv.org/abs/1907.11329}.}
+
+\supplement{}%optional, e.g. related research data, source code, ... hosted on a repository like zenodo, figshare, GitHub, ...
+
+%\funding{(Optional) general funding statement \dots}%optional, to capture a funding statement, which applies to all authors. Please enter author specific funding statements as fifth argument of the \author macro.
+
+\acknowledgements{We would like to thank Rotem Oshman, Juan Garay, Ehud Friedgut, and Elchanan Mossel for very helpful discussions.}%optional
+
+%\nolinenumbers %uncomment to disable line numbering
+
+%\hideLIPIcs  %uncomment to remove references to LIPIcs series (logo, DOI, ...), e.g. when preparing a pre-final version to be uploaded to arXiv or another public repository
+
+%Editor-only macros:: begin (do not touch as author)%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\EventEditors{Jukka Suomela}
+\EventNoEds{1}
+\EventLongTitle{33rd International Symposium on Distributed Computing (DISC 2019)}
+\EventShortTitle{DISC 2019}
+\EventAcronym{DISC}
+\EventYear{2019}
+\EventDate{October 14--18, 2019}
+\EventLocation{Budapest, Hungary}
+\EventLogo{}
+\SeriesVolume{146}
+\ArticleNo{12}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\Ensuremath}[1]{\ensuremath{#1}\xspace}
+\newcommand{\MathAlg}[1]{\mathsf{#1}}
+\newcommand{\MathAlgX}[1]{\Ensuremath{\MathAlg{#1}}}
+
+\newcommand{\suchthat}{\text{ s.t.\ }}
+\newcommand{\resp}{resp.,\xspace}
+\newcommand{\ie}  {i.e.,\xspace}
+\newcommand{\eg}  {e.g.,\xspace}
+\newcommand{\Party}{\MathAlgX{P}}
+\newcommand{\secParam}{\kappa}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\adaptive}{{\MathAlgX{adaptive}\xspace}}
+\newcommand{\nonadaptive}{{\MathAlgX{non\mhyphen adaptive}\xspace}}
+
+\newcommand{\wrt} {with respect to\xspace}
+\newcommand{\cf}{cf.,\xspace}
+
+\newcommand{\BA}{\MathAlgX{BA}}
+\newcommand{\Agr}{\MathAlgX{agreement}}
+\newcommand{\Vld}{\MathAlgX{validity}}
+\newcommand{\Halt}{\MathAlgX{halting}}
+
+\newcommand{\bls}{\cB_{\ell,\sigma}}
+
+\renewcommand{\o}{b}
+\newcommand{\oo}{\overline{\o}}
+
+\newcommand{\omin}{\set{\o,\bot}}
+\newcommand{\oomin}{\set{\oo,\bot}}
+\newcommand{\vz}{\vv_0}
+\newcommand{\vo}{\vv_1}
+\newcommand{\oP}{{\overline{\cP}}}
+\newcommand{\bns}{\mathbf{D}_{n,\sigma}}
+\newcommand{\bne}{\cB_{n,\eps}}
+\newcommand{\err}{\mathsf{err}}
+
+\newcommand{\FirstErr}{2^{t-n}}
+
+\newcommand{\vect}[1]{{ \boldsymbol{#1}}}
+\newcommand{\vr}{\vect{r}}
+\newcommand{\vv}{\vect{v}}
+\newcommand{\vx}{\vect{x}}
+
+\newcommand{\Ac}{\MathAlgX{A}}
+
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\oS}{{\overline{\cS}}}
+\newcommand{\cL}{{\cal{L}}}
+
+\newcommand{\set}[1]{\ens{#1}}
+\newcommand{\sset}[1]{\{#1\}}
+\newcommand{\ens}[1]{\left\{#1\right\}}
+\newcommand{\size}[1]{\left|#1\right|}
+\newcommand{\ssize}[1]{|#1|}
+\newcommand{\enss}[1]{\{#1\}}
+
+\newcommand{\N}{{\mathbb{N}}}
+\newcommand{\Z}{{\mathbb Z}}
+\newcommand{\zo}{\{0,1\}}
+\newcommand{\zn}{{\zo^n}}
+
+\renewcommand{\sb}{\set{\Sigma \cup \bot}}
+\newcommand{\sn}{\Sigma^n}
+\newcommand{\sel}{\Sigma^\ell}
+\newcommand{\rn}{\cR^n}
+\newcommand{\sbn}{\sb^n}
+\newcommand{\sbl}{\sb^\ell}
+
+\newcommand{\cs}{{\cal{S}}}
+
+\newcommand{\assign}{\ensuremath{\mathrel{\vcenter{\baselineskip0.5ex \lineskiplimit0pt \hbox{\scriptsize.}\hbox{\scriptsize.}}}=}}
+
+\newcommand{\iith}[1] {$#1$'th\xspace}
+\newcommand{\ith}           {\iith{i}}
+\newcommand{\jth}           {\iith{j}}
+\newcommand{\rth}           {\iith{r}}
+
+\newcommand{\la}{\gets}
+
+\newcommand{\pr}[1]{\Pr\left[#1\right]}
+\newcommand{\ppr}[2]{\Pr_{#1}\left[#2\right]}
+\renewcommand{\pr}[1]{\ppr{}{#1}}
+
+\newcommand{\Pc}{\mathsf{P}}
+\newcommand{\halt}{\mathsf{Halt}}
+\newcommand{\maj}{\operatorname*{maj}}
+
+\theoremstyle{plain}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\begin{document}
+
+\maketitle
+
+%TODO mandatory: add short abstract of the document
+\begin{abstract}
+We prove lower bounds on the round complexity of \emph{randomized} Byzantine agreement (BA) protocols,
+bounding the halting probability of such protocols after one and two rounds. In particular, we prove that:
+\begin{enumerate}
+\item
+BA protocols resilient against $n/3$ [\resp $n/4$] corruptions terminate (under attack) at the end of the first round with probability at most $o(1)$ [\resp $1/2+ o(1)$].
+
+\item
+BA protocols resilient against $n/4$ corruptions terminate at the end of the second round with probability at most $1-\Theta(1)$.
+
+\item
+For a large class of protocols (including all BA protocols used in practice) and under a plausible combinatorial conjecture, BA protocols resilient against $n/3$ [\resp $n/4$] corruptions terminate at the end of the second round with probability at most $o(1)$ [\resp $1/2 + o(1)$].
+\end{enumerate}
+The above bounds hold even when the parties use a trusted setup phase, \eg a public-key infrastructure (PKI).
+
+The third bound essentially matches the recent protocol of Micali (ITCS'17) that tolerates up to $n/3$ corruptions and terminates at the end of the third round with constant probability.
+\end{abstract}
+
+\input{introduction}
+\input{Technique}
+
+
+%%
+%% Bibliography
+%%
+%% Please use bibtex,
+\bibliography{crypto}
+
+\end{document}

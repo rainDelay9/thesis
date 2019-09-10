@@ -1,0 +1,182 @@
+\section{Introduction}\label{sec:intro}
+Byzantine agreement (BA)~\cite{PSL80,LSP82} is one of the most important problems in theoretical computer science. In
+%an $n$-party
+a BA protocol, a set of $n$ parties wish to jointly agree on one of the honest parties' input bits.
+The protocol is \emph{$t$-resilient} if no set of $t$ corrupted parties can collude and prevent the honest parties from completing this task.
+%The protocol is \emph{$t$-resilient} if the honest parties manage to perform the above task even when $t$ of the parties are corrupt.
+In the closely related problem of \emph{broadcast}, all honest parties must agree on the message sent by a (potentially corrupted) sender.
+Byzantine agreement and broadcast are fundamental building blocks in distributed computing and cryptography, with applications in fault-tolerant distributed systems~\cite{CL99,KBCCEGGRWWWZ00}, secure multiparty computation~\cite{Yao82,GMW87,BGW88,CCD88}, and more recently, cryptocurrencies~\cite{SM16,GHMVZ17,PS18}.
+
+In this work we consider the \emph{synchronous} communication model, where the protocol proceeds in rounds. It is well known that in the plain model, without any trusted setup assumptions, BA and broadcast can be solved if and only if $t<n/3$~\cite{PSL80,LSP82,FLM85,GM93}. Assuming the existence of digital signatures and a public-key infrastructure (PKI), BA can be solved in the honest-majority setting $t<n/2$, and broadcast under any number of corruptions $t<n$~\cite{DS83}. Information-theoretic variants that remain secure against computationally unbounded adversaries exist using information-theoretic pseudo-signatures~\cite{PW92}.
+
+An important aspect of BA and broadcast protocols is their \emph{round complexity}. Deterministic $t$-resilient protocols require at least $t+1$ rounds~\cite{FL82,DS83}, which is a tight lower bound~\cite{DS83,GM93}. The breakthrough results of \citet{Ben-Or83} and \citet{Rabin83} showed that this limitation can be circumvented using randomization. In particular, \citet{Rabin83} used \emph{random beacons} (common random coins that are secret-shared among the parties in a trusted setup phase) to construct a BA protocol resilient to $t<n/4$ corruptions. Rabin's protocol fails with probability $2^{-r}$ after $r$ rounds, and requires \emph{expected} constant number of rounds to reach agreement. This line of research culminated with the work of \citet{FM97} who showed how to compute the common coins from scratch, yielding expected-constant-round BA protocol in the plain model, resilient to $t<n/3$ corruptions. \citet{KK06} gave an analogue result in the PKI-model for the honest-majority case. Recent results use trusted setup and cryptographic assumptions to establish a surprisingly small expected round complexity, namely $9$ for $t<n/3$~\cite{Micali17} and $10$ for $t<n/2$~\cite{MV17,ADDNR19}.
+
+The expected-constant-round protocols mentioned above are guaranteed to terminate (with negligible error probability) within a poly-logarithmic number of rounds.
+The lower bounds on the guaranteed termination from~\cite{FL82,DS83} were generalized by \cite{CMS89,KY86}, showing that any randomized $r$-round protocol must fail with probability at least $(c\cdot r)^{-r}$ for some constant $c$. However, to date there is no lower bound on the \emph{expected} round complexity of randomized BA.
+
+In this work, we tackle this question and show new lower bounds for randomized BA. To make the discussion more informative, we consider a more explicit definition that bounds the halting probability within a specific number of rounds. A lower bound based on such a definition readily implies a lower bound on the expected round complexity of the BA protocol.
+
+\subsection{The Model}\label{sec:intro:model}
+We start with   describing in more details the model in which our lower bounds are given.  In the BA protocols we consider the  parties are communicating over a synchronous network of private and authenticated channels. Each party starts the protocol with an input bit and upon completion decides on an output bit. The protocol is  $t$-resilient  if  when  facing $t$ colluding parties that attack the protocol it holds that: (1) all honest parties agree on the same output bit (\emph{agreement}), and (2) if all honest parties start with the same input bit, then this is the common output bit (\emph{validity}). The protocols might have a \emph{trusted setup phase}: a trusted external party samples correlated values and distributes them between the parties. A setup phase is known to be essential for tolerating $t\geq n/3$ corruptions, and seems to be crucial for highly efficient protocols such as \cite{Micali17,SM16,MV17,ADDNR19,ACDNPRS19}. The trusted setup phase is typically implemented using (heavy) secure multiparty computation \cite{BCGTV15,BGG18}, via a public-key infrastructure, or with a random oracle (that is used to model proof of work)~\cite{PS17}. \rnote{added}
+
+%We give a brief overview of the problem and the model (\cf \cref{?}). There are $n$ parties $\Party_1, \ldots,\Party_n$,
+%$\set{P_i}_{i\in [n]}$,
+%$t$ of which are corrupt, communicating via private and authenticated channels, with each $\Party_i$ admitting an input bit $v_i\in \zo$. The parties aim to compute a single bit $z\in \zo$ such that $z$ is equal to one of the honest parties' input; this property is referred to as validity/agreement. \rnote{I think it's best to separate agreement and validity here} For presentation purposes, in the present section, we will assume that validity/agreement holds perfectly against $t$ corrupted parties for the protocols we consider (we briefly discuss the non-perfect case at the end of the section, and the rest of the paper tackles the non-perfect case).
+
+
+
+\paragraph{Locally consistent adversaries.}
+The attacks presented in the paper require very limited capabilities from the corrupted parties  (a limitation that makes our bounds stronger). Specifically they might (1) prematurely abort, and (2) send messages to different parties based on \emph{differing} input bits and/or incoming messages from other corrupted parties. We emphasize that corrupted parties sample their random coins honestly (and use the same coins for all messages sent). In addition,
+%And,
+they do not lie about messages received from honest parties.
+%Although a corrupted party may act inconsistently towards different honest parties, it is possible to enforce consistency towards each individual honest party (as explained below); therefore, we term this adversarial strategy as \emph{locally consistent}.
+
+%\begin{definition}[Locally consistent adversaries, informal]
+%A party is said to be {\sf locally consistent} \wrt a protocol, if it acts honestly apart from the following cheats:
+%\begin{description}
+%	\item[Aborting:] Abort prematurely.
+%	
+%	\item[Input and message selection:] A locally consistent party might act towards some parties as if its input is $0$ and towards other parties as if its input is $1$ (these sets of parties might overlap). %If cheating, it aborts at the end of this round.
+%	
+%	If the party got in one of the previous rounds several messages from another locally consistent party, it might act towards some of the parties as if it got one message and towards other parties as if got a different message.
+%\end{description}
+%\end{definition}
+
+\paragraph{Public-randomness protocols.}
+In many randomized
+%expected-constant-round BA
+protocols, including all those used in practice, cryptography is merely used to provide \emph{message authentication}---preventing a  party from lying about the messages it received---and \emph{verifiable randomness}---forcing the parties to toss their coins correctly. The description of such protocols can be greatly simplified if only security against locally consistent adversaries is required (in which corrupted parties do not lie about their coin tosses and their incoming messages from honest parties). This motivates the definition of \emph{public-randomness} protocols, where each party publishes its local coin tosses for each round (the party's first message also contains its setup parameter, if such exists).
+Although our attacks apply to arbitrary BA protocols, we show even stronger lower bounds for public-randomness protocols.
+
+We illustrate the simplicity of the model by considering the BA protocol of \citet{Micali17}. In this protocol, the  cryptographic tools, digital signatures and verifiable random functions (VRFs)\footnote{A pseudorandom function that provides a non-interactively verifiable proof for the correctness of its output.}, are used to allow the parties elect leaders and toss coins with probability $2/3$ as follows: each party $\Party_i$ in round $r$ evaluates the VRF on the pair $(i,r)$ and multicasts the result. The leader is set to be the party with the smallest VRF value, and the coin is set to be the least-significant bit of this value. Since these values are uniformly distributed $\secParam$-bit strings ($\secParam$ is the security parameter), and there are at least $2n/3$ honest parties, the success probability is $2/3$. (Indeed, with probability $1/3$, the leader is corrupted, and can send its
+%the adversary can send the leader's
+value only to a subset of the parties, creating disagreement.)
+
+When considering locally consistent adversaries, \citeauthor{Micali17}'s protocol can be significantly simplified by having each party randomly sample and multicast a uniformly distributed $\secParam$-bit string (cryptographic tools and setup phase are no longer needed). Corrupted parties can still send their values to a subset of honest parties as before, but they cannot send different random values to different honest parties.
+
+A similar simplification applies to other BA protocols that are based on leader election and coin tosses such as \cite{FM97,FG03,KK06} (private channels are used for a leader-election sub-protocol), \cite{MV17,ADDNR19} (cryptography is used for coin-tossing and message-authentication), and \cite{SM16,ACDNPRS19} (cryptography is used to elect a small committee per round).\footnote{Unlike the aforementioned protocols that use ``simple'' preprocess and ``light-weight''  cryptographic tools, the protocol of \citet{Rabin83} uses a heavy, per execution, setup phase (consisting of Shamir sharing of a random coin for every potential round) that we do not know how to  cast as a public-randomness protocol.}
+
+\begin{proposition}[Malicious security to locally consistent public-randomness protocol, informal]
+Each of the BA protocols of \cite{FM97,FG03,KK06,Micali17,SM16,MV17,ADDNR19,ACDNPRS19} induces a public-randomness BA protocol secure against locally consistent adversaries, with the same parameters.
+\end{proposition}
+
+
+\paragraph{A useful abstraction  for protocol design.}
+To complete the picture, we remark that security against locally consistent adversaries, which  may seem somewhat weak at first sight, can be compiled using standard cryptographic techniques into security against arbitrary adversaries. This reduction  becomes lossless, efficiency-wise and security-wise, when applied to public-randomness protocols. Thus, building public-randomness protocols secure against locally consistent adversaries is a useful abstraction for protocol designers that  want to use what  cryptography has to offer, but  without being bothered with the technical details.
+See more details in \cref{sec:intro:LocalToFull}.
+
+\subsection{Our Results}\label{sec:intro:ourResult}
+We present three lower bounds on the halting probability of randomized BA protocols.
+To keep the following introductory discussion simple, we will assume that both validity and agreement properties hold perfectly, without error.
+
+\paragraph{First-round halting.}
+Our first result bounds the halting probability after a single communication round. This is the simplest case since parties cannot inform each other about inconsistencies they encounter. Indeed, the established lower bound is quite strong, showing an exponentially small bound on the halting probability when $t\geq n/3$, and exponentially close to $1/2$ when $t\geq n/4$.
+
+\begin{theorem}[First-round halting, informal]\label{thm:intro:FirstRound}
+Let $\Pi$ be an $n$-party BA protocol and let $\gamma$ denote the halting probability after a single communication round facing a locally consistent, static,  adversary  corrupting $t$ parties. Then,
+\begin{itemize}
+	\item $t \ge n/3$ implies $\gamma \le \FirstErr$ for arbitrary protocols, and $\gamma=0$ for public-randomness protocols.
+	\item $t \ge n/4$ implies $\gamma \le 1/2+\FirstErr$ for arbitrary protocols, and $\gamma \leq 1/2$ for public-randomness protocols.
+\end{itemize}
+\end{theorem}
+
+
+Note that the deterministic $(t+1)$-round, $t$-resilient BA protocol of \citet{DS83} can be cast as a locally consistent public-randomness protocol (in the plain model).\footnote{When considering locally consistent adversaries, the impossibility of BA for $t=n/3$ does not apply.}
+\cref{thm:intro:FirstRound} shows that for $n=3$ and $t=1$, this two-round BA protocol is essentially optimal and cannot be improved via randomization (at least without considering complex protocols that cannot be cast as public-randomness protocols).
+
+%\cref{thm:intro:FirstRound} shows that any protocol that can be cast as a public-randomness protocol tolerating one third of locally consistent corruptions, cannot halt in one round; hence, the expected round complexity is at least $2$.
+%In particular, for $n=3$ and $t=1$, the deterministic $2$-round BA protocol is essentially optimal and cannot be improved via randomization.\footnote{Recall that when considering locally consistent adversaries, the impossibility of BA for $t=n/3$ does not apply, and the deterministic $(t+1)$-round protocol of \cite{DS83} can be cast as a public-randomness protocol in the plain model.}
+
+\paragraph{Second-round halting for arbitrary protocols.}
+Our second result considers the halting probability after two communication rounds.
+%rounds of communications.
+This is a much more challenging regime, as honest parties have time to detect inconsistencies in first-round messages. Our bound for arbitrary protocols in this case is weaker, and shows that when $t>n/4$, the halting probability is bounded away from $1$.
+
+\begin{theorem}[Second-round halting, arbitrary protocols, informal]\label{thm:intro:SecondRound:Arb}
+ Let $\Pi$ be an $n$-party BA protocol and let $\gamma$ denote the halting probability after two communication rounds facing a locally consistent, static, adversary  corrupting $t=(1/4+\eps)n$ parties.
+Then, $\gamma \le 1 - (\eps /5)^2$.
+\end{theorem}
+
+\paragraph{Second-round halting for public-randomness protocols.}
+\cref{thm:intro:SecondRound:Arb} bounds the second-round halting probability of arbitrary BA protocols away from one. For public-randomness protocol we  achieve a much stronger bound. The attack requires \emph{adaptive} corruptions (as opposed to \emph{static} corruptions in the previous case) and is based on a combinatorial conjecture that is stated below.\footnote{The attack holds even without assuming \cref{con:intro:IsoBot} when considering \emph{strongly adaptive} corruptions~\cite{GKP15}, in which an adversary sees all messages sent by honest parties in any given round and, based on the message content, decides whether to corrupt a party (and alter its message or sabotage its delivery) or not. Similarly, the conjecture is not required if each party is limited to tossing a single unbiased coin. These extensions are not formally proved in this paper.\label{footnote:no_conjecture}}
+%(\cref{con:intro:IsoBot})
+
+\begin{theorem}[Second-round halting, public-randomness protocols, informal]\label{thm:intro:SecondRound:PR}
+Let $\Pi$ be an $n$-party public-randomness BA protocol and let $\gamma$ denote the halting probability after two communication rounds facing a locally consistent adversary adaptively corrupting $t$ parties.
+Then, for sufficiently large $n$ and assuming \cref{con:intro:IsoBot} holds,
+\begin{itemize}
+\item $t > n/3$ implies $\gamma=0$.
+\item $t > n/4$ implies $\gamma \leq 1/2$.
+\end{itemize}
+%\rnote{should the theorem use $t=\beta\cdot n$ for a constant $0<\beta<1$, and then the first bound is for $\beta>1/3$ and the second for $\beta>1/4$?}
+\end{theorem}
+
+\cref{thm:intro:SecondRound:PR} shows that for sufficiently large $n$, any public-randomness protocol tolerating $t>n/3$ locally consistent corruptions cannot halt in less than three rounds (unless  \cref{con:intro:IsoBot}  is false). In particular, its expected round complexity must be at least three.
+
+To understand the meaning of this result, recall the protocol of \citet{Micali17}. As discussed above, this protocol can be cast as a public-randomness protocol tolerating $t<n/3$ adaptive locally consistent corruptions. The protocol proceeds by continuously running a three-round sub-protocol until halting, where each sub-protocol consists of a coin-tossing round, a check-halting-on-$0$ round, and a check-halting-on-$1$ round. Executing a single instance of this
+%three-round
+sub-protocol demonstrates a halting probability of $1/3$ after three rounds.
+By \cref{thm:intro:SecondRound:PR}, a protocol that tolerates slightly more corruptions, \ie $(1/3 +\eps) \cdot n$, for arbitrarily small $\eps>0$, cannot halt in fewer rounds.
+
+
+\paragraph{Our techniques.}
+Our attacks follow the spirit of many lower bounds on the round complexity on BA and broadcast~\cite{FL82,DS83,KY86,DRS90,GKKO07,AH10}. The underlying idea is to start with a configuration in which validity assures the common output is $0$, and gradually adjust it, while retaining the same output value, into a configuration in which validity assures the common output is $1$.  (For the simple case of deterministic protocols, each step of the argument requires the corrupted parties to lie about their input bits and incoming messages from other corrupted parties, but %otherwise behave honestly.)
+
+Our main contribution, which departs from the aforementioned paradigm, is adding another dimension to the attack by aborting a random subset of parties (rather than simply manipulating the input and incoming messages). This change allows us to bypass a seemingly inherent barrier for this approach. We refer the reader to \cref{sec:Technique} for a detailed overview of our attacks.
+
+\paragraph{The combinatorial conjecture.}
+We conclude the present section by motivating and stating the combinatorial conjecture assumed in  \cref{thm:intro:SecondRound:PR}, and discussing its plausibility. We believe the conjecture to be of independent interest, as it relates to topics from Boolean functions analysis such as influences of subsets of variables \cite{Odonnel14} and isoperimetric-type inequalities \cite{Mossel2006,Mossel2013}. The nature of our conjecture makes the  following paragraphs somewhat technical, and  reading them can be postponed until after going over the description of our attack in \cref{sec:Technique}.
+
+The analysis of our attack naturally gives rise to an isoperimetric-type inequality. For limited types of protocols, we manage to prove it using Friedgut's theorem \cite{Friedgut} about approximate juntas and the KKL theorem~\cite{KKL88}. For arbitrary protocols, however, we only manage to reduce our attack to the conjecture below.
+
+We require the following notation before stating the conjecture. Let $\Sigma$ denote some finite set.
+For $\vx\in \sn$ and $\cS \subseteq [n]$, define the vector $\bot_\cS(\vx) \in \set{\Sigma \cup \bot}^n$ by assigning all entries indexed by $\cS$ with the value $\bot$, and all other entries according to $\vx$. Finally, let $\bns$ denote the distribution induced over subsets of $[n]$ by choosing each element with probability $\sigma$ independently at random.
+
+\def\MainConj{
+For any $\sigma,\lambda >0$ there exists $\delta>0$ such that the following holds for large enough $n\in \N$: let  $\Sigma$ be a finite alphabet, and let $\cA_0,\cA_1 \subseteq \sbn$  be  two  sets such that for both $b\in \zo$:
+
+\begin{align*}%\label{eq:1}
+\ppr{\cs\gets \bns}{\ppr{\vr \gets \Sigma^n}{\vr,\bot_{\cS}(\vr) \in \cA_b} \ge  \lambda } \ge 1-\delta.
+\end{align*}
+Then,
+\begin{align*}%\label{eq:2}
+\ppr{\substack{\cS \gets \bns \vspace{.05in}\\ \vr\gets \Sigma^n }}{\forall b\in \zo\colon  \set{\vr,\bot_{\cS}(\vr)}  \cap \cA_b \neq \emptyset} \ge  \delta.
+\end{align*}
+}
+
+
+\begin{conjecture}\label{con:intro:IsoBot}
+\MainConj
+\end{conjecture}
+
+\noindent
+Consider two large sets $\cA_0$ and $\cA_1$ which are ``stable'' in the following sense:  for both $\o\in \zo$, with probability $1-\delta$ over $\cS\la \bns$, it holds that both $\vr$ and $\bot_{\cS}(\vr)$ belong to $\cA_\o$, with probability at least $\lambda$ over $\vr$.  \cref{con:intro:IsoBot} stipulates  that with high probability ($\ge \delta$), the vectors $\vr$ and $\bot_{\cS}(\vr)$ lie in opposite sets (\ie one is in $\cA_0$ and the other $\cA_{1-\o}$), for random $\vr$ and $\cS$. It is somewhat reminiscent of the following flavor of isoperimetric inequality: for any two large sets $\cB_0$ and $\cB_1$, taking a random element from $\cB_0$ and resampling a few coordinates, yields an element in $\cB_1$ with large probability. Less formally, one can ``move'' from one set to the other by manipulating a few coordinates~\cite{Mossel2006,Mossel2013}.
+
+
+A few remarks are in order. First, it suffices for our purposes to show that $\delta$ is a noticeable (\ie inverse polynomial) function of $n$, rather than independent of $n$.\footnote{We remark that it is rather easy to show that $\delta\ge 2^{-n}$, which is not good enough for our purposes.} We opted for the latter as it gives a stronger attack. Second, the conjecture holds for ``natural'' sets such as balls, \ie $\cA_0$ and $\cA_1$ are balls centered around $0^n$ and $1^n$ of constant radius,\footnote{The alphabet $\Sigma$ is not necessarily Boolean, and there are a couple of subtleties in defining balls.} and ``prefix'' sets, \ie sets of the form $\cA_\o=\o^k \times \set{\Sigma \cup \bot}^{n-k}$. Furthermore, the claim can be proven
+%we know how prove the statement
+when the probabilities over $\cS$ and $\vr$ are reversed, \ie ``with probability $\lambda$ over $\vr$, it holds that both $\vr$ and $\bot_{\cS}(\vr)$ belong to $\cA_\o$ with probability at least $1-\delta$ over $\cS$'', instead of the above. Interestingly, this weaker statement boils down to the aforementioned isoperimetric-type inequality (c.f.~\cite{Mossel2006} for the Boolean case and \cite{Mossel2013} for the non Boolean case).
+	
+	
+We conclude by pointing out that, as mentioned in \cref{footnote:no_conjecture},
+%above,
+the conjecture is not needed for certain limited cases that are not addressed in detail in the present paper. One such case is sketched out in \cref{sec:Technique}.
+
+
+\ifdefined\IsFullVersion
+\input{Intro_cont}
+
+\subsection{Open Questions}\label{sec:OpenQuest}
+Our attack on two-round halting of public-randomness protocols is based on \cref{con:intro:IsoBot}. In this work we prove special cases of this conjecture, but proving the general case remains an open challenge.
+
+A different interesting direction is to bound the halting probability of protocols when $t<n/4$. It is not clear how to extend our attacks to this regime.
+\fi
+
+\subsection*{Paper Organization}
+
+\ifdefined\IsFullVersion
+In \cref{sec:Technique} we present a technical overview of our attacks. The formal model and the exact bounds are stated in \cref{sec:OurResult}. The proof of the first-round halting is given in \cref{sec:FirstRound}, and for second-round halting in \cref{sec:SecondRound}.
+\else
+In \cref{sec:Technique} we present a technical overview of our attacks. Due to space limitations, we differ the related work to \cref{sec:intro_cont}. The formal model and the exact bounds are stated in \cref{sec:OurResult}. The proof of the first-round halting is given in \cref{sec:FirstRound}, and for second-round halting in \cref{sec:SecondRound}.
+\fi
+

@@ -1,0 +1,992 @@
+@string{jcss={Journal of Computer and System Sciences}}
+@string{jcrypt={Journal of Cryptology}}
+@string{siamjc={SIAM Journal on Computing}}
+@string{jacm={Journal of the ACM}}
+@string{eurocryptcc={Electronic Colloquium on Computational Complexity}}
+@string{tcs={Theoretical Computer Science}}
+@string{lncs={Lecture Notes in Computer Science}}
+@string{ipl={Information Processing Letters}}
+@string{tit={IEEE Transactions on Information Theory}}
+@string{eprint={Cryptology ePrint Archive}}
+@string{iandc={Information and Control}}
+@string{ieee={IEEE Computer Society}}
+@string{springer={Springer}}
+@string{acm={ACM Press}}
+@string{cacm={Communications of the ACM}}
+
+
+@string{stoc70={Proceedings of the first Annual ACM Symposium on Theory of Computing (STOC)}}
+@string{stoc71={Proceedings of the second Annual ACM Symposium on Theory of Computing (STOC)}}
+@string{stoc72={Proceedings of the third Annual ACM Symposium on Theory of Computing (STOC)}}
+@string{stoc73={Proceedings of the 4th Annual ACM Symposium on Theory of Computing (STOC)}}
+@string{stoc74={Proceedings of the 6th Annual ACM Symposium on Theory of Computing (STOC)}}
+@string{stoc75={Proceedings of the 7th Annual ACM Symposium on Theory of Computing (STOC)}}
+@string{stoc76={Proceedings of the 8th Annual ACM Symposium on Theory of Computing (STOC)}}
+@string{stoc77={Proceedings of the 9th Annual ACM Symposium on Theory of Computing (STOC)}}
+@string{stoc78={Proceedings of the 10th Annual ACM Symposium on Theory of Computing (STOC)}}
+@string{stoc79={Proceedings of the 11th Annual ACM Symposium on Theory of Computing (STOC)}}
+@string{stoc80={Proceedings of the 12th Annual ACM Symposium on Theory of Computing (STOC)}}
+@string{stoc81={Proceedings of the 13th Annual ACM Symposium on Theory of Computing (STOC)}}
+@string{stoc82={Proceedings of the 14th Annual ACM Symposium on Theory of Computing (STOC)}}
+@string{stoc83={Proceedings of the 15th Annual ACM Symposium on Theory of Computing (STOC)}}
+@string{stoc84={Proceedings of the 16th Annual ACM Symposium on Theory of Computing (STOC)}}
+@string{stoc85={Proceedings of the 17th Annual ACM Symposium on Theory of Computing (STOC)}}
+@string{stoc86={Proceedings of the 18th Annual ACM Symposium on Theory of Computing (STOC)}}
+@string{stoc87={Proceedings of the 19th Annual ACM Symposium on Theory of Computing (STOC)}}
+@string{stoc88={Proceedings of the 20th Annual ACM Symposium on Theory of Computing (STOC)}}
+@string{stoc89={Proceedings of the 21st Annual ACM Symposium on Theory of Computing (STOC)}}
+@string{stoc90={Proceedings of the 22nd Annual ACM Symposium on Theory of Computing (STOC)}}
+@string{stoc91={Proceedings of the 23rd Annual ACM Symposium on Theory of Computing (STOC)}}
+@string{stoc92={Proceedings of the 24th Annual ACM Symposium on Theory of Computing (STOC)}}
+@string{stoc93={Proceedings of the 25th Annual ACM Symposium on Theory of Computing (STOC)}}
+@string{stoc94={Proceedings of the 26th Annual ACM Symposium on Theory of Computing (STOC)}}
+@string{stoc95={Proceedings of the 27th Annual ACM Symposium on Theory of Computing (STOC)}}
+@string{stoc96={Proceedings of the 28th Annual ACM Symposium on Theory of Computing (STOC)}}
+@string{stoc97={Proceedings of the 29th Annual ACM Symposium on Theory of Computing (STOC)}}
+@string{stoc98={Proceedings of the 30th Annual ACM Symposium on Theory of Computing (STOC)}}
+@string{stoc99={Proceedings of the 31st Annual ACM Symposium on Theory of Computing (STOC)}}
+@string{stoc00={Proceedings of the 32nd Annual ACM Symposium on Theory of Computing (STOC)}}
+@string{stoc01={Proceedings of the 33rd Annual ACM Symposium on Theory of Computing (STOC)}}
+@string{stoc02={Proceedings of the 34th Annual ACM Symposium on Theory of Computing (STOC)}}
+@string{stoc03={Proceedings of the 35th Annual ACM Symposium on Theory of Computing (STOC)}}
+@string{stoc04={Proceedings of the 36th Annual ACM Symposium on Theory of Computing (STOC)}}
+@string{stoc05={Proceedings of the 37th Annual ACM Symposium on Theory of Computing (STOC)}}
+@string{stoc06={Proceedings of the 38th Annual ACM Symposium on Theory of Computing (STOC)}}
+@string{stoc07={Proceedings of the 39th Annual ACM Symposium on Theory of Computing (STOC)}}
+@string{stoc08={Proceedings of the 40th Annual ACM Symposium on Theory of Computing (STOC)}}
+@string{stoc09={Proceedings of the 41st Annual ACM Symposium on Theory of Computing (STOC)}}
+@string{stoc10={Proceedings of the 42nd Annual ACM Symposium on Theory of Computing (STOC)}}
+@string{stoc11={Proceedings of the 43rd Annual ACM Symposium on Theory of Computing (STOC)}}
+@string{stoc12={Proceedings of the 44th Annual ACM Symposium on Theory of Computing (STOC)}}
+@string{stoc13={Proceedings of the 45th Annual ACM Symposium on Theory of Computing (STOC)}}
+@string{stoc14={Proceedings of the 46th Annual ACM Symposium on Theory of Computing (STOC)}}
+@string{stoc15={Proceedings of the 47th Annual ACM Symposium on Theory of Computing (STOC)}}
+@string{stoc16={Proceedings of the 48th Annual ACM Symposium on Theory of Computing (STOC)}}
+@string{stoc17={Proceedings of the 49th Annual ACM Symposium on Theory of Computing (STOC)}}
+@string{stoc18={Proceedings of the 50th Annual ACM Symposium on Theory of Computing (STOC)}}
+
+@string{focs82={Proceedings of the 23th Annual Symposium on Foundations of Computer Science (FOCS)}}
+@string{focs83={Proceedings of the 24th Annual Symposium on Foundations of Computer Science (FOCS)}}
+@string{focs84={Proceedings of the 25th Annual Symposium on Foundations of Computer Science (FOCS)}}
+@string{focs85={Proceedings of the 26th Annual Symposium on Foundations of Computer Science (FOCS)}}
+@string{focs86={Proceedings of the 27th Annual Symposium on Foundations of Computer Science (FOCS)}}
+@string{focs87={Proceedings of the 28th Annual Symposium on Foundations of Computer Science (FOCS)}}
+@string{focs88={Proceedings of the 29th Annual Symposium on Foundations of Computer Science (FOCS)}}
+@string{focs89={Proceedings of the 30th Annual Symposium on Foundations of Computer Science (FOCS)}}
+@string{focs90={Proceedings of the 31st Annual Symposium on Foundations of Computer Science (FOCS)}}
+@string{focs91={Proceedings of the 32nd Annual Symposium on Foundations of Computer Science (FOCS)}}
+@string{focs92={Proceedings of the 33rd Annual Symposium on Foundations of Computer Science (FOCS)}}
+@string{focs93={Proceedings of the 34th Annual Symposium on Foundations of Computer Science (FOCS)}}
+@string{focs94={Proceedings of the 35th Annual Symposium on Foundations of Computer Science (FOCS)}}
+@string{focs95={Proceedings of the 36th Annual Symposium on Foundations of Computer Science (FOCS)}}
+@string{focs96={Proceedings of the 37th Annual Symposium on Foundations of Computer Science (FOCS)}}
+@string{focs97={Proceedings of the 38th Annual Symposium on Foundations of Computer Science (FOCS)}}
+@string{focs98={Proceedings of the 39th Annual Symposium on Foundations of Computer Science (FOCS)}}
+@string{focs99={Proceedings of the 40th Annual Symposium on Foundations of Computer Science (FOCS)}}
+@string{focs00={Proceedings of the 41st Annual Symposium on Foundations of Computer Science (FOCS)}}
+@string{focs01={Proceedings of the 42nd Annual Symposium on Foundations of Computer Science (FOCS)}}
+@string{focs02={Proceedings of the 43rd Annual Symposium on Foundations of Computer Science (FOCS)}}
+@string{focs03={Proceedings of the 44th Annual Symposium on Foundations of Computer Science (FOCS)}}
+@string{focs04={Proceedings of the 45th Annual Symposium on Foundations of Computer Science (FOCS)}}
+@string{focs05={Proceedings of the 46th Annual Symposium on Foundations of Computer Science (FOCS)}}
+@string{focs06={Proceedings of the 47th Annual Symposium on Foundations of Computer Science (FOCS)}}
+@string{focs07={Proceedings of the 48th Annual Symposium on Foundations of Computer Science (FOCS)}}
+@string{focs08={Proceedings of the 49th Annual Symposium on Foundations of Computer Science (FOCS)}}
+@string{focs09={Proceedings of the 50th Annual Symposium on Foundations of Computer Science (FOCS)}}
+@string{focs10={Proceedings of the 51st Annual Symposium on Foundations of Computer Science (FOCS)}}
+@string{focs11={Proceedings of the 52nd Annual Symposium on Foundations of Computer Science (FOCS)}}
+@string{focs12={Proceedings of the 53rd Annual Symposium on Foundations of Computer Science (FOCS)}}
+@string{focs13={Proceedings of the 54th Annual Symposium on Foundations of Computer Science (FOCS)}}
+@string{focs14={Proceedings of the 55th Annual Symposium on Foundations of Computer Science (FOCS)}}
+@string{focs15={Proceedings of the 56th Annual Symposium on Foundations of Computer Science (FOCS)}}
+@string{focs16={Proceedings of the 57th Annual Symposium on Foundations of Computer Science (FOCS)}}
+@string{focs17={Proceedings of the 58th Annual Symposium on Foundations of Computer Science (FOCS)}}
+@string{focs18={Proceedings of the 59th Annual Symposium on Foundations of Computer Science (FOCS)}}
+
+
+@string{crypto18part1={Advances in Cryptology -- CRYPTO 2018, part {I}}}
+@string{crypto18part2={Advances in Cryptology -- CRYPTO 2018, part {II}}}
+@string{crypto18part3={Advances in Cryptology -- CRYPTO 2018, part {III}}}
+@string{crypto17part1={Advances in Cryptology -- CRYPTO 2017, part {I}}}
+@string{crypto17part2={Advances in Cryptology -- CRYPTO 2017, part {II}}}
+@string{crypto17part3={Advances in Cryptology -- CRYPTO 2017, part {III}}}
+@string{crypto16part1={Advances in Cryptology -- CRYPTO 2016, part {I}}}
+@string{crypto16part2={Advances in Cryptology -- CRYPTO 2016, part {II}}}
+@string{crypto16part3={Advances in Cryptology -- CRYPTO 2016, part {III}}}
+@string{crypto15part1={Advances in Cryptology -- CRYPTO 2015, part {I}}}
+@string{crypto15part2={Advances in Cryptology -- CRYPTO 2015, part {II}}}
+@string{crypto14part1={Advances in Cryptology -- CRYPTO 2014, part {I}}}
+@string{crypto14part2={Advances in Cryptology -- CRYPTO 2014, part {II}}}
+@string{crypto13part1={Advances in Cryptology -- CRYPTO 2013, part {I}}}
+@string{crypto13part2={Advances in Cryptology -- CRYPTO 2013, part {II}}}
+@string{crypto12={Advances in Cryptology -- CRYPTO 2012}}
+@string{crypto11={Advances in Cryptology -- CRYPTO 2011}}
+@string{crypto10={Advances in Cryptology -- CRYPTO 2010}}
+@string{crypto09={Advances in Cryptology -- CRYPTO 2009}}
+@string{crypto08={Advances in Cryptology -- CRYPTO 2008}}
+@string{crypto07={Advances in Cryptology -- CRYPTO 2007}}
+@string{crypto06={Advances in Cryptology -- CRYPTO 2006}}
+@string{crypto05={Advances in Cryptology -- CRYPTO 2005}}
+@string{crypto04={Advances in Cryptology -- CRYPTO 2004}}
+@string{crypto03={Advances in Cryptology -- CRYPTO 2003}}
+@string{crypto02={Advances in Cryptology -- CRYPTO 2002}}
+@string{crypto01={Advances in Cryptology -- CRYPTO 2001}}
+@string{crypto00={Advances in Cryptology -- CRYPTO 2000}}
+@string{crypto99={Advances in Cryptology -- CRYPTO '99}}
+@string{crypto98={Advances in Cryptology -- CRYPTO '98}}
+@string{crypto97={Advances in Cryptology -- CRYPTO '97}}
+@string{crypto96={Advances in Cryptology -- CRYPTO '96}}
+@string{crypto95={Advances in Cryptology -- CRYPTO '95}}
+@string{crypto94={Advances in Cryptology -- CRYPTO '94}}
+@string{crypto93={Advances in Cryptology -- CRYPTO '93}}
+@string{crypto92={Advances in Cryptology -- CRYPTO '92}}
+@string{crypto91={Advances in Cryptology -- CRYPTO '91}}
+@string{crypto90={Advances in Cryptology -- CRYPTO '90}}
+@string{crypto89={Advances in Cryptology -- CRYPTO '89}}
+@string{crypto88={Advances in Cryptology -- CRYPTO '88}}
+@string{crypto87={Advances in Cryptology -- CRYPTO '87}}
+@string{crypto86={Advances in Cryptology -- CRYPTO '86}}
+@string{crypto85={Advances in Cryptology -- CRYPTO '85}}
+@string{crypto84={Advances in Cryptology -- CRYPTO '84}}
+@string{crypto83={Advances in Cryptology -- CRYPTO '83}}
+@string{crypto82={Advances in Cryptology -- CRYPTO '82}}
+@string{crypto81={Advances in Cryptology -- CRYPTO '81}}
+
+@string{eurocrypt18part1={Advances in Cryptology -- EUROCRYPT 2018, part {I}}}
+@string{eurocrypt18part2={Advances in Cryptology -- EUROCRYPT 2018, part {II}}}
+@string{eurocrypt17part1={Advances in Cryptology -- EUROCRYPT 2017, part {I}}}
+@string{eurocrypt17part2={Advances in Cryptology -- EUROCRYPT 2017, part {II}}}
+@string{eurocrypt16part1={Advances in Cryptology -- EUROCRYPT 2016, part {I}}}
+@string{eurocrypt16part2={Advances in Cryptology -- EUROCRYPT 2016, part {II}}}
+@string{eurocrypt15part1={Advances in Cryptology -- EUROCRYPT 2015, part {I}}}
+@string{eurocrypt15part2={Advances in Cryptology -- EUROCRYPT 2015, part {II}}}
+@string{eurocrypt14={Advances in Cryptology -- EUROCRYPT 2014}}
+@string{eurocrypt13={Advances in Cryptology -- EUROCRYPT 2013}}
+@string{eurocrypt12={Advances in Cryptology -- EUROCRYPT 2012}}
+@string{eurocrypt11={Advances in Cryptology -- EUROCRYPT 2011}}
+@string{eurocrypt10={Advances in Cryptology -- EUROCRYPT 2010}}
+@string{eurocrypt09={Advances in Cryptology -- EUROCRYPT 2009}}
+@string{eurocrypt08={Advances in Cryptology -- EUROCRYPT 2008}}
+@string{eurocrypt07={Advances in Cryptology -- EUROCRYPT 2007}}
+@string{eurocrypt06={Advances in Cryptology -- EUROCRYPT 2006}}
+@string{eurocrypt05={Advances in Cryptology -- EUROCRYPT 2005}}
+@string{eurocrypt04={Advances in Cryptology -- EUROCRYPT 2004}}
+@string{eurocrypt03={Advances in Cryptology -- EUROCRYPT 2003}}
+@string{eurocrypt02={Advances in Cryptology -- EUROCRYPT 2002}}
+@string{eurocrypt01={Advances in Cryptology -- EUROCRYPT 2001}}
+@string{eurocrypt00={Advances in Cryptology -- EUROCRYPT 2000}}
+@string{eurocrypt99={Advances in Cryptology -- EUROCRYPT '99}}
+@string{eurocrypt98={Advances in Cryptology -- EUROCRYPT '98}}
+@string{eurocrypt97={Advances in Cryptology -- EUROCRYPT '97}}
+@string{eurocrypt96={Advances in Cryptology -- EUROCRYPT '96}}
+@string{eurocrypt95={Advances in Cryptology -- EUROCRYPT '95}}
+@string{eurocrypt94={Advances in Cryptology -- EUROCRYPT '94}}
+@string{eurocrypt93={Advances in Cryptology -- EUROCRYPT '93}}
+@string{eurocrypt92={Advances in Cryptology -- EUROCRYPT '92}}
+@string{eurocrypt91={Advances in Cryptology -- EUROCRYPT '91}}
+@string{eurocrypt90={Advances in Cryptology -- EUROCRYPT '90}}
+@string{eurocrypt89={Advances in Cryptology -- EUROCRYPT '89}}
+@string{eurocrypt88={Advances in Cryptology -- EUROCRYPT '88}}
+@string{eurocrypt87={Advances in Cryptology -- EUROCRYPT '87}}
+@string{eurocrypt86={Advances in Cryptology -- EUROCRYPT '86}}
+@string{eurocrypt85={Advances in Cryptology -- EUROCRYPT '85}}
+@string{eurocrypt84={Advances in Cryptology -- EUROCRYPT '84}}
+
+@string{asiacrypt18part1={Advances in Cryptology -- ASIACRYPT  2018, part {I}}}
+@string{asiacrypt18part2={Advances in Cryptology -- ASIACRYPT  2018, part {II}}}
+@string{asiacrypt17part1={Advances in Cryptology -- ASIACRYPT  2017, part {I}}}
+@string{asiacrypt17part2={Advances in Cryptology -- ASIACRYPT  2017, part {II}}}
+@string{asiacrypt16part1={Advances in Cryptology -- ASIACRYPT  2016, part {I}}}
+@string{asiacrypt16part2={Advances in Cryptology -- ASIACRYPT  2016, part {II}}}
+@string{asiacrypt15part1={Advances in Cryptology -- ASIACRYPT  2015, part {I}}}
+@string{asiacrypt15part2={Advances in Cryptology -- ASIACRYPT  2015, part {II}}}
+@string{asiacrypt14part1={Advances in Cryptology -- ASIACRYPT  2014, part {I}}}
+@string{asiacrypt14part2={Advances in Cryptology -- ASIACRYPT  2014, part {II}}}
+@string{asiacrypt13part1={Advances in Cryptology -- ASIACRYPT  2013, part {I}}}
+@string{asiacrypt13part2={Advances in Cryptology -- ASIACRYPT  2013, part {II}}}
+@string{asiacrypt12={Advances in Cryptology -- ASIACRYPT  2012}}
+@string{asiacrypt11={Advances in Cryptology -- ASIACRYPT  2011}}
+@string{asiacrypt10={Advances in Cryptology -- ASIACRYPT  2010}}
+@string{asiacrypt09={Advances in Cryptology -- ASIACRYPT  2009}}
+@string{asiacrypt08={Advances in Cryptology -- ASIACRYPT  2008}}
+@string{asiacrypt07={Advances in Cryptology -- ASIACRYPT  2007}}
+@string{asiacrypt06={Advances in Cryptology -- ASIACRYPT  2006}}
+@string{asiacrypt05={Advances in Cryptology -- ASIACRYPT  2005}}
+@string{asiacrypt04={Advances in Cryptology -- ASIACRYPT  2004}}
+@string{asiacrypt03={Advances in Cryptology -- ASIACRYPT  2003}}
+@string{asiacrypt02={Advances in Cryptology -- ASIACRYPT  2002}}
+@string{asiacrypt01={Advances in Cryptology -- ASIACRYPT  2001}}
+@string{asiacrypt00={Advances in Cryptology -- ASIACRYPT  2000}}
+@string{asiacrypt99={Advances in Cryptology -- ASIACRYPT  '99}}
+@string{asiacrypt98={Advances in Cryptology -- ASIACRYPT  '98}}
+@string{asiacrypt97={Advances in Cryptology -- ASIACRYPT  '97}}
+@string{asiacrypt96={Advances in Cryptology -- ASIACRYPT  '96}}
+@string{asiacrypt95={Advances in Cryptology -- ASIACRYPT  '95}}
+@string{asiacrypt94={Advances in Cryptology -- ASIACRYPT  '94}}
+@string{asiacrypt93={Advances in Cryptology -- ASIACRYPT  '93}}
+@string{asiacrypt92={Advances in Cryptology -- ASIACRYPT  '92}}
+@string{asiacrypt91={Advances in Cryptology -- ASIACRYPT  '91}}
+@string{asiacrypt90={Advances in Cryptology -- ASIACRYPT  '90}}
+@string{asiacrypt89={Advances in Cryptology -- ASIACRYPT  '89}}
+@string{asiacrypt88={Advances in Cryptology -- ASIACRYPT  '88}}
+@string{asiacrypt87={Advances in Cryptology -- ASIACRYPT  '87}}
+@string{asiacrypt86={Advances in Cryptology -- ASIACRYPT  '86}}
+@string{asiacrypt85={Advances in Cryptology -- ASIACRYPT  '85}}
+@string{asiacrypt84={Advances in Cryptology -- ASIACRYPT  '84}}
+
+@string{tcc04={Proceedings of the First Theory of Cryptography Conference, TCC 2004}}
+@string{tcc05={Proceedings of the Second Theory of Cryptography Conference, TCC 2005}}
+@string{tcc06={Proceedings of the Third Theory of Cryptography Conference, TCC 2006}}
+@string{tcc07={Proceedings of the Fourth Theory of Cryptography Conference, TCC 2007}}
+@string{tcc08={Proceedings of the 5th Theory of Cryptography Conference, TCC 2008}}
+@string{tcc09={Proceedings of the 6th Theory of Cryptography Conference, TCC 2009}}
+@string{tcc10={Proceedings of the 7th Theory of Cryptography Conference, TCC 2010}}
+@string{tcc11={Proceedings of the 8th Theory of Cryptography Conference, TCC 2011}}
+@string{tcc12={Proceedings of the 9th Theory of Cryptography Conference, TCC 2012}}
+@string{tcc13={Proceedings of the 10th Theory of Cryptography Conference, TCC 2013}}
+@string{tcc14={Proceedings of the 11th Theory of Cryptography Conference, TCC 2014}}
+@string{tcc15part1={Proceedings of the 12th Theory of Cryptography Conference, TCC 2015, part {I}}}
+@string{tcc15part2={Proceedings of the 12th Theory of Cryptography Conference, TCC 2015, part {II}}}
+@string{tcc16apart1={Proceedings of the 13th Theory of Cryptography Conference, TCC 2016-A, part {I}}}
+@string{tcc16apart2={Proceedings of the 13th Theory of Cryptography Conference, TCC 2016-A, part {II}}}
+@string{tcc16bpart1={Proceedings of the 14th Theory of Cryptography Conference, TCC 2016-B, part {I}}}
+@string{tcc16bpart2={Proceedings of the 14th Theory of Cryptography Conference, TCC 2016-B, part {II}}}
+@string{tcc17part1={Proceedings of the 15th Theory of Cryptography Conference, TCC 2017, part {I}}}
+@string{tcc17part2={Proceedings of the 15th Theory of Cryptography Conference, TCC 2017, part {II}}}
+@string{tcc18part1={Proceedings of the 16th Theory of Cryptography Conference, TCC 2018, part {I}}}
+@string{tcc18part2={Proceedings of the 16th Theory of Cryptography Conference, TCC 2018, part {II}}}
+
+@string{itcs10={Proceedings of the first Annual Innovations in Theoretical Computer Science (ITCS) conference}}
+@string{itcs11={Proceedings of the second Annual Innovations in Theoretical Computer Science (ITCS) conference}}
+@string{itcs12={Proceedings of the third Annual Innovations in Theoretical Computer Science (ITCS) conference}}
+@string{itcs13={Proceedings of the 4th Annual Innovations in Theoretical Computer Science (ITCS) conference}}
+@string{itcs14={Proceedings of the 5th Annual Innovations in Theoretical Computer Science (ITCS) conference}}
+@string{itcs15={Proceedings of the 6th Annual Innovations in Theoretical Computer Science (ITCS) conference}}
+@string{itcs16={Proceedings of the 7th Annual Innovations in Theoretical Computer Science (ITCS) conference}}
+@string{itcs17={Proceedings of the 8th Annual Innovations in Theoretical Computer Science (ITCS) conference}}
+@string{itcs18={Proceedings of the 9th Annual Innovations in Theoretical Computer Science (ITCS) conference}}
+
+@string{podc82={Proceedings of the 1st Annual ACM Symposium on Principles of Distributed Computing (PODC)}}
+@string{podc83={Proceedings of the 2nd Annual ACM Symposium on Principles of Distributed Computing (PODC)}}
+@string{podc84={Proceedings of the 3rd Annual ACM Symposium on Principles of Distributed Computing (PODC)}}
+@string{podc85={Proceedings of the 4th Annual ACM Symposium on Principles of Distributed Computing (PODC)}}
+@string{podc86={Proceedings of the 5th Annual ACM Symposium on Principles of Distributed Computing (PODC)}}
+@string{podc87={Proceedings of the 6th Annual ACM Symposium on Principles of Distributed Computing (PODC)}}
+@string{podc88={Proceedings of the 7th Annual ACM Symposium on Principles of Distributed Computing (PODC)}}
+@string{podc89={Proceedings of the 8th Annual ACM Symposium on Principles of Distributed Computing (PODC)}}
+@string{podc90={Proceedings of the 9th Annual ACM Symposium on Principles of Distributed Computing (PODC)}}
+@string{podc91={Proceedings of the 10th Annual ACM Symposium on Principles of Distributed Computing (PODC)}}
+@string{podc92={Proceedings of the 11th Annual ACM Symposium on Principles of Distributed Computing (PODC)}}
+@string{podc93={Proceedings of the 12th Annual ACM Symposium on Principles of Distributed Computing (PODC)}}
+@string{podc94={Proceedings of the 13th Annual ACM Symposium on Principles of Distributed Computing (PODC)}}
+@string{podc95={Proceedings of the 14th Annual ACM Symposium on Principles of Distributed Computing (PODC)}}
+@string{podc96={Proceedings of the 15th Annual ACM Symposium on Principles of Distributed Computing (PODC)}}
+@string{podc97={Proceedings of the 16th Annual ACM Symposium on Principles of Distributed Computing (PODC)}}
+@string{podc98={Proceedings of the 17th Annual ACM Symposium on Principles of Distributed Computing (PODC)}}
+@string{podc99={Proceedings of the 18th Annual ACM Symposium on Principles of Distributed Computing (PODC)}}
+@string{podc00={Proceedings of the 19th Annual ACM Symposium on Principles of Distributed Computing (PODC)}}
+@string{podc01={Proceedings of the 20th Annual ACM Symposium on Principles of Distributed Computing (PODC)}}
+@string{podc02={Proceedings of the 21th Annual ACM Symposium on Principles of Distributed Computing (PODC)}}
+@string{podc03={Proceedings of the 22th Annual ACM Symposium on Principles of Distributed Computing (PODC)}}
+@string{podc04={Proceedings of the 23th Annual ACM Symposium on Principles of Distributed Computing (PODC)}}
+@string{podc05={Proceedings of the 24th Annual ACM Symposium on Principles of Distributed Computing (PODC)}}
+@string{podc06={Proceedings of the 25th Annual ACM Symposium on Principles of Distributed Computing (PODC)}}
+@string{podc07={Proceedings of the 26th Annual ACM Symposium on Principles of Distributed Computing (PODC)}}
+@string{podc08={Proceedings of the 27th Annual ACM Symposium on Principles of Distributed Computing (PODC)}}
+@string{podc09={Proceedings of the 28th Annual ACM Symposium on Principles of Distributed Computing (PODC)}}
+@string{podc10={Proceedings of the 29th Annual ACM Symposium on Principles of Distributed Computing (PODC)}}
+@string{podc11={Proceedings of the 30th Annual ACM Symposium on Principles of Distributed Computing (PODC)}}
+@string{podc12={Proceedings of the 31th Annual ACM Symposium on Principles of Distributed Computing (PODC)}}
+@string{podc13={Proceedings of the 32th Annual ACM Symposium on Principles of Distributed Computing (PODC)}}
+@string{podc14={Proceedings of the 33th Annual ACM Symposium on Principles of Distributed Computing (PODC)}}
+@string{podc15={Proceedings of the 34th Annual ACM Symposium on Principles of Distributed Computing (PODC)}}
+@string{podc16={Proceedings of the 35th Annual ACM Symposium on Principles of Distributed Computing (PODC)}}
+@string{podc17={Proceedings of the 36th Annual ACM Symposium on Principles of Distributed Computing (PODC)}}
+@string{podc18={Proceedings of the 37th Annual ACM Symposium on Principles of Distributed Computing (PODC)}}
+@string{podc19={Proceedings of the 38th Annual ACM Symposium on Principles of Distributed Computing (PODC)}}
+
+@string{disc11={Proceedings of the 25th International Symposium on
+Distributed Computing (DISC)}}
+
+@string{disc17={Proceedings of the 31st International Symposium on
+Distributed Computing (DISC)}}
+
+@string{pkc05={Proceedings of the 8th International Conference on the Theory
+and Practice of Public-Key Cryptography (PKC)}}
+
+@string{icalp15part2={Proceedings of the 42th International Colloquium on
+Automata, Languages, and Programming (ICALP), part {II}}}
+@string{icalp17={Proceedings of the 44th International Colloquium on
+Automata, Languages, and Programming (ICALP)}}
+
+@string{stacs09={Proceedings of the 9th Annual Symposium on Theoretical Aspects of Computer Science (STACS)}}
+
+@inproceedings{GKKO07,
+  author    = {Juan A. Garay and
+               Jonathan Katz and
+               Chiu{-}Yuen Koo and
+               Rafail Ostrovsky},
+  title     = {Round Complexity of Authenticated Broadcast with a Dishonest Majority},
+  booktitle = focs07,
+  pages     = {658--668},
+  year      = {2007}
+}
+@inproceedings{FGHHS02,
+  author    = {Matthias Fitzi and
+               Daniel Gottesman and
+               Martin Hirt and
+               Thomas Holenstein and
+               Adam D. Smith},
+  title     = {Detectable {B}yzantine agreement secure against faulty majorities},
+  booktitle = podc02,
+  pages     = {118--126},
+  year      = {2002}
+}
+@inproceedings{CCD88,
+  author    = {David Chaum and
+               Claude Cr{\'{e}}peau and
+               Ivan Damg{\aa}rd},
+  title     = {Multiparty Unconditionally Secure Protocols (Extended Abstract)},
+  booktitle = stoc88,
+  pages     = {11--19},
+  year      = {1988}
+}
+@InProceedings{GMW87,
+title   = {How to Play any Mental Game or A Completeness Theorem for Protocols with Honest Majority},
+author  = {Goldreich, Oded and Micali, Silvio and Wigderson, Avi},
+pages   = {218--229},
+booktitle= stoc87,
+year    = {1987}
+}
+@inproceedings{BGW88,
+  author    = {Michael {Ben-Or} and Shafi Goldwasser and Avi Wigderson},
+  title     = {Completeness Theorems for Non-Cryptographic Fault-Tolerant Distributed Computation (Extended Abstract)},
+  booktitle = stoc88,
+  year      = {1988},
+  pages     = {1--10}
+}
+@inproceedings{RB89,
+  author    = {Tal Rabin and Michael {Ben-Or}},
+  title     = {Verifiable Secret Sharing and Multiparty Protocols with Honest Majority (Extended Abstract)},
+  booktitle = focs89,
+  year      = {1989},
+  pages     = {73--85}
+}
+
+@inproceedings{SM16,
+  author    = {Jing Chen and Silvio Micali},
+  title     = {Algorand},
+  booktitle = {CoRR},
+  note      = {http://arxiv.org/abs/1607.01341},
+  year      = {2016}
+}
+@inproceedings{GHMVZ17,
+  author    = {Yossi Gilad and
+               Rotem Hemo and
+               Silvio Micali and
+               Georgios Vlachos and
+               Nickolai Zeldovich},
+  title     = {Algorand: Scaling {B}yzantine Agreements for Cryptocurrencies},
+  booktitle = {Proceedings of the 26th Symposium on Operating Systems Principles (SOSP)},
+  pages     = {51--68},
+  year      = {2017}
+}
+
+@inproceedings{Micali17,
+  author    = {Silvio Micali},
+  title     = {Very Simple and Efficient {Byzantine} Agreement},
+  booktitle = itcs17,
+  pages     = {6:1--6:1},
+  year      = {2017}
+}
+@inproceedings{PS18,
+  author    = {Rafael Pass and
+               Elaine Shi},
+  title     = {Thunderella: Blockchains with Optimistic Instant Confirmation},
+  booktitle = eurocrypt18part2,
+  pages     = {3--33},
+  year      = {2018}
+}
+@InProceedings{CCGZ17,
+  author =	 {Ran Cohen and Sandro Coretti and Juan Garay and Vassilis Zikas},
+  title =	 {Round-Preserving Parallel Composition of Probabilistic-Termination Cryptographic Protocols},
+  booktitle =icalp17,
+  pages =	{37:1--37:15},
+  year =	{2017}
+}
+
+@inproceedings{CHOR16,
+  author    = {Ran Cohen and
+               Iftach Haitner and
+               Eran Omri and
+               Lior Rotem},
+  title     = {Characterization of Secure Multiparty Computation Without Broadcast},
+  booktitle = tcc16apart1,
+  pages     = {596--616},
+  year      = {2016}
+}
+@inproceedings{FHHW03,
+  author    = {Matthias Fitzi and
+               Martin Hirt and
+               Thomas Holenstein and
+               J{\"{u}}rg Wullschleger},
+  title     = {Two-Threshold Broadcast and Detectable Multi-party Computation},
+  booktitle = eurocrypt03,
+  pages     = {51--67},
+  year      = {2003}
+}
+@inproceedings{PW92,
+  author    = {Birgit Pfitzmann and
+               Michael Waidner},
+  title     = {Unconditional {Byzantine} Agreement for any Number of Faulty Processors},
+  booktitle = stacs09,
+  year      = {1992},
+  pages     = {339-350}
+}
+@article{DS83,
+  author    = {Danny Dolev and
+               Raymond Strong},
+  title     = {Authenticated Algorithms for {Byzantine} Agreement},
+  journal   = siamjc,
+  volume    = {12},
+  number    = {4},
+  pages     = {656--666},
+  year      = {1983}
+}
+@article{FL82,
+  author    = {Michael J. Fischer and
+               Nancy A. Lynch},
+  title     = {A Lower Bound for the Time to Assure Interactive Consistency},
+  journal   = ipl,
+  volume    = {14},
+  number    = {4},
+  pages     = {183--186},
+  year      = {1982}
+}
+
+@article{FM97,
+  author    = {Pesech Feldman and Silvio Micali},
+  title     = {An Optimal Probabilistic Protocol for Synchronous {Byzantine} Agreement},
+  journal   = siamjc,
+  volume    = {26},
+  number    = {4},
+  pages     = {873--933},
+  year      = {1997}
+}
+@inproceedings{KK06,
+  author    = {Jonathan Katz and Chiu{-}Yuen Koo},
+  title     = {On Expected Constant-Round Protocols for {Byzantine} Agreement},
+  booktitle = crypto06,
+  pages     = {445--462},
+  year      = {2006}
+}
+
+@article{Lamport83,
+ author = {Leslie Lamport},
+ title = {The Weak {Byzantine} Generals Problem},
+ journal=jacm,
+ volume = {30},
+ number = {3},
+ year = {1983},
+ pages = {668--676}
+}
+
+@inproceedings{FLM85,
+  author    = {Michael J. Fischer and
+               Nancy A. Lynch and
+               Michael Merritt},
+  title     = {Easy Impossibility Proofs for Distributed Consensus Problems},
+  booktitle = podc04,
+  pages     = {59--70},
+  year      = {1985}
+}
+@article{LLR06,
+  author    = {Yehuda Lindell and
+               Anna Lysyanskaya and
+               Tal Rabin},
+  title     = {On the Composition of Authenticated {Byzantine} Agreement},
+  journal   = jacm,
+  volume    = {53},
+  number    = {6},
+  pages     = {881--917},
+  year      = {2006}
+}
+
+@article{DLPSW86,
+  title={Reaching approximate agreement in the presence of faults},
+  author={Dolev, Danny and Lynch, Nancy A and Pinter, Shlomit S and Stark, Eugene W and Weihl, William E},
+   journal=jacm,
+  volume={33},
+  number={3},
+  pages={499--516},
+  year={1986}
+}
+
+
+@article{PSL80,
+  author    = {Marshall C. Pease and Robert E. Shostak and Leslie Lamport},
+  title     = {Reaching Agreement in the Presence of Faults},
+  journal   = jacm,
+  volume    = {27},
+  number    = {2},
+  year      = {1980},
+  pages     = {228--234}
+}
+
+@article{LSP82,
+  author    = {Leslie Lamport and Robert E. Shostak and Marshall C. Pease},
+  title     = {The {Byzantine} Generals Problem},
+  journal   = {ACM Transactions on Programming Languages and Systems},
+  volume    = {4},
+  number    = {3},
+  year      = {1982},
+  pages     = {382-401}
+}
+@inproceedings{Yao82,
+  author    = {Andrew Chi{-}Chih Yao},
+  title     = {Protocols for Secure Computations (Extended Abstract)},
+  booktitle = focs82,
+  pages     = {160--164},
+  year      = {1982}
+}
+@inproceedings{ADDNR19,
+  author    = {Ittai Abraham and
+               Srinivas Devadas and
+               Danny Dolev and
+               Kartik Nayak and
+               Ling Ren},
+  title     = {Synchronous {Byzantine} Agreement with Expected {O(1)} Rounds, Expected O(n\({}^{\mbox{2)}}\) Communication, and Optimal Resilience},
+  booktitle = {Financial Cryptography and Data Security},
+  year      = {2019}
+}
+
+@inproceedings{CL99,
+  author    = {Miguel Castro and
+               Barbara Liskov},
+  title     = {Practical {Byzantine} Fault Tolerance},
+  booktitle = {Proceedings of the Third {USENIX} Symposium on Operating Systems Design and Implementation (OSDI)},
+  pages     = {173--186},
+  year      = {1999}
+}
+@inproceedings{KBCCEGGRWWWZ00,
+  author    = {John Kubiatowicz and
+               David Bindel and
+               Yan Chen and
+               Steven E. Czerwinski and
+               Patrick R. Eaton and
+               Dennis Geels and
+               Ramakrishna Gummadi and
+               Sean C. Rhea and
+               Hakim Weatherspoon and
+               Westley Weimer and
+               Chris Wells and
+               Ben Y. Zhao},
+  title     = {OceanStore: An Architecture for Global-Scale Persistent Storage},
+  booktitle = {{ASPLOS-IX} Proceedings of the 9th International Conference on Architectural
+               Support for Programming Languages and Operating Systems},
+  pages     = {190--201},
+  year      = {2000}
+}
+@inproceedings{GM93,
+  author    = {Juan A. Garay and
+               Yoram Moses},
+  title     = {Fully polynomial {Byzantine} agreement in t+1 rounds},
+  booktitle = stoc93,
+  pages     = {31--41},
+  year      = {1993}
+}
+@inproceedings{Ben-Or83,
+  author    = {Michael Ben{-}Or},
+  title     = {Another Advantage of Free Choice: Completely Asynchronous Agreement Protocols (Extended Abstract)},
+  booktitle = podc83,
+  pages     = {27--30},
+  year      = {1983}
+}
+@inproceedings{Rabin83,
+  author    = {Michael O. Rabin},
+  title     = {Randomized {Byzantine} Generals},
+  booktitle = focs83,
+  pages     = {403--409},
+  year      = {1983}
+}
+@unpublished{KY86,
+  author    = {Anna R. Karlin and Andrew Chi{-}Chih Yao},
+  title     = {Probabilistic lower bounds for {Byzantine} agreement and clock synchronization},
+  note      = {Unpublished manuscript},
+  year      = {1986}
+}
+@article{AH10,
+  author    = {Hagit Attiya and
+               Keren Censor{-}Hillel},
+  title     = {Lower Bounds for Randomized Consensus under a Weak Adversary},
+  journal   = siamjc,
+  volume    = {39},
+  number    = {8},
+  pages     = {3885--3904},
+  year      = {2010}
+}
+@inproceedings{FG03,
+  author    = {Matthias Fitzi and
+               Juan A. Garay},
+  title     = {Efficient player-optimal protocols for strong and differential consensus},
+  booktitle = podc03,
+  pages     = {211--220},
+  year      = {2003}
+}
+@unpublished{MV17,
+  author    = {Silvio Micali and
+               Vinod Vaikuntanathan},
+  title     = {Optimal and player-replaceable consensus with an honest majority},
+  note      = {Unpublished manuscript},
+  year      = {2017}
+}
+@inproceedings{ACDNPRS19,
+  author    = {Ittai Abraham and
+               T.{-}H. Hubert Chan and
+               Danny Dolev and
+               Kartik Nayak and
+               Rafael Pass and
+               Ling Ren and
+               Elaine Shi},
+  title     = {Communication Complexity of {Byzantine} Agreement, Revisited},
+  booktitle = podc19,
+  pages     = {317--326},
+  year      = {2019},
+}
+@inproceedings{CCGZ16,
+  author    = {Ran Cohen and
+               Sandro Coretti and
+               Juan A. Garay and
+               Vassilis Zikas},
+  title     = {Probabilistic Termination and Composability of Cryptographic Protocols},
+  booktitle = crypto16part3,
+  pages     = {240--269},
+  year      = {2016}
+}
+@article{TC84,
+  author    = {Russell Turpin and
+               Brian A. Coan},
+  title     = {Extending Binary {Byzantine} Agreement to Multivalued {Byzantine} Agreement},
+  journal   = ipl,
+  volume    = {18},
+  number    = {2},
+  pages     = {73--76},
+  year      = {1984}
+}
+@inproceedings{MRV99,
+  author    = {Silvio Micali and
+               Michael O. Rabin and
+               Salil P. Vadhan},
+  title     = {Verifiable Random Functions},
+  booktitle = focs99,
+  pages     = {120--130},
+  year      = {1999}
+}
+@inproceedings{BKK14,
+  author    = {Jean Bourgain and Jeff Kahn and Kalai, Gil},
+  title     = {Influential coalitions for {B}oolean Functions},
+  booktitle = {CoRR},
+  note      = {https://arxiv.org/abs/1409.3033},
+  year      = {2014}
+}
+@inproceedings{KKL88,
+  author    = {Jeff Kahn and
+               Gil Kalai and
+               Nathan Linial},
+  title     = {The Influence of Variables on {B}oolean Functions (Extended Abstract)},
+  booktitle = focs88,
+  pages     = {68--80},
+  year      = {1988}
+}
+@article{CMS89,
+  author    = {Benny Chor and
+               Michael Merritt and
+               David B. Shmoys},
+  title     = {Simple constant-time consensus protocols in realistic failure models},
+  journal   = jacm,
+  volume    = {36},
+  number    = {3},
+  pages     = {591--614},
+  year      = {1989}
+}
+@inproceedings{GKP15,
+  author    = {Shafi Goldwasser and
+               Yael Tauman Kalai and
+               Sunoo Park},
+  title     = {Adaptively Secure Coin-Flipping, Revisited},
+  booktitle = icalp15part2,
+  pages     = {663--674},
+  year      = {2015}
+}
+@article{DRS90,
+  author    = {Danny Dolev and
+               R{\"{u}}diger Reischuk and
+               H. Raymond Strong},
+  title     = {Early Stopping in {Byzantine} Agreement},
+  journal   = jacm,
+  volume    = {37},
+  number    = {4},
+  pages     = {720--741},
+  year      = {1990}
+}
+@article{BGM17,
+  author    = {Sean Bowe and
+               Ariel Gabizon and
+               Ian Miers},
+  title     = {Scalable Multi-party Computation for zk-SNARK Parameters in the Random Beacon Model},
+  journal   = {{IACR} Cryptology ePrint Archive},
+  volume    = {2017},
+  pages     = {1050},
+  year      = {2017}
+}
+@inproceedings{BGG18,
+  author    = {Sean Bowe and
+               Ariel Gabizon and
+               Matthew D. Green},
+  title     = {A Multi-party Protocol for Constructing the Public Parameters of the Pinocchio zk-SNARK},
+  booktitle = {Financial Cryptography and Data Security {FC}},
+  pages     = {64--77},
+  year      = {2018}
+}
+@inproceedings{BCGTV15,
+  author    = {Eli Ben{-}Sasson and
+               Alessandro Chiesa and
+               Matthew Green and
+               Eran Tromer and
+               Madars Virza},
+  title     = {Secure Sampling of Public Parameters for Succinct Zero Knowledge Proofs},
+  booktitle = {{IEEE} Symposium on Security and Privacy},
+  pages     = {287--304},
+  year      = {2015}
+}
+
+@article{MosselORSS2006,
+    author="Mossel, Elchanan
+            and O'Donnell, Ryan
+            and Regev, Oded
+            and Steif, Jeffrey E.
+            and Sudakov, Benny",
+    title="Non-interactive correlation distillation, inhomogeneous {M}arkov chains, and the reverse {B}onami-{B}eckner inequality",
+    journal="Israel Journal of Mathematics",
+    year="2006",
+    volume="154",
+    number="1",
+    pages="299--336"
+}
+
+@article{MosselOS2013,
+    author="Mossel, Elchanan and Oleszkiewicz, Krzysztof and Sen, Arnab",
+    title="On Reverse Hypercontractivity",
+    journal="Geometric and Functional Analysis",
+    year="2013",
+    volume="23",
+    number="3",
+    pages="1062--1097"
+}
+
+
+@book{Odonnel14,
+    place={Cambridge},
+    title={Analysis of Boolean Functions},
+    publisher={Cambridge University Press},
+    author={O'Donnell, Ryan},
+    year={2014}
+}
+
+ @article{Friedgut98,
+  author    = {Ehud Friedgut},
+  title     = {Boolean Functions With Low Average Sensitivity Depend On Few Coordinates},
+  journal   = {Combinatorica},
+  volume    = {18},
+  number    = {1},
+  pages     = {27--35},
+  year      = {1998}
+}
+
+@inproceedings{PS17,
+  author    = {Rafael Pass and
+               Elaine Shi},
+  title     = {Hybrid Consensus: Efficient Consensus in the Permissionless Model},
+  booktitle = disc17,
+  pages     = {39:1--39:16},
+  year      = {2017}
+}
+@inproceedings{CR93,
+  author    = {Ran Canetti and
+               Tal Rabin},
+  title     = {Fast asynchronous {Byzantine} agreement with optimal resilience},
+  booktitle = stoc93,
+  pages     = {42--51},
+  year      = {1993}
+}
+@inproceedings{BB98,
+  author    = {Ziv Bar{-}Joseph and
+               Michael Ben{-}Or},
+  title     = {A Tight Lower Bound for Randomized Synchronous Consensus},
+  booktitle = podc98,
+  pages     = {193--199},
+  year      = {1998}
+}
+@article{AC08,
+  author    = {Hagit Attiya and
+               Keren Censor},
+  title     = {Tight bounds for asynchronous randomized consensus},
+  journal   = jacm,
+  volume    = {55},
+  number    = {5},
+  pages     = {20:1--20:26},
+  year      = {2008}
+}
+@inproceedings{BL85,
+  author    = {Michael Ben{-}Or and
+               Nathan Linial},
+  title     = {Collective Coin Flipping, Robust Voting Schemes and Minima of Banzhaf Values},
+  booktitle = focs85,
+  pages     = {408--416},
+  year      = {1985}
+}
+@inproceedings{BPV06,
+  author    = {Michael Ben{-}Or and
+               Elan Pavlov and
+               Vinod Vaikuntanathan},
+  title     = {{Byzantine} agreement in the full-information model in O(log n) rounds},
+  booktitle = stoc06,
+  pages     = {179--186},
+  year      = {2006}
+}
+@article{GGL98,
+  author    = {Oded Goldreich and
+               Shafi Goldwasser and
+               Nathan Linial},
+  title     = {Fault-Tolerant Computation in the Full Information Model},
+  journal   = siamjc,
+  volume    = {27},
+  number    = {2},
+  pages     = {506--544},
+  year      = {1998}
+}
+@inproceedings{GPV06,
+  author    = {Shafi Goldwasser and
+               Elan Pavlov and
+               Vinod Vaikuntanathan},
+  title     = {Fault-Tolerant Distributed Computing in Full-Information Networks},
+  booktitle = focs06,
+  pages     = {15--26},
+  year      = {2006}
+}
+@inproceedings{CC84,
+  author    = {Benny Chor and
+               Brian A. Coan},
+  title     = {A Simple and Efficient Randomized {Byzantine} Agreement Algorithm},
+  booktitle = {Fourth Symposium on Reliability in Distributed Software and Database Systems, {SRDS}},
+  pages     = {98--106},
+  year      = {1984}
+}
+@inproceedings{KKKSS08,
+  author    = {Bruce M. Kapron and
+               David Kempe and
+               Valerie King and
+               Jared Saia and
+               Vishal Sanwalani},
+  title     = {Fast asynchronous {Byzantine} agreement and leader election with full information},
+  booktitle = {Proceedings of the Nineteenth Annual {ACM-SIAM} Symposium on Discrete Algorithms, {SODA}},
+  pages     = {1038--1047},
+  year      = {2008}
+}
+@inproceedings{KS13,
+  author    = {Valerie King and
+               Jared Saia},
+  title     = {{Byzantine} agreement in polynomial expected time: [extended abstract]},
+  booktitle = stoc13,
+  pages     = {401--410},
+  year      = {2013}
+}
+
+@inproceedings{Lewko11,
+  author    = {Allison B. Lewko},
+  title     = {The Contest between Simplicity and Efficiency in Asynchronous {Byzantine} Agreement},
+  booktitle = disc11,
+  pages     = {348--362},
+  year      = {2011}
+}
+
+@inproceedings{LL13,
+  author    = {Allison B. Lewko and
+               Mark Lewko},
+  title     = {On the complexity of asynchronous agreement against powerful adversaries},
+  booktitle = podc13,
+  pages     = {280--289},
+  year      = {2013}
+}
+@inproceedings{DY05,
+	author    = {Yevgeniy Dodis and
+                 Aleksandr Yampolskiy},
+	title     = {A Verifiable Random Function with Short Proofs and Keys},
+	booktitle = pkc05,
+	pages     = {416--431},
+	year      = {2005}
+}
+@article{Hadzilacos87,
+  author    = {Vassos Hadzilacos},
+  title     = {Connectivity Requirements for {Byzantine} Agreement under Restricted Types of Failures},
+  journal   = {Distributed Computing},
+  volume    = {2},
+  number    = {2},
+  pages     = {95--103},
+  year      = {1987}
+}
+
+@inproceedings{SV84,
+  author    = {Miklos Santha and
+               Umesh V. Vazirani},
+  title     = {Generating Quasi-Random Sequences from Slightly-Random Sources (Extended Abstract)},
+  booktitle = focs84,
+  pages     = {434--440},
+  year      = {1984}
+}
+
+@article{NT90,
+  author    = {Gil Neiger and
+               Sam Toueg},
+  title     = {Automatically Increasing the Fault-Tolerance of Distributed Algorithms},
+  journal   = {Journal of Algorithms},
+  volume    = {11},
+  number    = {3},
+  pages     = {374--419},
+  year      = {1990}
+}
+
+@inproceedings{Bracha84,
+  author    = {Gabriel Bracha},
+  title     = {An Asynchronou [(n-1)/3]-Resilient Consensus Protocol},
+  booktitle = podc84,
+  pages     = {154--162},
+  year      = {1984},
+}
+
+@article{RSA78,
+	author    = {Ronald L. Rivest and
+	Adi Shamir and
+	Leonard M. Adleman},
+	title     = {A Method for Obtaining Digital Signatures and Public-Key Cryptosystems},
+	journal   = cacm,
+	volume    = {21},
+	number    = {2},
+	pages     = {120--126},
+	year      = {1978},
+}
+
+@inproceedings{Merkle89,
+	author    = {Ralph C. Merkle},
+	title     = {A Certified Digital Signature},
+	booktitle = crypto89,
+	pages     = {218--238},
+	year      = {1989},
+}
+@techreport{Rabin1979,
+	title={Digitalized Signatures and Public-Key Functions as Intractable as Factorization},
+	author={Michael O. Rabin},
+	institution={MIT Laboratory for Computer Science},
+    number={212},
+	year={1979}
+}

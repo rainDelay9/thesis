@@ -1,0 +1,163 @@
+\section{Two Rounds are Necessary for \texorpdfstring{$4$}{Lg}-Party \texorpdfstring{$1$}{Lg}-Resilient BA}
+
+\begin{theorem} \label{thm1}
+	Let $\Pi(\secParam)$ be a $4t$-party $t$-resilient $\epsilon$-sound Byzantine agreement, where $\epsilon = \negl(\secParam)$. Then $\Pi$'s expected round complexity is at least $2 - \epsilon$.
+\end{theorem}
+
+To prove \cref{thm1} we will actually show a stronger result which will imply the theorem. We will show that if there exists a non-negligible probability that on input vector $(0,0,1,1)$ two parties starting with different input values halt after one round, then these parties must output different values in an honest execution with the same input vector. Note that this condition does not imply round-complexity less than $2 - \epsilon$, but that such round complexity necessarily implies this condition. We can also make a stronger lemma, but it is unnecessary, as our attack on correctness applies to any input vector with hamming weight exactly $2$.
+
+
+\begin{lemma}\label{lemma1}
+	Let $\Pi$ be a $4$-party $1$-resilient $\epsilon$-sound Byzantine agreement, and let $\cE$ be the event that on input vector $(0,0,1,1)$ two parties with different input bits halt after one round, regardless of adversarial behavior. Then,
+	\[
+	\Pr[\cE] < \epsilon
+	\]
+	where the probability is taken over the honest party coins and the correlated randomness in $\Pi$.
+\end{lemma}
+
+\begin{proof}
+	Assume that $\Pr[\cE] < \epsilon$. \Wlg we set the parties halting after one round of communication to $\pone$ and $\pfour$.
+	
+	We define the following scenarios, each consisting of an input vector and adversarial behavior.
+	
+	\begin{definition}{(Execution Scenarios for $4$-party Byzantine agreement)}
+
+	
+	\begin{itemize}
+	\item\textbf{Scenario~1.}
+	The input vector for the protocol is $(1,0,0,0)$ and $\cpone$ is corrupt. The adversarial strategy of  $\cpone$ is to play honestly in round one, and then halt.
+	
+	\item\textbf{Scenario~2.}
+	The input vector for the protocol is $(1,1,0,0)$ and $\cptwo$ is corrupt. The adversarial strategy of $\cptwo$ is to play honestly toward $\pone$ according to input $x_2=1$, and play honestly toward $\pthree$ and $\pfour$ according to input $x_2=0$.
+	
+	\item\textbf{Scenario~3.}
+	The input vector for the protocol is $(1,1,1,0)$ and $\Party_4^\ast$ is corrupt. The adversarial strategy of  $\Party_4^\ast$ is to play honestly in round $1$, and then halt.
+	
+	\item\textbf{Scenario~4.}
+	The input vector for the protocol is $(1,1,0,0)$ and $\Party_3^\ast$ is corrupt. The adversarial strategy of $\Party_3^\ast$ is to play honestly toward $\Party_4$ according to input $x_3=0$, and play honestly toward $\Party_1$ and $\Party_2$ according to input $x_3=1$.
+	
+	\end{itemize}
+
+	\end{definition}
+
+
+\begin{claim}\label{claim:4.1}
+	In an honest execution with input vector $(1,1,0,0)$ $\Party_1$ outputs $1$ with probability at least $1-2\epsilon$.
+\end{claim}
+
+\begin{proof}
+ Observe that in an execution of Scenario~1 in which \val holds $\Party_3$ outputs $1$, since all honest parties have input bit $1$. Let $\cE_1$ be the event that $\Party_3$ outputs $1$ in an execution of Scenario~1. We have
+ \[
+ \Pr[\cE_1] \geq \Pr[\cE_1 | \text{\val holds}] \cdot \Pr[\text{\val holds}] \geq 1-\epsilon
+ \]
+ where the probability is taken over the randomness of $\Pi$, correlated or otherwise.
+ Let $\cE_2$ be the event that $\Party_1$ halts in an execution of Scenario~2 after one round of communication. Conditioned on $\cE_1$, the only difference between Scenario~1 and Scenario~2 is the message from $\Party_2$ to $\Party_1$ in the first round, and since $\Party_1$ halts after one round, we have that $\Party_3$'s view is identical is both scenarios. Since $\Party_3$ has the exact same view, it also has the exact same output. Let $\cE_3$ be the event that $\Party_3$ outputs $1$ in an execution of Scenario~2. We have
+ \[
+ \Pr[\cE_3 | \cE_2] = \Pr[\cE_1] \geq 1-\epsilon
+ \]
+ Let $\cE_4$ be the event that $\Party_1$ halts after one round
+\end{proof}
+
+\begin{claim}\label{claim:4.2}
+	In an honest execution with input vector $(1,1,0,0)$ $\Party_4$ outputs $1$ with probability at least $1-2\epsilon$.
+\end{claim}
+
+\rnote{I still think that we should have a negligible $\epsilon$. This way we will not need to condition on agreement/validity. I don't think we gain anything from defining $\epsilon$ to be the negligible error probability and assume that $\delta>\epsilon$}
+
+\begin{claim}\label{claim:4.5}
+Let $E_1$ be the event where $\pone$ halts after one round \rnote{in an honest execution over inputs $(1,1,0,0)$?}, and \agr is reached. In Scenario~2,
+\[
+\pr{\text{all honest parties output } 0 \mid E_1}= 1
+\]
+%		In Scenario 2, if \emph{agreement} is reached then all honest parties output $0$.
+\rnote{maybe use $\cE_1$ to denote the event?}
+\end{claim}
+
+\begin{proof}
+Let $\view_3^2$ denote the random variable representing the view of $\pthree$ in Scenario~2, conditioned on the event that $\pone$ halts after one round, and let $\view_3^1$ denote the random variable representing the view of $\pthree$ in Scenario~1, conditioned on the event that the randomness is one with which $\pone$ halts after one round in Scenario~2. That last condition is important, since $\pone$ halts on all randomness in Scenario~1 (since it is controlled by the adversary), and only on a subset of the randomness in Scenario~2. Since Scenarios~1 and~2 are identical in that case, except for the first round message from $\ptwo$ to $\pone$, and since $\pone$ halts after round one in both executions, it follows that $\view_3^1$ and $\view_3^2$ are identically distributed. Therefore, the output of $\pthree$ is identically distributed in both scenarios. By \emph{validity}, party $\pthree$ outputs $0$ in Scenario~1, and therefore also in Scenario~2, with probability $1$. \rnote{I'm not sure this is accurate. In Scenario 1 we condition on validity, and in Scenario 2 we don't} By the $\epsilon$-soundness of the protocol, conditioned on event $E$ \rnote{$E_1$?} all honest parties will output~$0$ in Scenario~2 with probability $1$.
+%Let $\view_3^i$ denote the random variable representing the view of $\pthree$ in Scenario $i$, conditioned on the randomness being such that $\pone$ halts after one round. Since Scenario 1 and Scenario 2 are equivalent in all party behaviors except for the first round message from $\ptwo$ to $\pone$, and given that by assumption $\pone$ halts after round one in both executions, it is easy to see that $\view_3^1 \equiv \view_3^2$ and thus $\pthree$'s output is distributed the same in both scenarios. Since $\pthree$ outputs $0$ in every execution of Scenario~1, and since by assumption agreement is reached in Scenario~2 all honest parties output $0$ in Scenario 2.
+\end{proof}
+
+\begin{claim}\label{claim4.3}
+In Scenario~5,
+\[
+\pr{\text{all honest parties output } 0 \mid E_1} =  1.
+\]
+\end{claim}
+\begin{proof}
+This follows since the view of $\pone$ in Scenario~5 is identically distributed as its view in Scenario~2, conditioned on $\Party_1$ halting after one round.
+\end{proof}
+
+\cref{claim:case3,claim:case4,claim:case6} follow from \cref{claim:4.1,claim:4.2,claim:4.5} by symmetry. \rnote{define $E_2$}
+\begin{claim}\label{claim:case3}
+%In Scenario~3 if \emph{agreement} is reached then all honest parties output $1$.
+In Scenario~3, $\pr{\text{all honest parties output } 1 \mid \text{\val holds}} = 1$.
+\end{claim}
+
+%\begin{proof}
+%In Scenario~3 all honest parties start with input bit $1$, and since \agr is reached and \val holds, all honest parties must output $1$.
+%\end{proof}
+
+\begin{claim}\label{claim:case4}
+%In Scenario~4 if \agr is reached then all honest parties output $1$.
+Let $E_2$ be the event where $\pfour$ halts after one round, and \agr is reached. In Scenario~4, $\pr{\text{all honest parties output } 1 \mid E_2} =  1$.
+\end{claim}
+\begin{claim}\label{claim:case6}
+In Scenario~5, $\pr{\text{all honest parties output } 1 \mid E_2} = 1$.
+\end{claim}
+	
+%The proof to this claim is similar to the proof of \cref{claim:case2}.
+
+%We first note that the view of $\pone$ in Scenario~5 is distributed identically to its view in Scenario~2. Also, the view of $\pfour$ in Scenario~6 is distributed identically to its view in Scenario~4. This means that in Scenario~5 $\pone$ outputs $0$, and in Scenario~6 $\pfour$ outputs $1$. By assumption $\delta > \epsilon$, hence there exists randomness for which both parties halt after one round when all parties are honest and \agr is reached, in contradiction to both parties outputting different bits, and we have the theorem.
+
+To conclude the proof, we focus on Scenario~5. Let $E_3$ be the event in which \agr is reached and both $\pone$ and $\pfour$ halt after one round. %By \cref{claim:case5} \rnote{???}
+
+Since $E_3 = E_1 \cap E_2$, we have from \cref{claim:case3} that, conditioned on $E_3$, in Scenario~5 $\ptwo$ \rnote{try to avoid two adjacent math symbols, change to ``party $\ptwo$''} halts with $0$, and from \cref{claim:case6} that, conditioned on $E_3$ $\pthree$ halts with $1$. By assumption, $\delta > \epsilon$. Thus, there exists randomness s.t \rnote{use words, such that} $E_3$ holds, and so parties $\ptwo$ and $\pthree$, both \emph{honest}, output differing values. This, in contradiction to \agr holding in $E_3$. We conclude, then, that $\delta \leq \epsilon$.
+
+%\begin{align*}
+%\pr{\text{all honest parties output } 0}
+%\geq  & \ \pr{\text{all honest parties output } 0\mid \Party_1 \text{ and } \Party_4 \text{ halt after round } 1} \\
+% \ \cdot & \ \pr{\Party_1 \text{ and } \Party_4 \text{ halt after round } 1}\\
+%\geq  & \ (1-2\cdot \epsilon(\secParam)) \cdot \delta(\secParam).
+%\end{align*}
+
+%\[
+%\pr{\text{all honest parties output } 1}  \geq (1-2\cdot \epsilon(\secParam)) \cdot %\delta(\secParam)
+%\]
+
+\end{proof}
+
+\mnote{It just looks weird with the negligible error, even if it is interesting}
+\rnote{This corollary is not interesting - the interesting case is $\epsilon=\negl$}
+\begin{corollary}\label{cor1}
+Let $\Pi$ be a \ba{4}{1}{\epsilon}, where $\epsilon = \negl(\secParam)$. $\Pi$'s \textbf{expected} round complexity is at least $2 - \negl(\secParam)$.
+\rnote{Let $\Pi$ be a $4$-party $1$-resilient BA protocol. Then, the expected round complexity of $\Pi$ is at least $2$, except for negligible probability.}
+\end{corollary}
+
+\begin{proof}
+Let $\Pi$ be a \ba{4}{1}{\epsilon}, where $\epsilon = \negl(\secParam)$. From \cref{lemma1} we have that $\beta$, the probability with which all parties halt in $\Pi$ after one round is smaller or equal to $\epsilon$, since clearly $\beta \leq \delta$, as defined in \cref{lemma1}. We conclude that $\beta = \negl(\secParam)$, and the expected round complexity of $\Pi$ must be at least $2 - \negl(\secParam)$.
+\end{proof}
+
+We can now prove \cref{thm1}. \rnote{I adjusted the proof}
+\begin{proof}[Proof of \cref{thm1}]
+Assume that the expected round complexity of $\Pi$ is $2 - \epsilon(\secParam)$.
+We construct a $4$-party $1$-resilient BA protocol $\Pi'$ that has the same round complexity as $\Pi$.
+We start by partitioning the set of $n$ parties into $4$ subsets:
+\[
+S_1=\set{\Party_1, \ldots, \Party_{\ceil{n/4}}},
+\quad
+S_2=\set{\Party_{\ceil{n/4}+1}, \ldots, \Party_{\ceil{n/2}}},
+\]
+\[
+S_3=\set{\Party_{\ceil{n/2}+1}, \ldots, \Party_{\ceil{3n/4}}},
+\quad
+S_4=\set{\Party_{\ceil{3n/4}+1}, \ldots, \Party_n}.
+\]
+The $4$-party protocol $\Pi'=(\QParty_1,\QParty_2,\QParty_3,\QParty_4)$ is defined by having party $\QParty_i$ with input $x_i$ simulate all parties in $S_i$ running protocol $\Pi$ on input $x_i$. More precisely, whenever a party $\Party_k\in S_i$ should send a message $m$ to a party $\Party_l\in S_i$, party $\QParty_i$ simulates in its mind $\Party_l$ as receiving $m$ from $\Party_k$, and whenever $\Party_k$ should send a message $m$ to a party $\Party_l\in S_j$, for $j\neq i$, party $\QParty_i$ sends the message $(m,k,l)$ to $\QParty_j$ who simulates $\Party_l$ as receiving $m$ from $\Party_k$. At the conclusion of this interaction, party $\QParty_i$ chooses an arbitrary party in $S_i$ (\eg the party with smallest index) and outputs the output value of that party.
+
+Every PPT adversary $\Adv'$ attacking $\Pi'$ by corrupting a single party $\QParty_i$ can be translated into a PPT adversary $\Adv$ attacking $\Pi$ by corrupting all parties in $S_i$ and emulating $\Adv'$ actions. Since $\ssize{S_i}\leq \ceil{n/4}$ for every $i\in[4]$, it follows from the security of $\Pi$ that the \emph{agreement} and \emph{validity} properties hold except for negligible probability in $\Pi$, and therefore also in $\Pi'$. Since the expected round complexity of $\Pi'$ is the same as of $\Pi$, \ie $2-\epsilon(\secParam)$, it follows from \cref{cor1} that $\epsilon$ is negligible.
+
+%Let $\Pi$ be an \batwo{n}{\ceil{n/4}}. Assume towards a contradiction that the expected round complexity of $\Pi$ is less than $2 - \epsilon$.
+%We construct $\Pi'$ which is a \ba{4}{1}{\epsilon}, without changing the round complexity, thus reaching a contradiction with \cref{cor1}.
+%In $\Pi'$ each party $\Party_i$, upon receiving input bit $x_i$, will simply simulate the behavior of $n/4$ parties in $\Pi$, all starting with input bit $x_i$. First, we note that an adversary controlling one party in $\Pi'$, will control $n/4$ parties of the simulated version of $\Pi$, and since $\Pi$ is \res{\ceil{n/4}}, \agr is guaranteed w.p at least $1-\epsilon$. Next, we note that if \val holds in $\Pi$ then it also holds in $\Pi'$ since if all input bits to $\Pi'$ were identical, so would they be in the simulation of $\Pi$ by parties of $\Pi'$, by construction. Thus, \val holds w.p at least $1-\epsilon$ in $\Pi'$.  Since all parties simply execute $\Pi$ the expected round complexity of $\Pi'$ is equivalent to that of $\Pi$. We have that $\Pi'$ is a \batwo{4}{1} with expected round complexity less than $2 - \negl(\secParam)$, in contradiction to \cref{cor1}.
+\end{proof}

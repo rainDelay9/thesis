@@ -1,0 +1,456 @@
+
+\section{Lower Bounds for \texorpdfstring{$5$}{Lg}-Party \texorpdfstring{$2$}{Lg}-Reselient BA}
+
+In what follows we will prove some lower bounds on the round complexity of Byzantine agreements, mostly working towards the following conjecture:
+
+\begin{conjecture}
+	Let $\Pi$ be an $n$-party $2n/5$-resilient Byzantine Agreement. $\Pi$'s expected round complexity is at least three.
+\end{conjecture}
+
+\subsection{Honest Agreement}
+We start this section with an introduction of a very simple yet surprisingly powerful lemma, which simply states that if a BA protocol $\Pi$ is \tres, then in an \emph{honest} execution of $\Pi$ in which the input vector is unbalanced enough (exactly how much is "enough" will be clearly defined) the output bit can be determined. We define the lemma and summarily prove it:
+
+\begin{lemma}[Honest Agreement Lemma]\label{honestagreementlemma}
+	Let $\Pi$ be an \batwo{n}{t}, and let $w$ be the hamming weight of the input vector. The following two conditions hold in an \emph{honest} execution of $\Pi$ in which \agr is reached: \nnote{w.p. $1-\beta$}
+	\begin{enumerate}
+		\item If $w \geq n-t$ then all honest parties output $1$.
+		\item If $w \leq t$ then all honest parties output $0$.
+	\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+	We assume the first case, and the second will follow by symmetry. Let $\sigma_1$ be an honest execution of $\Pi$, and let $\tilde{P} \subset P$ such that $\size{\tilde{P}}  \leq t$ be the set of parties with input bit $0$. Consider also $\sigma_2$, an execution of $\Pi$ in which all parties have input bits $1$, an adversary controls all parties in $\tilde{P}$ and all adversary-controlled parties behave as honest parties with input bit $0$. Clearly the views of each honest party in $\sigma_1$, $\sigma_2$ are equivalent. Thus, the outputs of all honest parties in both executions are equivalent. From \val all parties in $\sigma_2$ output $1$, and so all parties in $\sigma_1$ output $1$.
+\end{proof}
+
+%\subsection{Public Coin \texorpdfstring{\batwo{n}{\ceil{2n/5}}}{TEXT} Requires Expected Three Rounds of Communication}
+%\subsection{Lower Bounds for \texorpdfstring{\batwo{5t}{2t}}{TEXT}}
+
+%\subsubsection{Public Coin}
+\subsection{Public Coin}
+\rnote{is the model defined?}
+\begin{theorem}\label{thm2}
+Let $\Pi$ be an $5t$-party $2t$-resilient BA protocol in the public-coin model. Then, the expected round complexity of $\Pi$ is at least $3$.
+\end{theorem}
+
+To prove \cref{thm2} we first prove a simpler lemma.
+
+\rnote{changed the claim to a lemma}
+\radded{Write a few words describing what is going to happen. The proof follows the spirit of~\cite{FischerL82}, and changes an honest execution on inputs $(0,0,1,1,1)$, in which the output must be $1$, into an honest execution on inputs $(0,0,0,1,1)$, in which the output must be $0$. Similarly to \cite{FischerL82}, this is done by a sequence of hybrids, where $\Party_3$ changes its messages one by one, however, special care must be taken...}
+%\begin{lemma}\label{claim2}
+%Let $\Pi$ be a \ba{5}{2}{\epsilon} in the \emph{public coin} model, and let $\delta$ be the probability with which all parties halt after two rounds \rdeleted{of communication}, regardless of adversarial strategy. Then $\delta \leq \epsilon$.
+%\end{lemma}
+\rnote{again, I think that a negligible $\epsilon$ will simplify the statement and the proof}
+\begin{proof}
+We assume towards a contradiction that $\delta > \epsilon$. We, again, introduce a few different scenarios:
+\radded{We start by considering an execution on inputs $(0,0,1,1,1)$ for the parties where a corrupted party $\Party_3$ plays towards $\Party_2$ according to $x_3=0$ and towards all other parties according to $x_3=1$. We show that if $\Party_1$ halts after $2$ rounds then the common output remains $1$.}
+\begin{itemize}
+    \item\textbf{Scenario~1}:
+    The input vector for the protocol is $(0,0,1,1,1)$ and $\cpthree$ is corrupt. The adversarial strategy of  $\cpthree$ is to play toward $\ptwo$ according to the next-message function defined by $\Pi$ for input bit $x_2=0$ \rnote{this is what we mean by play honestly according to input $x_2=0$}, and according to the next-message function for input bit $x_2=1$ with all other parties.
+    \item\textbf{Scenario~1.1}:
+    The input vector for the protocol is $(0,0,1,1,1)$. \radded{Parties} $\cptwo$ and $\cpthree$ are corrupt. The adversarial strategy of $\cpthree$ is to play honestly. The adversarial strategy of $\cptwo$ is to play honestly in round one, in round two send $\pone$ a message corresponding to the next-message function defined in $\Pi$ had $\cpthree$ sent $\cptwo$ a message corresponding to input bit $0$ in round one and send $\pfour$ and $\pfive$ a message corresponding to the next-message function defined in $\Pi$ had $\cpthree$ sent $\cptwo$ a message corresponding to input bit $1$ in round one. $\cptwo$ then halts after round two. We note here that although $\cpthree$'s strategy \rnote{try not to use $\cpthree$'s, writing ``the strategy of $\cpthree$'' is easier to read} is to play honestly, the adversary needs control over $\cpthree$, since $\cptwo$ must send messages corresponding to different (possibly signed) messages of $\cpthree$.
+    \rnote{maybe define $m_{i\rightarrow j}(b)$ as the first round message $\Party_i$ sends to $\Party_j$, when $\Party_i$ plays honestly according to input $x_i=b$?}
+    \item\textbf{Scenario~1.2}:
+    The input vector for the protocol is $(0,0,1,1,1)$. \radded{Parties} $\cpone$ and $\cptwo$ are corrupt. Their adversarial strategy is to play \emph{honestly} in the first two rounds and then halt.
+\end{itemize}	
+%	\paragraph{\textbf{Scenario 1}:}
+%	The input vector for the protocol is $(0,0,1,1,1)$ and $\cpthree$ is corrupt. The adversarial strategy of  $\cpthree$ is to play according to the next-message function defined by $\Pi$ for input bit $0$ toward $\ptwo$, and according to the next-message function for input bit $1$ with all other parties.
+%	
+%	\paragraph{\textbf{Scenario 1.1}:}
+%	The input vector for the protocol is $(0,0,1,1,1)$. $\cptwo$ and $\cpthree$ are corrupt. The adversarial strategy of $\cpthree$ is to play honestly. The adversarial strategy of $\cptwo$ is to play honestly in round one, in round two send $\pone$ a message corresponding to the next-message function defined in $\Pi$ had $\cpthree$ sent $\cptwo$ a message corresponding to input bit $0$ in round one and send $\pfour$ and $\pfive$ a message corresponding to the next-message function defined in $\Pi$ had $\cpthree$ sent $\cptwo$ a message corresponding to input bit $1$ in round one. $\cptwo$ then halts after round two. We note here that although $\cpthree$'s strategy is to play honestly, the adversary needs control over $\cpthree$, since $\cptwo$ must send messages corresponding to different (possibly signed) messages of $\cpthree$.
+%	
+%	\paragraph{\textbf{Scenario 1.2}:}
+%	The input vector for the protocol is $(0,0,1,1,1)$. $\cpone$ and $\cptwo$ are corrupt. Their adversarial strategy is to play \emph{honestly} in the first two rounds and then halt.
+	
+	\begin{claim}\label{claim2.1}
+		In an execution of Scenario~1 in which \agr is reached and $\pone$ halts after two rounds of communication all honest parties output $1$.
+	\end{claim}
+
+	\begin{proof}
+		We first note that in Scenario~1.2 if \agr is reached, then all honest parties output $1$. This stems from \val of $\Pi$. Let $\viewps{i}{j}$ \radded{and} $\outps{i}{j}$ be the random variables corresponding to the view and output of party $\Party_i$ in Scenario~j, respectively, given that $\pone$ (or $\cpone$) halts after two rounds of communication and \agr is reached. We first \rnote{don't overuse ``first''} note that $\viewps{1}{1} \equiv \viewps{1}{1.1}$. This can easily be seen by accounting for all incoming messages and randomness of $\pone$, thus $\outps{1}{1} \equiv \outps{1}{1.1}$. Given that, by assumption, agreement is reached in both scenarios, we conclude that $\outps{5}{1} \equiv \outps{5}{1.1}$. Again, by accounting for all incoming messages to $\pfive$ in Scenarios~1.1 and 1.2, we can easily see that $\viewps{5}{1.1} \equiv \viewps{5}{1.2}$. Since $\outps{5}{1} \equiv 1$ \rnote{$\outps{5}{1.2}$?}, we have by chain rule \rnote{??} that $\outps{5}{1} \equiv 1$, and by assumption all honest parties in Scenario~1 output $1$, which gives us the claim.
+	\end{proof}
+
+\radded{We continue by showing in the above setting, if corrupted $\Party_3$ plays according to $x_3=0$ also towards $\Party_4$ (in addition to $\Party_2$), then the common output remains $1$.}
+\begin{itemize}
+    \item\textbf{Scenario~2:}
+	The input vector for the protocol is $(0,0,1,1,1)$ and $\cpthree$ is corrupt. The adversarial strategy of $\cpthree$ is to play according to the next-message function defined by $\Pi$ for input bit $0$ toward $\ptwo$ and $\pfour$, and according to the next-message function for input bit $1$ with all other parties.
+    \item\textbf{Scenario~2.1:}
+	The input vector for the protocol is $(0,0,1,1,1)$. Parties $\cpthree$ and $\cpfour$ are corrupt. The adversarial strategy of  $\cpthree$ is to play according to the next-message function defined by $\Pi$ for input bit $0$ toward $\ptwo$. The adversarial strategy of $\cpfour$ is to play honestly in round one, and in round two send $\pone$ a message corresponding to the next-message function defined in $\Pi$ had $\cpthree$ sent $\cpfour$ a message corresponding to input bit $0$ in round one and send $\ptwo$ and $\pfive$ a message corresponding to the next-message function defined in $\Pi$ had $\cpthree$ sent $\cpfour$ a message corresponding to input bit $1$ in round one. $\cpfour$ then plays honestly. \rnote{?}
+    \item\textbf{Scenario~2.2:}
+	The input vector for the protocol is $(0,0,1,1,1)$. Parties $\cpthree$ and $\cpfour$ are corrupt. The adversarial strategy of  $\cpthree$ is to play according to the next-message function defined by $\Pi$ for input bit $0$ with $\ptwo$. The adversarial strategy of $\cpfour$ is to play honestly in round one, and in round two send all honest parties messages corresponding to the next-message function defined in $\Pi$ had $\cpthree$ sent $\cpfour$ a message corresponding to input bit $1$ in round one. $\cpfour$ then plays honestly. \rnote{?}
+\end{itemize}	
+%	\paragraph{\textbf{Scenario 2}:}
+%	The input vector for the protocol is $(0,0,1,1,1)$ and $\cpthree$ is corrupt. The adversarial strategy of $\cpthree$ is to play according to the next-message function defined by $\Pi$ for input bit $0$ toward $\ptwo$ and $\pfour$, and according to the next-message function for input bit $1$ with all other parties.
+%	
+%	\paragraph{\textbf{Scenario 2.1}:}
+%	The input vector for the protocol is $(0,0,1,1,1)$. $\cpthree$ and $\cpfour$ are corrupt. The adversarial strategy of  $\cpthree$ is to play according to the next-message function defined by $\Pi$ for input bit $0$ toward $\ptwo$. The adversarial strategy of $\cpfour$ is to play honestly in round one, and in round two send $\pone$ a message corresponding to the next-message function defined in $\Pi$ had $\cpthree$ sent $\cpfour$ a message corresponding to input bit $0$ in round one and send $\ptwo$ and $\pfive$ a message corresponding to the next-message function defined in $\Pi$ had $\cpthree$ sent $\cpfour$ a message corresponding to input bit $1$ in round one. $\cpfour$ then plays honestly.
+%	
+%	\paragraph{\textbf{Scenario 2.2}:}
+%	The input vector for the protocol is $(0,0,1,1,1)$. $\cpthree$ and $\cpfour$ are corrupt. The adversarial strategy of  $\cpthree$ is to play according to the next-message function defined by $\Pi$ for input bit $0$ with $\ptwo$. The adversarial strategy of $\cpfour$ is to play honestly in round one, and in round two send all honest parties messages corresponding to the next-message function defined in $\Pi$ had $\cpthree$ sent $\cpfour$ a message corresponding to input bit $1$ in round one. $\cpfour$ then plays honestly.
+	
+	\begin{claim}\label{claim2.2}
+		In an execution of Scenario~2 in which \agr is reached and $\pone$ halts after two rounds of communication, and given that on the same randomness $\pone$ halts in an execution of Scenario~1, all honest parties output $1$.
+	\end{claim}
+	
+	\begin{proof}
+	We first set the randomness for all following discussed executions to one for which in both Scenarios~1 and~2 \agr is reached and also $\pone$ halts after two rounds. A simple observation would be that the view of $\pfive$ in Scenario~2 is identical to the view of $\pfive$ in Scenario~2.1. This is due to the fact that the only message different in the two executions is the one sent from $\pfour$ ($\cpfour$ in Scenario~2.1) to $\pone$, and by assumption $\pone$ halts without sending any messages after that message had been received. Thus, in both executions $\pfive$ will output the same bit. We also note that the view of $\pone$ in an execution of Scenario~2.2 is identical to the view of $\pone$ in an execution of Scenario~1, given the aforementioned set randomness, since the randomness is identical and all incoming messages are identical as a result of the randomness and adversarial strategy. Thus, from \cref{claim2.1}, and from the assumption about \agr \rnote{this assumption is annoying. If you assume it all the time there is no need for a non-negligible $\epsilon$. Removing this assumption will shorten the proof and simplify it}, $\pfive$ will output $1$ in Scenario~2.2. Our final link in the chain would be to notice that, given all assumptions, the view of $\pone$ in the execution of Scenario~2.2 is identical to its view in the execution of Scenario~2.1. Again, since this means that $\pone$ will have the same output, and we have the claim.
+	\end{proof}
+
+\radded{In the next scenario, $\Party_3$ plays according to $x_3=0$ also towards $\Party_5$ (in addition to $\Party_2$ and $\Party_2$); the common output remains $1$.}
+\begin{itemize}
+    \item\textbf{Scenario~3:}
+	The input vector for the protocol is $(0,0,1,1,1)$ and $\cpthree$ is corrupt. The adversarial strategy of  $\cpthree$ is to play according to the next-message function defined by $\Pi$ for input bit $0$ with $\ptwo, \pfour$, and $\pfive$, and according to the next-message function for input bit $1$ with $\pone$.
+\end{itemize}	
+%	\paragraph{\textbf{Scenario 3}:}
+%	The input vector for the protocol is $(0,0,1,1,1)$ and $\cpthree$ is corrupt. The adversarial strategy of  $\cpthree$ is to play according to the next-message function defined by $\Pi$ for to input bit $0$ with $\ptwo, \pfour$ and $\pfive$, and according to the next-message function for input bit $1$ with $\pone$.
+	
+	\begin{claim}\label{claim2.3}
+		In an execution of Scenario~3 in which \agr is reached and $\pone$ halts after two rounds of communication, and given that on the same randomness $\pone$ halts in executions of Scenarios~1 and~2, all honest parties output $1$.
+	\end{claim}
+	
+	The proof of \cref{claim2.3} follows in similar lines to proof of \cref{claim2.2}.
+	
+\begin{itemize}
+    \item\textbf{Scenario~4:}
+	The input vector for the protocol is $(0,0,1,1,1)$ and $\cpthree$ is corrupt. The adversarial strategy of  $\cpthree$ is to play according to the next-message function defined by $\Pi$ for input bit $0$ toward all other parties.
+\end{itemize}	
+%	\paragraph{\textbf{Scenario 4}:}
+%	The input vector for the protocol is $(0,0,1,1,1)$ and $\cpthree$ is corrupt. The adversarial strategy of  $\cpthree$ is to play according to the next-message function defined by $\Pi$ for input bit $0$ toward all other parties.
+	
+	\begin{claim}\label{claim2.4}
+		In an execution of Scenario~4 in which \agr is reached and $\pfive$ halts after two rounds of communication, and given that on the same randomness $\pone$ halts in executions of Scenarios~1, 2, and 3, all honest parties output $1$.
+	\end{claim}
+	
+	The proof of \cref{claim2.4} follows in similar lines to proof of \cref{claim2.2}.
+	
+	Next, we claim that if \agr is reached, then the conditions for \cref{claim2.1,claim2.2,claim2.3,claim2.4} must coexist.
+	
+	We denote by $\tilde{b} = (b_1,b_2,b_3,b_4)$ the vector of bits used by $\cpthree$ to determine its messages, where $b_i$ is the bit used for the messages to party $\Party_i$. In the non-adaptive public-coin model all randomness is revealed as part of a common reference string, and so a corrupt party may only deviate from $\Pi$ by representing a different input bit to other parties. $\cpthree$'s first round messages are then determined by this choice of input-vector and the protocol's randomness.
+
+	%\begin{claim}\label{triggerclaim}
+	%Let $\Pi$ be a \ba{5}{2}{\epsilon} in the \emph{public-coin} model, and let $\delta$ be the probability with which all parties halt after two rounds in $\Pi$. Then, for any input and for a $\delta$-fraction of the randomness space, it holds that all parties halt after two rounds, regardless $\cpthree$'s chosen input-vector.
+	%\end{claim}
+	
+	\begin{proof}
+	 Let $\mathcal{R}$ be the space of randomness. Let $\cR^1,\cR^2 \subseteq \cR$ be two randomness sub-spaces, and let $\tilde{b}^1, \tilde{b}^2$ be two input-vectors, such that for $i \in \{1,2\}$ when $\Pi$'s randomness is $r \in \cR^i$ and $\cpthree$ sends messages according to $\tilde{b}^i$, at least one party (any party) does not halt after the second round. We assume towards a contradiction that
+
+	\[
+	\frac{\size{\cR^1 \cup \cR^2}}{\size{R}} > 1 - \delta.
+	\]
+
+We describe an adversary controlling $\cpthree$ that upon seeing the CRS $r$ sends messages according to bit vector $\tilde{b}$ according to the following rule:
+	  \[
+	  \tilde{b} =   \begin{cases}
+	  \tilde{b}^1, & r \in \cR^1 \\
+	  \tilde{b}^2, & r \notin \cR^1.
+	  \end{cases}
+	  \]
+	
+	Observe that by assumption, given this adversarial behavior there exists some honest party, not necessarily the same party, which does not halt after two rounds for a subspace of randomness of size at least $|\cR^1 \cup \cR^2|$. Thus, with probability larger than $1-\delta$ some honest party continues execution after two rounds of communication. This, in contradiction to the assumption that all honest parties halt after two rounds with probability at least $\delta$, regardless of adversarial strategy. We conclude the claim.
+	\end{proof}
+	
+	We can now complete the proof of \cref{claim2}. Let $\sigma$ be an \emph{honest} execution of $\Pi$ with input vector $(0,0,0,1,1)$ in which all parties halt after two rounds. Since $\delta > \epsilon$ there exists such an execution. Since \agr is reached, all honest parties output $0$, by \cref{honestagreementlemma}. By \cref{triggerclaim}, all honest parties must halt after two rounds on executions of Scenarios~1, 2, 3, and~4 on the same randomness. Thus, for an execution $\sigma'$ with the same randomness of $\sigma$, conditions for \cref{claim2.4} exist, and $\pone$ will halt after two rounds and output $0$. Accounting for all of $\pone$'s incoming messages, input and randomness, it is easy to see that its view is identical in both $\sigma$ and $\sigma'$, yet in those executions it outputs $0$ and $1$, respectively. This is a contradiction, which gives us \cref{claim2}.
+	
+\end{proof}
+
+\rnote{please adjust the rest like previous section}
+
+\begin{corollary}\label{cor3}
+	Let $\Pi$ be a \batwo{5}{2} in the public coin model. $\Pi$'s expected round complexity is at least three.
+\end{corollary}
+
+\begin{proof}
+	By definition we have that for $\Pi$, $\epsilon = 0$, and from \cref{thm1} we have that $\delta$, the probability with which all parties halt in $\Pi$ after one round is smaller or equal to $\epsilon$. We conclude that $\delta = 0$, and the expected round complexity of $\Pi$ must be at least two.
+\end{proof}
+
+We can now prove \cref{thm2} as a corollary of \cref{claim2}.
+
+\begin{proof}
+	We assume towards a contradiction that $\Pi$ has expected round complexity less than three. We construct $\Pi'$ which is a \batwo{5}{2}, without changing the round complexity, thus reaching a contradiction with \cref{cor3}. In $\Pi'$ each party, upon receiving input bit $b$, will simply simulate the behavior of $n/5$ parties in $\Pi$, all starting with input bit $b$. First, we note that an adversary controlling two parties in $\Pi'$, will control $2n/5$ parties of the simulated version of $\Pi$, and since $\Pi$ is \res{\ceil{2n/5}}, \agr is guaranteed. Next, we note that if \val holds in $\Pi$ then it also holds in $\Pi'$ since if all input bits to $\Pi'$ were identical, so would they be in the simulation of $\Pi$ by parties of $\Pi'$, by construction. Since all parties simply execute $\Pi$ the expected round complexity of $\Pi'$ is equivalent to that of $\Pi$. We have that $\Pi'$ is a \batwo{5}{2} with expected round complexity less than three, in contradiction to \cref{cor3}.
+\end{proof}
+
+%\subsubsection{Extending to Adaptive Public Coins}
+\subsection{Extending to Adaptive Public Coins}
+
+We next extend our model to have some more randomness in it. Specifically, part of the CRS is devoted to selecting a party which can flip extra coins in round two and distribute them. We call this model the CRS-MC (MC for Magic Coin) model. We call the party who is chosen to flip coins in round two the leader. We denote the CRS space as $(\cR,i)$, where $\cR$ is some random string and $i \in [n]$. We further denote by $\cC$ the space of second round leader coins. We give another caveat in the form of restrictions on the halting decision of honest parties in $\Pi$. \mnote{Need to add restrictions on halting function}
+
+\begin{theorem} \label{thm3}
+	Let $\Pi$ be an $n$-party $2n/5$-resilient Byzantine agreement in the CRS-MC model. Then other than with negligible probability $\Pi$'s expected round complexity is at least three.
+\end{theorem}
+
+\begin{proof}
+We prove \cref{thm3} in much the same way we proved \cref{thm2}, as first establishing a lemma about the simpler \batwo{5}{2} case.
+
+%\begin{lemma}\label{lemma3}
+%	Let $\Pi$ be a \ba{5}{2}{\epsilon} in the CRS-MC model, and let $\delta$ be the probability with which all parties halt after two rounds, regardless of adversarial strategy. Then $\delta \leq 5\epsilon$.
+%\end{lemma}
+
+
+Proving \cref{lemma3} is very similar to proving \cref{claim2}, in that the witness chain created in \cref{claim2.1,claim2.2,claim2.3,claim2.4} holds for this model as well, as the fact that the protocol was in the CRS (or public coin) model did not play a part in the statement or proof of these claims. The only claim left to prove is a version of \cref{triggerclaim}, with its model adjusted to the CRS-MC model. This results in a constant fraction loss in probability, which is nullified in $o(1)$-sound protocols.
+
+
+	%\begin{claim}\label{triggerclaim2}
+	%	Let $\Pi$ be a \ba{5}{2}{\epsilon} in the \emph{CRS-MC} model, and let $\delta$ be the probability with which all parties halt after two rounds of communication, regardless of adversarial strategy. If $\cpthree$ is the leader, then for a $\delta$-fraction of randomness all parties halt after two rounds, regardless of $\cpthree$'s first round messages.
+	%\end{claim}
+
+	\begin{proof}
+		We first note that if the second round coins do not influence honest-party halting, then there is no difference between the CRS-MC model and the CRS model in regards to this claim. Let $\mathcal{R}$ be the space of randomness. We now claim that for any randomness $r \in \cR$ and adversarial strategy for which an honest party does not halt after two rounds with positive probability there exists $c \in \cC$ for which at least one honest party does not halt after two rounds. If this were not true, then simply setting the randomness to $r$ and the coins to $c$ would result in a deterministic two-round BA. Let $\cR^1,\cR^2 \subseteq \cR$ be two randomness sub-spaces, and let $(\tilde{b}^1,c_1), (\tilde{b}^2,c_2)$ be two input-vector and second-round randomness string pairs, such that for $j \in \{1,2\}$ when $\Pi$'s randomness is $r \in \cR^i$ and $\cpthree$ sends messages according to $(\tilde{b}^i,c_i)$, at least one party (any party) does not halt after the second round. We assume towards a contradiction that
+		
+		\[
+		\frac{\size{\cR^1 \cup \cR^2}}{\size{R}} > 1 - \delta.
+		\]
+		
+		We describe an adversary controlling $\cpthree$ that upon seeing the CRS $r$ sends messages according to bit vector $\tilde{b}$ and round-two randomness $c$ according to the following rule:
+		\[
+		(\tilde{b},c) =   \begin{cases}
+		(\tilde{b}^1,c_1), & r \in \cR^1 \\
+		(\tilde{b}^2,c_2) & r \notin \cR^1.
+		\end{cases}
+		\]
+		
+		Observe that by assumption, given this adversarial behavior there exists some honest party, not necessarily the same party, which does not halt after two rounds for a subspace of randomness of size at least $|\cR^1 \cup \cR^2|$. Thus, with probability larger than $1-\delta$ some honest party continues execution after two rounds of communication. This, in contradiction to the assumption that all honest parties halt after two rounds with probability at least $\delta$, regardless of adversarial strategy. We conclude the claim.
+		\end{proof}
+
+We can now prove \cref{lemma3}, by assuming towards a contradiction that $\delta > 5\epsilon$. On the surface it would appear as though we cannot make the same claims made for the proof of \cref{claim2}, as the $\delta$-fraction of coins for which all parties halt after two rounds may be disjoint from the set of coins for which $\cpthree$ is the leader. Still we can claim that since the CRS is input-independent, and thus there must exist a party such that when it is the leader, for at least a $\delta$-fraction of coins all parties halt after two rounds, in which case we simply substitute the input-vector and corrupt parties in all of our previous claims to maximize the adversary's probability of attack. We have that for a at least a $\delta/5$ fraction of coins all parties halt after two rounds, and since by assumption there exist such coins for which \agr holds, and we conclude the same contradiction as in \cref{claim2}.
+\end{proof}
+
+\mnote{maybe define good and bad events}
+
+\begin{proof}The proof of \cref{thm3} follows the same lines as the proof of \cref{thm2} with the adage that in a simulation of a larger (as in more participants) protocol by five parties, there is still a $0.2$ probability of the leader being under the control of an adversary.
+\end{proof}
+We can now extend this case to have more coins. In the CRS-PC model the adversary first selects $t$ parties to corrupt, a CRS is then revealed, and in the second round all parties have fresh randomness which they must send with their second round messages. \cref{lemma3} naturally extends to this model, if we consider halting decision which is input-independent. Since each honest party must halt on at least a $\delta$-fraction of randomness for each input, there must exist a party which can influence halting for at least a $\delta/5$-fraction of second-round coins. We can simply take this party to be the corrupt party, and adjust our input vector accordingly, as the halting decision is independent of the input vector.
+
+\mnote{There is a problem with extending this to \cref{thm3} - in a simulation now there must exist a party, all of whose simulated parties have influence - this is strange.}
+
+\begin{comment}
+\subsubsection{Deterministic First Round, MC second round}
+
+We next consider the case of a $5n$-party $2n$-resilient BA, where execution is deterministic in the first round, and in the second round all parties have one public coin. Termination is then decided by an honest party based on its entire view. We, again, claim that in this model honest parties cannot halt with significant probability in less than three rounds of communication. Our main theorem is as follows:
+
+\begin{theorem}\label{thm4}
+	Let $\Pi$ be a $5n$-party $2n$-resilient Byzantine agreement where the first round of communication in $\Pi$ is deterministic, and in the second round each party has a single coin which it has to distribute. Then other than with negligible probability $\Pi$'s expected round complexity is at least three.
+\end{theorem}
+
+We prove \cref{thm4} by considering the following claim, of which the theorem naturally follows.
+
+\begin{lemma}\label{lemma4}
+	Let $\Pi$ be a $5$-party $2$-resilient $\epsilon$-sound Byzantine agreement where the first round of communication in $\Pi$ is deterministic, and in the second round each party has a single coin which it has to distribute, and assume that for $\Pi$, for every adversary controlling at most $2$ parties and for every input vector it holds that
+	\[
+	\Pr[\text{All honest parties halt after at most two rounds of communication}] \geq \delta.
+	\]
+	Then $\delta \leq \varepsilon$.
+\end{lemma}
+
+To prove the lemma we consider the scenario chain previously defined
+\end{comment}
+
+%\subsubsection{Deterministic First Round, MC second round}
+\subsection{Deterministic First Round, MC second round}
+We next consider the following model. An adversary first chooses $t$ parties to corrupt, then the protocol is run, with the first round being deterministic, and in the second round each party can flip a single coin, and send it (along with a second round message) to all other parties.
+\rnote{parties also have CRS and signing oracle, right?}
+
+\begin{theorem}\label{thm5}
+	Let $\Pi$ be a $5n$-party $2n$-resilient BA in the above model. Except for negligible probability, $\Pi$'s expected round complexity is $3$.
+\end{theorem}
+\rnote{I'm not sure the multiparty case works, let's start with 5-party protocols}
+
+We prove \cref{thm5} by proving a stronger lemma first. We show that given a non-negligible probability for a $5$-party $2$-resilient Byzantine agreement to complete after two rounds of communication, there must be non-negligible probability of disagreement. \mnote{reformulate} \rnote{I don't follow...}
+
+\begin{lemma}\label{lemma5}
+\rnote{missing lemma?}
+\end{lemma}
+
+Without loss of generality we will assume throughout the proof of \cref{lemma5}, that, as a corrupt party, $\cpfive$ can choose the best second-round randomness it wants. \rnote{we're jumping into the deep water. The should be an explanation of what the attack is all about. Start with $(00111)$ and change to $(00110)$ one message at a time, and so on} Since in any case, at least one coin is better for it (be its goal attacking correctness or round complexity), it can simply choose that coin. Thus, we can define a second round randomness vector received by party $\Party_i$ as $\vr^i = (r^i_1,r^i_2,r^i_3,r^i_4)$, with $r^i_5$ being a constant, and therefore ignored.
+We will also denote by $\vb_i \in \zo^4$ the vector of first round messages a corrupt $\cpfive$ sends out during the first round, with $b_i^j$ being the bit it chooses to represent towards $\Party_j$. We define $\vb_i \in \zo^4$ such that the first $i$ bits of $\vb_i$ are $1$, and the rest are $0$ (\eg $\vb_3 = (1110)$).
+\rnote{be consistent between $\vb_i$ and $\vr^i$}
+We will restrict our adversaries to dishonest behavior only in the first two rounds, in which only $\cpfive$ is dishonest in round one, and another party is dishonest in round two in respect to its randomness. Thus, after two rounds of communication, the view of an honest party $\Party_i$ is well defined by a pair $(\vb_i,\vr_i)$. \rnote{change of notation for $\vr_i$} \rnote{what about the second round message of the second corrupted party? We can assume parties echo their view from round 1}
+Thus, we will refer to $\Pi(\vb_i,\vr_i)$ as an execution with input vector $(0,0,1,1,\ast)$ with the appropriate $\vb_i,\vr_i$ pair. We will denote with $\outputprot(\Pi(\vb_i,\vr_i))$ and $\view_{\Party_i}(\Pi(\vb_i,\vr_i))$ the output of all honest parties and the view of $\Party_i$ in an execution of $\Pi$ with $\vb_i,\vr_i$, respectively. \rnote{over the random coins of honest parties}
+We now define the concepts of \emph{robustness} and \emph{double robustness} which will be used throughout this proof.
+
+\begin{definition}({Robustness})
+	A pair $(\vb,\vr)$ is \textsf{robust} for $\Party_j$ if the following conditions hold:
+	\begin{enumerate}
+		\item All honest parties halt after two rounds in $\Pi(\vb,\vr)$.
+		\item All honest parties halt after two rounds in $\Pi(\vb,\vr \oplus \ve_j)$.
+	\end{enumerate}
+	where $\ve_j \in \zo^4$ is the vector with $1$ in the \jth entry and $0$ in all other entries. \rnote{this should move to preliminaries}
+\end{definition}
+
+\begin{definition}({Doubly-Robustness})
+	A pair $(\vb,\vr)$ is \textsf{doubly robust} for $\Party_j$ if the following conditions hold:
+	\begin{enumerate}
+		\item All honest parties halt after two rounds in $\Pi(\vb,\vr)$.
+		\item All honest parties halt after two rounds in $\Pi(\vb,\vr \oplus \ve_j)$.
+		\item All honest parties halt after two rounds in $\Pi(\vb \oplus \ve_j,\vr)$.
+		\item All honest parties halt after two rounds in $\Pi(\vb \oplus \ve_j,\vr \oplus \ve_j)$.
+	\end{enumerate}
+\end{definition}
+
+\noindent
+We make three claims regarding the existence of doubly-robust \rnote{no hyphen} pairs, and their expected output.
+
+\begin{claim}\label{clm:double_robust_means_same_output}
+If a pair $(\vb,\vr)$ is doubly robust \wrt $\Party_j$, then \rnote{these are distribution, they should be identically distributed}
+\[
+\outputprot(\Pi(\vb,\vr)) = \outputprot(\Pi(\vb,\vr \oplus \ve_j)) = \outputprot(\Pi(\vb \oplus \ve_j,\vr)) = \outputprot(\Pi(\vb \oplus \ve_j,\vr \oplus \ve_j)).
+\]
+
+\end{claim}
+
+\begin{proof}
+Suppose this is not the case, then a corrupt $\Party_j$ can simply choose to represent different pairs to different parties. By the doubly robust property, all honest parties will halt after two rounds, and they will output different values, in contradiction to agreement.
+\end{proof}
+
+\begin{claim}\label{clm:exists_double_robust_string}
+Let $\Pi$ be a $5$-party $2$-resilient BA such that for every adversary controlling no more than $2$ parties, all honest parties halt with non-negligible probability after two rounds of communication.
+Then, for every $i \in \sset{0,1,2,3,4}$ there exist $\vr_i \in \zo^4$ and $\Party_j$ with $j \neq i$ \mnote{Change $i,j$ notation to simplify (this is currently mismatching)}, such that $(\vb_i,\vr_i)$ is doubly robust for $\Party_j$.
+%Then $\forall i \in \sset{0,1,2,3,4} \exists \vr_i \in \zo^4$ such that $\exists \Party_j$, for $j \neq i$ for which $(\vb_i,\vr_i)$ is doubly robust in $\Pi$, where $\vb_i$ is as previously defined.
+\end{claim}
+
+\begin{proof}
+Assume towards a contradiction that there exists $i \in \sset{0,1,2,3,4}$ such that for every ${\vr_i \in \zo^4}$ and every party $\Party_j$, where $j \neq i$, it holds that $(\vb_i,\vr_i)$ is \emph{not} doubly robust for $\Party_j$. Stated differently, party $\Party_j$ \mnote{exists k such that party k does not halt} does not halt after two rounds of communication when it's view is distributed as one of $\view_{\Party_j}(\Pi(\vb_i,\vr_i))$, $\view_{\Party_j}(\Pi(\vb_i \oplus \ve_i,\vr_i))$, $\view_{\Party_j}(\Pi(\vb_i,\vr_i \oplus \ve_i))$, or $\view_{\Party_j}(\Pi(\vb_i \oplus \ve_i,\vr_i \oplus \ve_i))$.
+\rnote{The proof probably needs adjustments}
+
+We can now simply define the following adversarial strategy. The adversary corrupts party $\pfive$ and $\Party_k$. \mnote{k?!?!?!?!} Party $\cpfive$ sends the message vector according to $\vb_i$. Given second round coins from all honest parties, the adversary now chooses which of the four options for $(\vb,\vr)$ to present to $\Party_j$ \mnote{should be $\Party_{k_j}$ or $k = k(j)$} as a second round message. By assumption, $\Party_j$ will continue execution. Thus, the protocol will never halt after two rounds, in contradiction to what is assumed in the claim.
+\end{proof}
+
+Notice that by definition if $(\vb_i,\vr_i)$ is doubly-robust \rnote{what is $\vr_i$?} \wrt $\Party_j$ then also $(\vb_i \oplus e_j, \vr_i)$ is doubly-robust \wrt $\Party_j$.
+\begin{claim}\label{clm:doubly_robust_strings_output_the_same}
+	Let $r_1,r_2$ be two random strings and $j_1 \neq j_2 \in [4]$ two indices such that $(b,r_1),(b,r_2)$ are doubly robust \wrt parties $\Party_{j_1},\Party_{j_2}$, respectively. Then $\outputprot(\Pi(b,r_1)) = \outputprot(\Pi(b,r_2))$.
+\end{claim}
+
+\rnote{I stopped here}
+
+\begin{proof}
+	For two strings $r_1,r_2$ we will use the notation $d(r_1,r_2)$ to signify the number of coordinates in which the strings differ. We have two cases:
+	\begin{itemize}
+		\item $d(r_1,r_2) = 4$ - \Wlg assume that $r_1 = 0000, r_2 = 1111$, $(b,r_1), (b,r_2)$ are doubly-robust pairs \wrt $\Party_1,\Party_4$, respectively. Then, by definition the pairs $(b,r_3), (b,r_4)$, where $r_3 = 1000$, $r_4 = 1110$ are robust \wrt $\Party_1,\Party_4$, respectively. Observe an execution of $\Pi$ in which $\cpfive$ sends $b$ in the first round, with $r = 1100$ being the second round randomness. Consider execution $\sigma_0$ in which an adversary has corrupted $\Party_1$, such that it halts after the second round. All honest parties must reach agreement on an output bit. \Wlg that output bit is $0$, and assume towards a contradiction that $\outputprot(\Pi(b,r_3)) = 1$. We reach a contradiction in agreement with an adversary corrupting $\cpfive$, which sends vector $b$ in the first round, and $\cptwo$ which sends random bit $0$ to $\pone$ and random bit $1$ to all other parties. $\pone$'s view is that of an honest execution of $\Pi(b,r_3)$. Thus, it halts after one round, and by assumption outputs $1$. All other honest parties have the same view as in $\sigma_0$, since their incoming messages in the first round, and second round randomness are the same, and $\pone$ halts after two rounds. Thus, by assumption they all output $0$. This, in contradiction to $\Pi$ reaching agreement. The same holds for an execution of $\Pi(b,r_4)$. Thus $\outputprot(\Pi(b,r_3)) = \outputprot(\Pi(b,r_4))$. It is easy to see that $\outputprot(\Pi(b,r_1)) = \outputprot(\Pi(b,r_3))$ and $\outputprot(\Pi(b,r_2)) = \outputprot(\Pi(b,r_4))$, since assuming otherwise, by definition, an adversary corrupting $\pone$ (resp. $\pfour$) can make honest parties output different bits by simply sending some parties randomness bit $0$, and others randomness bit $1$, in $\Pi(b,r_1)$ (resp. $\Pi(b,r_2)$). Since $(b,r_1)$ (resp. $(b,r_2)$) is robust for $\pone$ (resp. $\pfour$), all honest parties will halt after two rounds and output different bits.
+		\mnote{needs to be done nicer}
+		
+		\item $d(r_1,r_2) < 4$ - If  $d(r_1,r_2) = 1$, then the output is trivially equal. \Wlg $r_1 = 0000, r_2 = 0001$, and an adversary corrupting $\pfour$ can simply send randomness bit $0$ to some parties, and $1$ to other parties, making all parties halt with different output values. \\
+		If $d(r_1,r_2) = 2$ or $d(r_1,r_2) = 3$, then the previous argument involving $\Pi(b,r_3), \Pi(b,r_4)$ holds for this case as well.
+	\end{itemize}
+	We conclude the claim.
+\end{proof}
+
+We can now use \cref{clm:exists_double_robust_string,clm:doubly_robust_strings_output_the_same} to prove \cref{lemma5}.
+\begin{proof}[Proof of \cref{lemma5}]
+\mnote{need to insert probability $\delta$.}
+From \cref{clm:exists_double_robust_string} we know that $\forall b_i \exists r_i$ such that the pair $(b_i,r_i)$ is doubly-robust \wrt $\Party_i$. From definition we know that the pair $(b_i \oplus e_i, r_i)$ is also doubly robust \wrt $\Party_i$. But $b_i \oplus e_i = b_{i-1}$. Thus, $\outputprot(\Pi(b_{i-1},r_i)) = \outputprot(\Pi(b_i,r_i))$. From the same claim, we also have a random string $r_{i+1}$ such that the pair $(b_{i+1},r_{i+1})$ is doubly-robust \wrt $\Party_{i+1}$, and by a similar argument we have that $(b_i,r_{i+1})$ is doubly-robust \wrt $\Party_{i+1}$. Since both $(b_i,r_i)$ and $(b_i, r_{i+1})$ are doubly-robust \wrt different parties, by \cref{clm:doubly_robust_strings_output_the_same} $\outputprot(\Pi(b_i,r_i)) = \outputprot(\Pi(b_i,r_{i+1}))$. Since this is true for every $i$, we deduce that there exists two randomness strings $r_0,r_4 \in \zo^4$ such that $\outputprot(\Pi(b_0,r_0)) = \outputprot(\Pi(b_4,r_4))$. Finally, we note that $\Pi(b_0,r_0)$ is an honest execution of $\Pi$ with input vector $(0,0,1,1,0)$, and $\Pi(b_4,r_4)$ is an honest execution of $\Pi$ with input vector $(0,0,1,1,1)$. By \cref{honestagreementlemma} $\outputprot(\Pi(b_0,r_0)) = 0$ and $\outputprot(\Pi(b_4,r_4)) = 1$, in contradiction. We conclude the lemma.
+\end{proof}
+
+\subsection{Committing to Randomness}
+
+\subsubsection{Model, Protocols and Adversaries}
+
+\subsubsection{Single Coin Randomness}
+We further extend our model to one in which parties can no longer choose their second-round randomness. Each party has access to an oracle which outputs one bit in the second round. The only option a party has is to either let the receiving party see this bit, or to abort it. The rest of the model is similar to the previous one.
+
+\begin{theorem}\label{thm6}
+	Let $\Pi$ be an \batwo{n}{t} in the above model, where $t$ is any constant fraction of $n$, and let $\delta$ be a lower-bound for the probability that for any input all honest parties halt after two rounds, regardless of adversarial behavior. Then $\delta \in o(1)$.
+\end{theorem}
+
+We prove the theorem for the case of honest majority where $n = 4\ell + 1$ and $t = 2\ell$ and discuss later on how to convert the proof to such that $t$ is any constant fraction of $n$. We first prove the following combinatorial lemma. 
+
+\begin{lemma}\label{lemma6}
+	Let $\gamma > 0$, $s \in \Theta(n)$ and $C \subset \zo^n$ such that for every $S \in {\binom{[n]}{s}}$ it holds that $\size{C|_{S}} < \gamma \cdot 2^s$. Then, $\size{C} \in o(1)$.  
+\end{lemma}
+
+\begin{proof}
+	KKL!
+\end{proof}
+
+\begin{definition}
+	Let $r \in \zo^n$, $b = (b_1,\dots, b_{n-1}) \in \zo^{n-1}$ and $S \subset [n]$. Denote by $\Pi(b,r^{\star S})$ an execution of $\Pi$ such that:
+	\begin{itemize}
+		\item Party $\Party_n$ sends $b_i$ to $\Party_i$.
+		\item $r$ denotes the randomness in the second round.
+		\item All parties in $S$ abort prior to sending their second round messages.
+	\end{itemize} 
+\end{definition}
+
+To prove \cref{thm6} we make a series of claims, showing that either $\delta \in o(1)$, or there is an adversarial behavior which makes different parties output different values. We split our input parties into $5$ distinct sets, each of size $\ell$. 
+\begin{claim}\label{clm6.1}
+For every $S \in \binom{[n]}{s}$ there exists $R^S_0 \subseteq \cR$ of size $\abs{R^S_0} \geq (\delta-\beta-2\alpha) \cdot 2^{n}$ such that for every $r \in R^S_0$ it holds that:
+\begin{enumerate}
+	\item $\Pi(b_0,r^{\star S})$ halts after two rounds and all honest parties output $0$.
+	\item $\Pi(b_1,r^{\star S})$ halts after two rounds and all honest parties output $0$.
+\end{enumerate}
+\end{claim}
+
+\begin{proof}
+	%}We first prove the claim about halting. By definition, for every $S \in \binom{[n]}{s}$, there exist $R_{S,b_0},R_{S,b_1} \subseteq \cR$ of size $\abs{R_{S,b_0}},\abs{R_{S,b_1}} \geq \delta \cdot 2^{n}$ such that the honest parties in $\Pi(b_0,r_0^{\star S}), \Pi(b_1,r_1^{\star S})$ halt after two rounds, for every $r_0 \in R_{S,b_0}$ and $r_1 \in R_{S,b_1}$. Fix $R_{S,b_0},R_{S,b_1}$ to be the largest possible sets and let $R_0^S = R_{S,b_0} \cap R_{S,b_1}$.
+	Define $R_0^S$ to be the set of $r$'s such that $\Pi(b_c,r), \Pi(b_c,r^{\star S})$ halt in two rounds for $c \in \zo$. We claim that $\abs{R_0^S} \geq \delta\cdot 2^n$. Otherwise, by corrupting $\Party_n$, the first $\ell$ parties and the parties in $S$, the adversary can prevent some honest parties from halting with probability greater than $1-\delta$, in contradiction to the assumption. Namely, a rushing adversary having seen $r \notin R_0^S$ can instruct the first $\ell$ parties to propagate either $b_0$ or $b_1$ and the parties in $S$ to abort accordingly, thus preventing halting. Next, we show that honest parties in  $\Pi(b_0,r^{\star S})$ and  $\Pi(b_1,r^{\star S})$ output $0$, for every $r \in R_0^S$.
+	\\ 
+	 We claim that the honest parties in an execution of $\Pi(b_1,r^{\star S})$ must output $0$, for $r \in \tilde{R}_0^S$ of relative size $\delta - \beta - 2\alpha$. First, we have $\size{\{r \in R_0^S \mid \Pi(b_0,r^{\star S}) = 0\}} \geq (\delta-\beta-\alpha)\cdot 2^n$. This stems from \cref{honestagreementlemma} as with probability at least $1-\beta$, $\Pi(b_0,r) = 0$, and from $(t,\alpha)$-agreement as with probability at least $1-\alpha$ $\Pi(b_0,r) = \Pi(b_0,r^{\star S})$.
+	 To conclude, $\size{\{r \in R_0^S \mid \Pi(b_0,r^{\star S}) = 0 \land \Pi(b_1,r^{\star S}) = 0\}} \geq (\delta - \beta - 2\alpha)\cdot 2^n$ again by $(t,\alpha)$-agreement.
+\end{proof}
+
+\begin{claim}\label{clm6.3}
+For every $S \in \binom{[n]}{s}$ there exists $R^S_1 \subseteq \cR$ of size $\abs{R^S_1} \geq (\delta-\beta -2\alpha) \cdot 2^{n}$ such that for every $r \in R^S_1$ it holds that:
+\begin{enumerate}
+	\item $\Pi(b_3,r^{\star S})$ halts after two rounds and all honest parties output $1$.
+	\item $\Pi(b_4,r^{\star S})$ halts after two rounds and all honest parties output $1$.
+\end{enumerate}
+\end{claim}
+
+\begin{proof}
+	The proof of this claim is analogous to the proof of \cref{clm6.1}.
+\end{proof}
+
+\begin{claim}\label{clm6.2}
+	For every $S \in \binom{[n]}{s}$ there exists $R^S_{0} \subseteq \cR$ of size ${\abs{R^S_{0}} \geq ((\delta-3\alpha)/2) \cdot 2^{n}}$ such that for every $r \in R^S_{0}$ it holds that:
+	\begin{enumerate}
+		\item $\Pi(b_1,r^{\star S})$ halts after two rounds and all honest parties output $0$.
+		\item $\Pi(b_2,r^{\star S})$ halts after two rounds and all honest parties output $0$.
+	\end{enumerate}
+\end{claim}
+
+\begin{proof}
+	Fix $S \in \binom{[n]}{s}$. Let $R^S \subseteq \cR$ such that $\Pi(b_1,r^{\star S}), \Pi(b_2,r^{\star S})$ halt after two rounds, for every $r \in R^S$. Similarly to \cref{clm6.1}, $\abs{R^S} \geq \delta \cdot 2^{n}$. Let $R^S_0,R^S_1 \subseteq R^S$ such that $\Pi(b_1,r^{\star S}) = c$, for every $r \in R^S_c$.  Let $c(S) = \argmax_{c \in \{0,1\}}(\size{R^S_c})$ and observe that $\abs{R^S_{c(S)}} \geq ((\delta-\alpha)/2) \cdot 2^{n}$. Similarly to \cref{clm6.1}, There exists $\tilde{R}^S_{c(S)}$ of size $\size{\tilde{R}^S_{c(S)}} \geq ((\delta-3\alpha)/2) \cdot 2^{n}$ such that $\Pi(b_2,r^{\star S})$ halts after two rounds and all honest parties output $c(S)$ for all $r \in \tilde{R}^S_{c(S)}$. If not, then similarly to the proof of \cref{clm6.1}, a rushing adversary having seen $r \in \tilde{R}_{c(S)}^S$ can instruct parties $\ell+1, \dots ,2\ell$ to propagate either $b_1$ or $b_2$ and the parties in $S$ to abort accordingly, thus violating \agr. It remains to show that $c(S) = 0$ for every $S$. 
+	
+	For every $S'$ define $\tilde{R}^{S'}_0 = \{r \in \cR \mid \Pi(b_1,r^{\star S}) = 0\}$. By the previous claims, we know that $\size{\tilde{R}^{S'}_0} \geq (\delta-\beta-2\alpha) \cdot 2^{n}$, for every  $S'$. We claim that ${\size{R^S_1|_{\overline{S}'} \cap \tilde{R}^{S'}_0|_{\overline{S}'}} \leq \alpha \cdot 2^{\size{\overline{S}'}}}$. To see this, we note that ${\tilde{R}^{S'}_c \equiv \zo^{s} \times \tilde{R}^{S'}_c|_{\overline{S}'}}$, for every $S'$ and for every $c \in \zo$. This is due to the definition of $\tilde{R}^{S'}_c$, as for every $r \in \tilde{R}^{S'}_c$ and $r' \in \cR$, if $r|_{\overline{S}'} = r'|_{\overline{S}'}$ then $r' \in \tilde{R}^{S'}_c$. Thus, we have ${\size{\tilde{R}^S_1|_{\overline{S \cup S'}} \cap \tilde{R}^{S'}_0|_{\overline{S \cup S'}}} \leq \alpha \cdot 2^{\size{\overline{S \cup S'}}}}$, since otherwise an adversary can corrupt both $S$ and $S'$, and cause disagreement with probability larger than $\alpha$. This also holds for projections on subsets containing $\overline{S \cup S'}$, namely $\overline{S}'$. By definition, $\size{\tilde{R}^{S'}_0|_{\overline{S'}}} \geq (\delta-\beta-2\alpha) \cdot 2^{\size{\overline{S'}}}$ and we conclude that for every $S'$, $\size{\tilde{R}^S_1|_{\overline{S'}}} < (1-\delta +\beta +3\alpha) \cdot 2^{\size{\overline{S'}}}$. Thus, by \cref{lemma6}, $\size{\tilde{R}^S_1} \in o(1) \cdot 2^{n}$ and the proof is concluded. \nnote{Parameters come from here}
+\end{proof}
+
+\begin{claim}\label{clm6.4}
+For every $S \in \binom{[n]}{s}$ there exists $R^S_{1} \subseteq \cR$ of size ${\abs{R^S_{1}} \geq ((\delta-3\alpha)/2) \cdot 2^{n}}$ such that for every $r \in R^S_{1}$ it holds that:
+\begin{enumerate}
+	\item $\Pi(b_2,r^{\star S})$ halts after two rounds and all honest parties output $1$.
+	\item $\Pi(b_3,r^{\star S})$ halts after two rounds and all honest parties output $1$.
+\end{enumerate}
+\end{claim}
+
+\begin{proof}
+	The proof of this claim is analogous to the proof of \cref{clm6.3}.
+\end{proof}
+
+
+\begin{proof}[Proof of \cref{thm6}]
+	By \cref{clm6.2,clm6.4}, for every $S \in \binom{[n]}{s}$ there exist $R^S_1,R^S_0 \in \cR$ of size $\size{R^S_1},\size{R^S_0} \geq ((\delta-3\alpha)/2) \cdot 2^{n}$ such that:
+	\begin{itemize}
+		\item $\Pi(b_2,r^{\star S}_0)$ halts after two rounds and all honest parties output $0$, for every $r_0 \in R^S_0$.
+		\item $\Pi(b_2,r^{\star S}_1)$ halts after two rounds and all honest parties output $1$, for every $r_1 \in R^S_1$.
+	\end{itemize}
+	Fix $S \in \binom{[n]}{s}$. By the same argument as in the proof of \cref{clm6.2}, $\size{{R^S_1|_{\overline{S}'} \cap \tilde{R}^{S'}_0|_{\overline{S}'}}} \leq \alpha \cdot 2^{\size{\overline{S}'}}$, for every $S' \in \binom{[n]}{s}$. Therefore, $\size{R^S_1|_{\overline{S'}}} < (1-\frac{\delta - 5\alpha}{2}) \cdot 2^{\size{\overline{S}'}}$, for every $S'$. By \cref{lemma6} $\size{R^S_1} \in o(1) \cdot 2^{n}$ and the proof is concluded.
+
+\end{proof}
+
+\subsubsection{Generalizing to Any $n$}
+
+\subsubsection{What If Not All Sets Have a Small Projection?}
+
+\begin{lemma}\label{lemma6}
+	Let $\gamma > 0$, $s \in \Theta(n)$ and $C \subset \zo^n$ such that for all but a vanishing fraction of $S \in {\binom{[n]}{s}}$ it holds that $\size{C|_{S}} < \gamma \cdot 2^s$. Then, $\size{C} \in o(1)$.  
+\end{lemma}
+
+\begin{proof}
+	Alex!
+\end{proof}
+
+\subsubsection{Committed Randomness is Now a String}
+
+
+\subsection{Second Round is Private Coin}
+
+
+\section{Reformulation in Terms of Computing Probabilities}
+In this section we formulate an attack on Byzantine Agreement protocols in which there is a constant probability of halting after two rounds. We later show that in certain cases this probability is either computable or can be approximated to attack the correctness of the protocol. (I.e that with some probability honest parties will output differing bits)

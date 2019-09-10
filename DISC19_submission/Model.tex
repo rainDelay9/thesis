@@ -1,0 +1,41 @@
+\section{The Model}
+
+\subsection{General Model}
+
+\subsection{Public Coin/CRS Model}
+
+\subsection{Public Coin/CRS + Magic Coin Model}
+
+\begin{comment}
+Our Model is based on the Feldman-Micali model of BA algorithm. \rnote{this is not the model!! this is the BA protocol template we consider (although for the 1-round 4-party we don't even need it)} This type of algorithm is based on a recurring phase, where the phase consists of one or more rounds. We call an algorithm a $(k,\beta)$-BA the following two conditions hold (For any fixing of adversary and inputs):
+\begin{enumerate}
+    \item The phase consists of $k$ rounds of communication.
+    \item Let $\text{phase}_i$ denote the $i$'th iteration of the phase. Then:
+    \begin{enumerate}
+        \item If no processor halted in $\text{phase}_{i-1}$, then w.p $\beta$ all processors halt in $\text{phase}_i$.
+        \item Otherwise, all processors halt in $\text{phase}_i$ w.p 1.
+    \end{enumerate}
+    In words - There is no more than a 1 phase delay between halting processors, and if none halted in the current phase, then w.p $\beta$ all will halt.
+\end{enumerate}
+
+We also state a general adversarial model:
+\begin{enumerate}
+    \item Adversary chooses $I \subset [n], \abs{I} \leq t$.
+    \item external dealer gives correlated randomness.
+    \item Players run protocol.
+\end{enumerate}
+
+Let $\beta = 1/2, k = 1$. We look at the old A,B,C,D example.
+From condition 2.(b) we have that:
+
+\[
+\Pr[B \text{ halts}] \times \Pr[C \text{ halts } | B \text{ halted }] \times \Pr[D \text{ halts } | B,C \text{ halted }] \geq \frac{1}{2}
+\]
+
+Since this is true we have that at least one of the events is $\geq \sqrt[3]{1/2}$.
+Let $\vec{\text{in}}$ be the vector of incoming inputs. We want to show that there is a non-negligible probability of getting the same outcome when hamming distance between two input vectors is 1 of outputting the same value. We set the randomness on a run in which B halts after 1 round if A sends her no messages. We start with $\vec{\text{in}} = (0,0,0,0)$, and remove the edge from A to B. Now B halts after one round and outputs 0 by correctness of BA. We can now change messages $A_1 \rightsquigarrow C,D$ from 0 to 1. Since B halts after round 1 and outputs 0, C and D will also output 0 (at some point). Next, we corrupt B, such that $B_2 \not\rightsquigarrow C,D$, and add $A_1 \rightsquigarrow B$ with $A$'s input being $1$. C,D cannot distinguish between these last two scenarios, and thus will output the same value (otherwise $B$ can send one of them a message making it output a different value, in contradiction to the agreement condition).
+
+Thus, we can change A's input to 1 and we have $(0,0,0,0) \approx (1,0,0,0)$.
+There was another step in which we change the conditioned probabilities into unconditioned ones, which I cannot recall exactly how we did (and I have to run home and pack since I have yet to do so). I will look into it during my free time abroad.
+
+\end{comment}

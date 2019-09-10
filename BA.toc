@@ -1,0 +1,57 @@
+\contentsline {section}{\numberline {1}Introduction}{1}{section.1}
+\contentsline {subsection}{\numberline {1.1}The Model}{1}{subsection.1.1}
+\contentsline {paragraph}{Locally consistent adversaries.}{2}{section*.2}
+\contentsline {paragraph}{Public-randomness protocols.}{2}{section*.3}
+\contentsline {paragraph}{A useful abstraction for protocol design.}{3}{section*.4}
+\contentsline {paragraph}{Connection to the full-information model.}{3}{section*.5}
+\contentsline {subsection}{\numberline {1.2}Our Results}{3}{subsection.1.2}
+\contentsline {paragraph}{First-round halting.}{4}{section*.6}
+\contentsline {paragraph}{Second-round halting for arbitrary protocols.}{4}{section*.7}
+\contentsline {paragraph}{Second-round halting for public-randomness protocols.}{4}{section*.8}
+\contentsline {paragraph}{Our techniques.}{5}{section*.9}
+\contentsline {paragraph}{The combinatorial conjecture.}{5}{section*.10}
+\contentsline {subsection}{\numberline {1.3}Locally Consistent Security to Malicious Security}{6}{subsection.1.3}
+\contentsline {subsection}{\numberline {1.4}Additional Related Work}{7}{subsection.1.4}
+\contentsline {subsection}{\numberline {1.5}Open Questions}{8}{subsection.1.5}
+\contentsline {section}{\numberline {2}Our Techniques}{8}{section.2}
+\contentsline {paragraph}{Notations}{8}{section*.12}
+\contentsline {subsection}{\numberline {2.1}First-Round Halting}{8}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}Second-Round Halting -- Arbitrary Protocols}{9}{subsection.2.2}
+\contentsline {subsection}{\numberline {2.3}Second-Round Halting -- Public-Randomness Protocols}{11}{subsection.2.3}
+\contentsline {subsubsection}{\numberline {2.3.1}``Superb'' Single-Coin Protocols}{12}{subsubsection.2.3.1}
+\contentsline {subsubsection}{\numberline {2.3.2}General (Public-Randomness) Protocols}{13}{subsubsection.2.3.2}
+\contentsline {section}{\numberline {3}Our Lower Bounds}{14}{section.3}
+\contentsline {subsection}{\numberline {3.1}The Model}{14}{subsection.3.1}
+\contentsline {subsubsection}{\numberline {3.1.1}Protocols}{14}{subsubsection.3.1.1}
+\contentsline {subsubsection}{\numberline {3.1.2}Adversarial Model}{14}{subsubsection.3.1.2}
+\contentsline {paragraph}{Locally consistent adversaries.}{14}{section*.13}
+\contentsline {subsubsection}{\numberline {3.1.3}Public-Randomness Protocols}{16}{subsubsection.3.1.3}
+\contentsline {subsubsection}{\numberline {3.1.4}Byzantine Agreement}{16}{subsubsection.3.1.4}
+\contentsline {subsection}{\numberline {3.2}The Bounds}{17}{subsection.3.2}
+\contentsline {paragraph}{First-round halting, arbitrary protocols.}{17}{section*.14}
+\contentsline {paragraph}{Second-round halting, arbitrary protocols.}{17}{section*.15}
+\contentsline {paragraph}{Second-round halting, public-randomness protocols.}{17}{section*.16}
+\contentsline {subsection}{\numberline {3.3}The Combinatorial Conjecture}{18}{subsection.3.3}
+\contentsline {section}{\numberline {4}Lower Bounds on First-Round Halting}{18}{section.4}
+\contentsline {paragraph}{The case $t \ge n/3$.}{19}{section*.17}
+\contentsline {paragraph}{The case $t \ge n/4$.}{19}{section*.18}
+\contentsline {subsection}{\numberline {4.1}Proving Lemma\nobreakspace {}\ref {lemma:FirstRound:Arb}}{19}{subsection.4.1}
+\contentsline {section}{\numberline {5}Lower Bounds on Second-Round Halting}{21}{section.5}
+\contentsline {subsection}{\numberline {5.1}Arbitrary Protocols}{21}{subsection.5.1}
+\contentsline {subsubsection}{\numberline {5.1.1}Proving \Cref {lemma:SecondRound:Arb}}{22}{subsubsection.5.1.1}
+\contentsline {subsection}{\numberline {5.2}Public-Randomness Protocols}{24}{subsection.5.2}
+\contentsline {paragraph}{Proving \Cref {thm:SecondRound:PR}.}{25}{section*.19}
+\contentsline {paragraph}{The case $t \ge (1/3 + \varepsilon _t)\cdot n$.}{25}{section*.20}
+\contentsline {paragraph}{The case $t \ge (1/4 + \varepsilon _t)\cdot n$.}{25}{section*.21}
+\contentsline {subsubsection}{\numberline {5.2.1}Proving \Cref {lemma:SecondRound:PR}}{26}{subsubsection.5.2.1}
+\contentsline {paragraph}{Proving \Cref {lemma:SecondRound:PRR}.}{28}{section*.22}
+\contentsline {paragraph}{Proving \Cref {claim:PR:00}.}{29}{section*.23}
+\contentsline {paragraph}{Proving \Cref {claim:PR:01}.}{29}{section*.24}
+\contentsline {paragraph}{Proving \Cref {claim:PR:1}.}{30}{section*.25}
+\contentsline {paragraph}{Acknowledgements.}{31}{section*.26}
+\contentsline {section}{\numberline {A}Locally Consistent Security to Malicious Security}{36}{appendix.A}
+\contentsline {paragraph}{Verifiable random functions.}{36}{section*.28}
+\contentsline {paragraph}{Digital signatures.}{37}{section*.29}
+\contentsline {paragraph}{Protocols.}{37}{section*.30}
+\contentsline {paragraph}{Zero-knowledge proofs.}{37}{section*.31}
+\contentsline {paragraph}{The compiler.}{38}{section*.32}

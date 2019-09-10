@@ -1,0 +1,179 @@
+\section{Locally-Consistent Resilience Implies Malicious Resilience}\label{sec:local_const}
+We next present a proof of \cref{thm:local_to_malicious}, but first some history \rnote{no need to write the history of VRF...} and definitions. Verifiable Random Functions (VRFs) were introduced by Micali, Rabin and Vadhan in \cite{MRV99}, who have also constructed a VRF based on the RSA assumption, although it was not efficient. Dodis and Yampolski \cite{DY05} presented an efficient VRF based on a decisional bilinear Diffie-Hellman inversion assumption. We give a definition of VRFs (\cite{MRV99,DY05}):
+
+\newcommand{\gen}{\text{GEN}}
+\newcommand{\pro}{\text{PROVE}}
+\newcommand{\ver}{\text{VERIFY}}
+
+\begin{definition}[Verifiable Random Function Family] \label{def:vrf}
+	Let $k \in \N$, $p,q,s:\N \mapsto \N$, $\upsilon(k) > 0$. $F_{(\cdot)}(\cdot): \zo^{p(k)} \mapsto \zo^{q(k)}$ is an $\upsilon$-Verifiable Random Function Family (VRF) if there exists a triplet of algorithms $(\gen, \pro,\ver)$ such that $\gen(1^k) = (pk,sk)$, $\pro_{sk}(x) = (F_{sk}(x), \pi_{sk}(x))$, $\ver_{pk}(x,y,\pi) \zo$ and $\ver_{pk}(x,y,\pi) = 1$ if and only $F_{sk}(x) = y$ and $\pi$ is a proof of that statement. I.e, if the following three conditions hold:
+	\begin{enumerate}
+		\item $\forall (pk,sk) \in Im(\gen(1^k)), x, y_1, y_2$, if $F_{sk}(x) = y_1$ then there exists $\pi_1$ such that $\ver_{pk}(x,y_1,\pi_1) = 1$ and there does not exist $\pi_2$ such that $\ver_{pk}(x,y_2,\pi_2) = 1$.
+		\item if $\pro_{sk}(x) = (y,\pi)$ then $\ver_{pk}(x,y,\pi) = 1$.
+		\item No adversary executing more than $s(k)$ steps can win in the VRF game (defined below) with probability greater than $1/2 + \upsilon(k)$.
+	\end{enumerate}
+\end{definition}
+
+\rnote{the definition above is somewhat messy and I think a bit buggy, please copy a good definition from one place and cite it}
+
+To round out \cref{def:vrf} we give a definition of the VRF game:
+\begin{definition}[VRF Game] \label{def:vrf_game}
+The VRF game is defined by the following steps:
+\begin{enumerate}
+	\item A pair of keys $(pk,sk)$ is sampled from $\gen(1^k)$, and the adversary is given $pk$.
+	\item The adversary is given oracle access to $\pro(\cdot)$, and it outputs a value $x$.
+	\item Let $y_0 = F_{sk}(x), y_1 \leftarrow \zo^{q(k)}, b \leftarrow \zo$.
+	\item The adversary is given $y_b$ along with oracle access to $\pro_{sk}(\cdot)$ and it outputs $b' \in \zo$.
+	\item The adversary wins if and only if $b = b'$.
+\end{enumerate}	
+\end{definition}
+
+\newcommand{\sig}{\text{SIGN}}
+
+This completes the definition of VRFs. We will now formally define digital signature schemes:
+\begin{definition}[Signature Scheme] \label{def:sig_sch}
+For $k \in \N$ a triplet of PPTs $(\gen,\sig,\ver)$ with the following conditions
+\begin{enumerate}
+	\item $\gen(1^k) = (sk,vk) \in \zo^* \times \zo^*$.
+	\item For $m \in \zo^k$, $\sig_{sk}(m) = \sigma \in \zo^*$.
+	\item $\ver_{vk}(m,\sigma) \in \zo$.
+\end{enumerate}	
+is called a signature scheme if for all $(sk,vk) \in Supp(\gen(1^k))$, $m \in \zo^*$, then $\ver_{vk}(m,\sigma) = 1$ if and only if $\sigma \in Supp(\sig_{sk}(m))$.
+\end{definition}
+\rnote{where did you copy this definition from?}
+
+We now present the notion for security for signature schemes:
+\begin{definition}[Existential Unforgeability] \label{def:eu}
+	For $\epsilon(k) > 0$ a signature scheme $(\gen,\sig,\ver)$ has $\epsilon$-existential unforgeability if for any PPT $\cA$ querying at most $p(k)$ queries, for some polynomial $p$ the following holds:
+	$$\ppr{(sk,sv) \leftarrow \gen(1^k)}{\cA^{\sig_{sk}}(1^k,v) = (m,\sigma) \text{ s.t } \ver_{vk}(m,\sigma) = 1 \land \cA \text{ did not query } m } < \epsilon(k) $$
+\end{definition}
+
+We can now state a formal version of \cref{thm:local_to_malicious}. We first point out that it is well known that given PKI (along with some intractability assumptions) one can construct both existentially unforgeable signature schemes (\cite{RSA78, Merkle89, Rabin1979} and many more) and VRFs (\cite{DY05}). \rnote{Why do we need PKI to construct signatures/VRF?} We begin with a definition.
+\newcommand{\euval}{(n-t)\cdot \epsilon(r)}
+\newcommand{\vrfval}{\frac{t\cdot r}{n-t}\cdot \upsilon}
+\newcommand{\rnd}{\Delta^{\epsilon,\upsilon}_{n,t,r}}
+
+\begin{definition}[$\rnd$]
+	In an $n$-party $t$-resilient Byzantine agreement executing for $r$ rounds where all parties have access to an $\epsilon$-EU signature oracle and an $\upsilon$-VRF we define $\rnd$ as:
+	\[
+	\rnd = \max(\euval, \vrfval)
+	\]
+\rnote{I don't understand what you want to define here... Why do we give signature oracle? We need to define the PKI for signatures and VRF}
+\end{definition}
+
+We present a compiler which receives as input a general Byzantine agreement protocol $\Pi$ which is secure against locally-consistent adversaries, along with a PKI for an existentially unforgeable digital signature scheme and a VRF and outputs $\Pi'$ which is a general Byzantine agreement protocol secure against malicious adversaries.
+
+We give a shorter description \rnote{we already have a short description in the intro, let's move directly to the theorem and proof} of the compiler that is described in \cref{sec:intro:LocalToFull}. Given a Byzantine agreement $\Pi$ which is secure against $t$ locally-consistent adversaries we can construct $\Pi'$, a Byzantine agreement which is secure against $t$ malicious adversaries, in the following way: Party $\QParty_i \in \Pi'$ simulates an execution of party $\Party_i \in \Pi$. In round $r$ it computes $\pro_{sk_i}(i,r) = (y_{i,r},\pi_{i,r}) = (F_k(i,r), \pi_k(i,r)) $ and sets $\Party_i$'s random tape to be $y$. It then simulates $\Party_i$'s execution for that round. Next, it signs and sends messages generated by $\Party_i$ in that round and adds a proof in zero knowledge that (1) it acted consistently with randomness output by the VRF, some input bit, and verified messages it received in previous rounds, and (2) that all messages sent so far in all previous rounds are consistent \wrt the same input bit, randomness and incoming messages. (in short - that it acted consistently with its view) Please advide \cref{sec:intro:LocalToFull} for further details of this proof. If at round $r$ it receives a message from $\QParty_j$ that either (1) cannot be verified as being sent by $\QParty_j$, (2) has a false zero-knowledge proof, or (3) is inconsistent with either its randomness and/or its view as previously proved, then it ignores this message, sets $\Party_i$'s incoming message tape from $\Party_j$ to an empty string (i.e abort) and adds $\QParty_j$ to the set $\cC_i$ of corrupt parties. In subsequent rounds it ignores (\ie treats as aborted) all parties in $\cC_i$.
+
+We can now state our theorem. We assume for the sake of simplicity that the zero-knowledge proofs above (except for the VRF proof) have perfect soundness. \rnote{it's easier to define the compiler in the ZK-hybrid model, and then simply replace it with a composable ZK protocol} This prevents extra complication (as well as another error term) in $\rnd$. This term is nullified if $\Pi$ is a public randomness protocol. We will also consider digital signature schemes as well as VRFs as being executed by calls to ideal functionalities.
+
+\begin{theorem}[Locally consistent to malicious security, formal]\label{thm:local_to_malicious_formal}
+	If $\Pi$ is an $n$-party protocol which is a $(t,\alpha,\beta,r,\gamma)$-\BA resilient against locally-consistent adversaries. Assuming that there exists PKI for $\epsilon$-EU digital signature schemes and $\upsilon$-VRF, and a $c>0$ round zero-knowledge proof of knowledge as mentioned above, then there exists an $n$-party protocol $\Pi'$ which is a $(t,\psi_1 = \alpha + \rnd,\psi_2 = \beta + \rnd,r \cdot c,\gamma)$-\BA resillient against malicious adversaries. Further, if $\Pi$ is a public randomness protocol, then $\Pi'$ is a $(t,\psi_1 = \alpha + \rnd,\psi_2 = \beta + \rnd,r + d,\gamma)$-\BA, for a constant $d > 0$.
+\end{theorem}
+
+\rnote{where did you define the compiler? What is the protocol $\Pi'$?} \rnote{in particular need to define the ZK -relation}
+We will prove \cref{thm:local_to_malicious_formal} for the general case, as the case for public-randomness protocols easily follows. \cref{thm:local_to_malicious_formal} follows from the next two claims:
+
+\begin{claim}\label{clm:locally_consistent_adversaries}
+	Any adversary in an $r$-round execution of $\Pi'$ controlling no more than $t$ parties cannot break the security of either (1) the signature scheme or (2) the VRF with probability greater than $\rnd$.
+\end{claim}
+
+\begin{claim}\label{clm:locally_consistent_view}
+	Let $\QParty_i$ be an honest party in an execution of $\Pi'$ with $\Party_i$ being the party in $\Pi$ it simulates. If an adversary controlling no more than $t$ parties in $\Pi'$ did not break the security of either (1) the signature scheme, or (2) the VRF then $\Party_i$' s view is consistent with an execution of $\Pi$ with no more than $t$ locally-consistent corrupted parties.
+\end{claim}
+
+We first prove \cref{thm:local_to_malicious_formal} using \cref{clm:locally_consistent_adversaries,clm:locally_consistent_view}.
+
+\begin{proof}[Proof of \cref{thm:local_to_malicious_formal}.]
+Assume by way of contradiction that there exists an adversary $\cA$ controlling no more than $t$ parties in $\Pi'$ such that it causes the honest parties in $\Pi'$ to output disagreing values with probability greater than  $\alpha + \rnd$ (The converse for validity is symmetric and will therefore be ommitted from the proof).  Let $\cT$ be the event that two honest parties interacting with $\cA$ in an execution of $\Pi'$ output differing values. By assumption we have
+\begin{align*}
+ 	\pr{\cT} > \alpha + \rnd.
+\end{align*}
+Let $\cE$ be the event that $\cA$ either (1) forged an honest party's signature, or (2) broke the security of the VRF in an execution of $\Pi'$. Note that by \cref{clm:locally_consistent_adversaries}
+\begin{align*}
+	\pr{\cE} < \rnd.
+\end{align*}
+Thus,
+\begin{align*}
+	\pr{\cT \land \cE} > \alpha.
+\end{align*}
+By \cref{clm:locally_consistent_view} in an execution of $\Pi'$ in which $\cE$ did not occur, the honest parties' simulated parties see a view consistent with an execution of $\Pi$ with no more than $t$ locally-consistent adversaries. Thus, since honest parties in $\Pi'$ output the same output as their simulated counterparts in an execution of $\Pi$, and the view of all simulated parties in $\Pi'$ is that of an execution in which they face no more than $t$ locally-consistent adversaries, we have that
+\begin{align*}
+\pr{\cT \land \cE} < \alpha
+\end{align*}
+leading to a contradiction.
+\end{proof}
+
+We can now prove \cref{clm:locally_consistent_adversaries,clm:locally_consistent_view}. To prove \cref{clm:locally_consistent_adversaries} we prove two sub-claims.
+
+\begin{claim}\label{clm:locally_consistent_eu}
+	Let $\cE_1$ be the event that in an $r$-round execution of $\Pi'$ with adversary $\cA$ controlling no more than $t$ parties, $\cA$ managed to forge an honest party's signature. Then
+	\begin{align}\label{eq:locally_consistent_eu}
+		\pr{\cE_1} < \euval.
+	\end{align}
+\end{claim}
+
+\begin{claim}\label{clm:locally_consistent_vrf}
+	Let $\cE_2$ be the event that in an $r$-round execution of $\Pi'$ with adversary $\cA$ controlling no more than $t$ parties, $\cA$ managed to produce $\pi$, a false proof accepted by an honest party. Then
+	\begin{align}\label{eq:locally_consistent_vrf}
+	\pr{\cE_2} < \vrfval.
+	\end{align}
+\end{claim}
+
+These two claims are enough to prove \cref{clm:locally_consistent_adversaries} as we can simply note that $\cE \equiv \cE_1 \lor \cE_2$. We prove them next.
+\begin{proof}[Proof of \cref{clm:locally_consistent_eu}.]
+	Assume there exists an adversary $\cA$ for which \cref{eq:locally_consistent_eu} does not hold. Consider the following adversary $\cB$ to the signature scheme:
+	{\samepage
+		\begin{description}
+		\item[$\cB^{\sig}$.]		
+		\begin{enumerate}
+			\item Simulate an execution of $\Pi'$ with adversary $\cA$.
+			
+			\item Let $\cP_\cA$ be the set of parties adversary $\cA$ has chosen to corrupt. Sample party ${\cQ \leftarrow \cP \setminus \cP_\cA}$ uniformly at random.
+			
+			\item In each round of $\Pi'$, if $\cQ$ queries its signing oracle with $q$, then query $\sig(q)$ and respond to $\cQ$ with the result of that query. For other parties $\cB$ simply simulates a consistent view of an oracle for a signature scheme and an oracle for a VRF.
+			
+			\item If at any round $\cA$ forged a signature $\sigma$ on a message $m$ by $\cQ$ then output $(m,\sigma)$.
+			
+			\item else, output a random message $m$ and random value $\tilde{\sigma}$ from the image of \sig.
+		\end{enumerate}
+	\end{description}
+}
+
+Let $\cF$ be the event that $\cB$ forged a valid signature and let $\cG$ be the event that $\cA \text{ forged a signature by } \cQ \text{ and } \cQ \text{ was selected by } \cB$. Notice first that the simulated $\cA$'s view in $\cB$'s execution is clearly consistent with that of an $r$-round execution of $\Pi'$, as all oracle queries are answered consistently according to step (3). Thus,
+\begin{align*}
+\pr{\cF} &= \pr{\cG}\\&+ \pr{\neg \cG \land \cB \text{ randomly sampled a valid message and signature pair in step 5 }}\\
+&>\pr{\cG} \ge \pr{\cA \text{ forged a signature by } \cQ} \cdot \frac{1}{n-t} \ge \epsilon(r)
+\end{align*}
+where the final two inequalities are by $\cA$ corrupting at most $t$ parties and the assumption over $\cA$'s forging probability, respectively. Thus, $\cB$ manages to forge a signature with $r$ queries with probability greater than $\epsilon(r)$, in contradiction to the assumption over the signature scheme.
+\end{proof}
+
+\begin{proof}[Proof of \cref{clm:locally_consistent_vrf}.]
+	Assume there exists an adversary $\cA$ for which \cref{eq:locally_consistent_vrf} does not hold. Consider the following adversary $\cB$ in the role of prover $P$ in communication with verifier $V$ for the VRF.
+	{\samepage
+			\begin{description}
+		\item[$<\cB, V>$]		
+		\begin{enumerate}
+			\item Simulate an execution of $\Pi'$ with adversary $\cA$.
+			
+			\item Let $\cP_\cA$ be the set of parties adversary $\cA$ has chosen to corrupt. Sample party ${\cQ_p \leftarrow \cP_\cA}$ and party $\cQ_v \leftarrow \cP \setminus \cP_\cA$ uniformly at random. Also sample $d \leftarrow [r]$ uniformly at random.
+			
+			\item In each round of $\Pi'$ $\cB$ provides a consistent view of a signing oracle to all parties. At round $d$ it performes the following in the proving phase:
+			
+			\item Let $m, \pi^{p,v}_d$ be the message, proof pair sent from party $\cQ_p$ to party $\cQ_v$ - $\cB$ sends $m, \pi^{p,v}_d$ to $V$.
+			
+			\item $\cB$ then halts.
+		\end{enumerate}
+	\end{description}
+}
+
+Let $\cD$ be the event that $\cB$ managed to make $V$ accepts a non-valid proof. By a similar reasoning to the one in the proof of \cref{clm:locally_consistent_eu} we have our claim, as the proofs of the VRF are independent between rounds and between parties (\ie they stand on their own without context). Thus, the view of $V$ is that of an execution of the proving part of the VRF protocol with prover $\cQ_p$, and the view of $\cA$ is consistent with an execution of $\Pi'$.
+\end{proof}
+
+Finally, a proof of \cref{clm:locally_consistent_view} will give us \cref{thm:local_to_malicious_formal}.
+
+\begin{proof}[Proof of \cref{clm:locally_consistent_view}.]
+	
+	First, recall the definition of a locally-consistent adversary. A locally consistent adversary is one that can (1) abort prematurely, (2) send messages based on differing input bits and messages from honest parties, (3) sample their random coins honestly, and (4) cannot lie about messages received from honest parties. Given this, the proof of this claim is fairly simple, as in an execution of $\Pi'$ in which no adversary has forged an honest party's signature and all proofs were accepted, all honest parties have received messages consistent with other honest parties' messages in the execution, and as no adversary has managed to provide a false proof of consistency then it either was flagged as being aborted (which, again, it can do as a locally-consistent adversary) by an honest party $\cQ$ or has acted honestly \wrt its randomness. Thus, the view of parties in $\Pi$ simulated in $\Pi'$ is consistent with an execution of $\Pi$ in the presence of a locally-consistent adversary controlling no more than $t$ parties.
+\end{proof}
+	

@@ -1,0 +1,119 @@
+
+\documentclass[11pt]{article}
+\usepackage{amsfonts,amsmath,amssymb,boxedminipage,color,url,fullpage,nccmath,amsthm}
+
+\usepackage{color}
+
+\definecolor{weborange}{rgb}{.8,.3,.3}
+\definecolor{webblue}{rgb}{0,0,.8}
+\definecolor{internallinkcolor}{rgb}{0,.5,0}
+\definecolor{externallinkcolor}{rgb}{0,0,.5}
+
+
+% pageanchor=false solves the warning "pdfTeX warning (ext4): destination with the same identifier (name{page.}) has been already used, duplicate ignored"
+\usepackage[pageanchor=false,
+colorlinks=true,
+urlcolor=externallinkcolor,
+linkcolor=internallinkcolor,
+filecolor=externallinkcolor,
+citecolor=internallinkcolor,
+pdfstartview=FitH]{hyperref}
+
+
+\usepackage{enumerate,paralist}
+\usepackage[numbers]{natbib} % \citet{foo} -> Foo et al. [5]
+\usepackage[labelfont=bf]{caption}
+\usepackage{aliascnt}
+\usepackage{cleveref}
+\usepackage{xspace}
+
+\usepackage{relsize}
+\usepackage{graphics}
+
+\input{macros}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcounter{fnnumber}
+
+\newcommand{\adaptive}{{\MathAlgX{adaptive}\xspace}}
+\newcommand{\nonadaptive}{{\MathAlgX{non\mhyphen adaptive}\xspace}}
+
+\newcommand{\BA}{\MathAlgX{BA}}
+\newcommand{\Agr}{\MathAlgX{agreement}}
+\newcommand{\Vld}{\MathAlgX{validity}}
+\renewcommand{\Halt}{\MathAlgX{halting}}
+
+
+\newcommand{\bls}{\cB_{\ell,\sigma}}
+
+\renewcommand{\o}{b}
+\newcommand{\oo}{\overline{\o}}
+
+\newcommand{\omin}{\set{\o,\bot}}
+\newcommand{\oomin}{\set{\oo,\bot}}
+\newcommand{\vz}{\vv_0}
+\newcommand{\vo}{\vv_1}
+\newcommand{\oP}{{\overline{\cP}}}
+\newcommand{\bns}{\mathbf{D}_{n,\sigma}}
+\newcommand{\bne}{\cB_{n,\eps}}
+\newcommand{\err}{\mathsf{err}}
+\newcommand{\fnk}{\floor{(n-k)/2}}
+\newcommand{\cnk}{\ceil{(n-k)/2}}
+\newcommand{\fnt}{\floor{(n-t)/2}}
+\newcommand{\cnt}{\ceil{(n-t)/2}}
+
+\newcommand{\mon}{\set{\bot^n}}
+
+\newcommand{\FirstErr}{2^{t-n}}
+
+\title{On the Round Complexity of Randomized Byzantine Agreement}
+
+\author{Ran Cohen\thanks{Boston University and Northeastern University. E-mail: \texttt{rancohen@ccs.neu.edu}. Research supported by the Northeastern University Cybersecurity and Privacy Institute Post-doctoral fellowship, IARPA under award 2019-19020700009 (ACHILLES), NSF grant TWC-1664445, NSF grant 1422965, and by the NSF MACS project. Some of this work was done while the author was a post-doc at Tel Aviv University, supported by ERC starting grant 638121.}
+\and Iftach Haitner\thanks{School of Computer Science, Tel Aviv University. E-mail: \texttt{iftachh@cs.tau.ac.il}. Member of the  Israeli Center of Research Excellence in Algorithms (ICORE) and the Check Point Institute for Information Security.}~\footnotemark[5] %
+\and Nikolaos Makriyannis\thanks{Department of Computer Science, Technion. E-mail: \texttt{n.makriyannis@gmail.com}. Research supported by ERC advanced grant 742754.}~\footnotemark[5]
+\and Matan Orland\thanks{School of Computer Science, Tel Aviv University. E-mail: \texttt{matanorland@mail.tau.ac.il}.}
+\footnote{Research supported by ERC starting grant 638121.}
+\and Alex Samorodnitsky\thanks{School of Engineering and Computer Science, The Hebrew University of Jerusalem.\newline{} E-mail: \texttt{salex@cs.huji.ac.il}. Research partially supported by ISF grant 1724/15.}
+}
+
+\begin{document}
+
+\sloppy
+\maketitle
+\begin{abstract}
+We prove lower bounds on the round complexity of \emph{randomized} Byzantine agreement (BA) protocols,
+bounding the halting probability of such protocols after one and two rounds. In particular, we prove that:
+
+\begin{enumerate}
+\item BA protocols resilient against $n/3$ [\resp $n/4$] corruptions terminate (under attack) at the end of the first round with probability at most $o(1)$ [\resp $1/2+ o(1)$].
+
+\item BA protocols resilient against $n/4$ corruptions terminate at the end of the second round with probability at most $1-\Theta(1)$.
+
+\item For a large class of protocols (including all BA protocols used in practice) and under a plausible combinatorial conjecture, BA protocols resilient against $n/3$ [\resp $n/4$] corruptions terminate at the end of the second round with probability at most $o(1)$ [\resp $1/2 + o(1)$].
+\end{enumerate}
+The above bounds hold even when the parties use a trusted setup phase, \eg a public-key infrastructure (PKI).
+
+The third bound essentially matches the recent protocol of \citeauthor{Micali17} (ITCS'17) that tolerates up to $n/3$ corruptions and terminates at the end of the third round with constant probability.
+\end{abstract}
+
+\vfill
+\noindent\textbf{Keywords: Byzantine agreement; lower bound; round complexity.}
+
+\Tableofcontents
+
+\input{Introduction}
+\input{Technique}
+\input{OurResults}
+\input{Isoperimetric}
+\input{FirstRound}
+\input{SecondRound}
+
+\paragraph{Acknowledgements.}
+We would like to thank Rotem Oshman, Juan Garay, Ehud Friedgut, and Elchanan Mossel for very helpful discussions.
+
+\bibliographystyle{abbrvnat}
+\bibliography{crypto}
+
+\end{document}
+

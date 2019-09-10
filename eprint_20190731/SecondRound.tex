@@ -1,0 +1,566 @@
+\newcommand{\DF}{D_\F}
+\newcommand{\SDF}{\Supp(D_\F)}
+
+
+\section{Lower Bounds on Second-Round Halting}\label{sec:SecondRound}
+In this section, we prove lower bounds for second-round halting of Byzantine agreement protocols. In \cref{sec:TwoRoundProtcol:Arbitrary}, we prove a bound for arbitrary protocols, and in \cref{sec:TwoRoundProtcol:PR}, we give a much stronger bound for public-randomness protocols (the natural extension of public-coin protocols to the 'with-input' setting).
+
+\subsection{Arbitrary Protocols}\label{sec:TwoRoundProtcol:Arbitrary}
+We start by proving our lower bound for second-round halting of arbitrary protocols.
+
+
+\begin{theorem}[Bound on second-round halting, arbitrary protocols. \cref{thm:SecondRound:Arb} restated]\label{thm:SecondRound:Arb:Res}
+\ThmSecondRoundArb
+\end{theorem}
+
+Let $\Pi$ be as in \cref{thm:SecondRound:Arb:Res}. We assume for ease of notation that an honest party that runs more than two rounds outputs $\perp$ (it will be clear that the attack, described below, does not benefit from this change). We also assume \wlg that the honest parties in an execution of $\Pi$ never halt in one round (by adding a dummy round if needed). Finally, we omit the security parameter from the parties' input list, it will be clear though that the adversaries we present are efficient \wrt the security parameter.
+
+Let $k =\ceil{n/4}$ and let $h = \ceil{(n-k)/(t-k)}$. The theorem is easily implied by the next lemma.
+
+\begin{lemma}[Neighboring executions]\label{lemma:SecondRound:Arb}
+	Let $\vv,\vv' \in \zn$ be with $\ham(\vv,\vv') \le k$. Then, for every $\o\in \zo$:
+\[
+\pr{\Pi(\vv') = \o^n} \ge \pr{\Pi(\vv) = \o^n} - h(h+1)(2\alpha + 1-\gamma) - \alpha.
+\]
+\end{lemma}
+Namely, the lemma bounds from below the probability that in a random honest execution of the protocol on input $\vv'$ all parties halt within two rounds while outputting $\o$.
+
+
+We prove \cref{lemma:SecondRound:Arb} below, but first use it to prove \cref{thm:SecondRound:Arb:Res}. We also make use of the following immediate observation.
+\begin{claim}[Almost pre-agreement]\label{claim:SecondRound:Arb:Validity}
+Let $\vv \in \zn$ and $\o \in \zo$ be such that $\ham(\vv,\o^n) \le t$. Then, $\pr{\Pi(\vv) = \o^n } \ge 1 - \alpha - \beta - (1- \gamma)$.
+\end{claim}
+\begin{proof}
+The same argument as in the proof of \cref{claim:FirstRoundound:Arb:Validity} yields that
+\begin{align*}
+\pr{\Pi(\vv) \notin \omin^n} < \alpha + \beta
+\end{align*}
+Thus, by $\gamma$-second-round halting
+\begin{align*}
+\pr{\Pi(\vv) \ne \o^n} < \alpha + \beta + (1-\gamma)
+\end{align*}
+\end{proof}
+
+\begin{proof}[Proof of \cref{thm:SecondRound:Arb:Res}]
+Consider the vectors $\vz= 0^k 0^k 0^k 1^{n-3k}$, $\vo= 1^k 1^k 0^k 1^{n-3k}$ and $\vstar =1^k 0^k 0^k 1^{n-3k}$. Note that for both $\o\in \zo$ it holds that $\ham(\vv_b,\o^n)\le t$ since $n/4 \leq k\leq t$), and that $\ham(\vv_b,\vstar)=k$. Applying \cref{lemma:SecondRound:Arb,claim:SecondRound:Arb:Validity} for each of these vectors, yields that for both $\o\in \zo$:
+\begin{align*}
+\pr{\Pi(\vstar) = \o^n} &\ge 1- \alpha - \beta -(1- \gamma) - h(h+1)(2\alpha + 1-\gamma) -\alpha\\
+&\ge 1- \beta - (h+1)^2(2\alpha + 1-\gamma).
+\end{align*}
+Note that $w=h+1$, which implies $\beta +w^2(2\alpha + 1-\gamma) \ge 1/2$, and the proof follows by a simple calculation.
+\end{proof}
+
+\subsubsection{Proving \cref{lemma:SecondRound:Arb}}
+We assume for ease of notation that $\ham(\vv,\vv')=k$ (rather than $\le k$) and let $\ell=t-k$. Assume for ease of notation that $h\cdot \ell = n-k $ (\ie no rounding), and for a $k$-size
+subset of parties $\cP \subset [n]$, let $ \cL^\cP_1,\dots,\cL_h^\cP$ be an arbitrary partition of $\oP = [n] \setminus \cP$ into $\ell$-size subsets. Consider the following family of protocols:
+
+
+\newcommand{\PP}{\Pi^\cP}
+
+{ \samepage
+\begin{protocol}[$\PP_{d}$]\label{prot:main:Arb} ~
+\begin{description}
+	\item [Parameters:] A subset $\cP\subseteq [n]$ and an index $d\in (h)$.
+	\item [Input:] Every party $\Pc_i$ has an input bit $v_i\in\zo$.
+	
+	\item [First round:] ~
+	\begin{description}
+		\item[Party $\Pc_i \in \cP$.]
+		If $d=0$ [\resp $d=h$], act honestly according to $\Pi$ \wrt input bit~$v_i$ [\resp $1-v_i$].
+		Otherwise,		
+		\begin{enumerate}
+			\item Choose random coins honestly (\ie uniformly at random).
+			
+			\item To each party in $\bigcup_{j \in \set{1,\ldots,d}} \cL_j^\cP$: send a message according to input $1-v_i$.
+			
+			\item To each party in $\bigcup_{j \in \set{d+1 ,\ldots, h}} \cL_j^\cP$: send a message according to input $v_i$ (real input).
+			
+			\item Send no messages to the other parties in $\cP$.
+		\end{enumerate}
+		
+		\item[Other parties.] Act according to $\Pi$.
+	\end{description}
+	
+	\item [Second round:]~
+	
+	\begin{description}
+		\item[Party $\Pc_i \in \cP$.]
+        If $d=0$ [\resp $d=h$], act honestly according to $\Pi$ \wrt input bit~$v_i$ [\resp $1-v_i$]; otherwise, abort.
+		
+		\item[Other parties.] Act honestly according to $\Pi$.
+	\end{description}
+\end{description}
+\end{protocol}
+}
+
+Namely, the ``pivot'' parties in $\cP$ gradually shift their inputs from their real input to its negation according to parameter $d$. Note that protocol $\PP_{0}(\vv)$ is equivalent to an honest execution of protocol $\Pi(\vv)$, and $\PP_{h}(\vv)$ is equivalent to an honest execution of $\Pi(\vv')$, for $\vv'$ being $\vv$ with the coordinates in $\cP$ negated. \cref{lemma:SecondRound:Arb} easily follows by the next claim about \cref{prot:main:Arb}. In the following we let $\delta = \pr{\Pi(\vv)_\oP = \o^{\size{\oP}}}$.
+
+\newcommand{\ds}{{d^\ast}}
+\begin{claim}\label{claim:SecondRound:Arb}
+For any $k$-size
+subset $\cP\subset [n]$ and $d\in (h)$ it holds that
+\[
+\pr{\PP_d(\vv)_\oP = \o^{\size{\oP}}} \ge \delta- d (h+1)(2\alpha + 1-\gamma)
+\]
+\end{claim}
+We prove \cref{claim:SecondRound:Arb} below, but first use it to prove \cref{lemma:SecondRound:Arb}.
+\begin{proof}[Proof of \cref{lemma:SecondRound:Arb}]
+By \cref{claim:SecondRound:Arb},
+\begin{align*}
+\pr{\PP_h(\vv)_\oP = \o^{\size{\oP}}} \ge \delta - h(h+1)(2\alpha + 1-\gamma)
+\end{align*}
+Since $\PP_h(\vv)$ is just an honest execution of $\Pi(\vv')$, by agreement
+\begin{align*}
+\pr{\Pi(\vv') = \o^n} &\ge \delta - h(h+1)(2\alpha + 1-\gamma) - \alpha
+\end{align*}
+\end{proof}
+
+
+
+
+\begin{proof}[Proof of \cref{claim:SecondRound:Arb}]
+The proof is by induction on $d$. The base case $d=0$ holds by definition. Suppose for contradiction the claim does not hold, and let $\ds\in(h-1)$
+be such that the claim holds for $\ds$ but not for $\ds+1$. Let $\gamma_d$ be the probability that all honest parties halt in the second round of a random execution of $\PP_d(\vv)$. The assumption about $\ds$ yields that
+\begin{align}\label{eq:main:Arb:01}
+\pr{\PP_\ds(\vv)_\oP = \o^{\size{\oP}}} \ge \delta- \beta- \ds (h+1)(2\alpha + 1-\gamma)
+\end{align}
+
+and
+\begin{align}\label{eq:main:Arb:02}
+\pr{\PP_{\ds+1}(\vv)_\oP \in \zo^{\size{\oP}} \setminus \sset{\o^{\size{\oP}}}} > 1-\left(\delta - \beta - (\ds+1) (h+1)(2\alpha + 1-\gamma)\right)- (1-\gamma_d)
+\end{align}
+
+
+We note that for every $d\in (h)$
+\begin{align}\label{eq:main:Arb:03}
+\frac{1- \gamma_d}{h+1} \le 1-\gamma
+\end{align}
+
+
+Indeed, otherwise, the adversary that corrupts the parties in $\cP$ and acts like $\PP_d$ for a random $d\in (h)$, violates the $\gamma$-second-round-halting property of $\Pi$. We conclude that
+\begin{align}\label{eq:main:Arb:1}
+\lefteqn{\ppr{\vr}{\PP_\ds(\vv;\vr)_\oP = \o^{\size{\oP}} \qand \PP_{\ds+1}(\vv;\vr)_\oP \in \zo^{\size{\oP}} \setminus \sset{\o^{\size{\oP}}}}}\\
+& \ge 1 - \left(1- \ppr{\vr}{\PP_\ds(\vv;\vr)_\oP = \o^{\size{\oP}}} \right) - \left(1- \ppr{\vr}{\PP_{\ds+1}(\vv;\vr)_\oP \in (\zo^{\size{\oP}} \setminus \sset{\o^{\size{\oP}}}}\right)\nonumber\\
+& > (h+1) (2\alpha + 1 - \gamma) - (1-\gamma_d) \nonumber\\
+& \ge (h+1) 2\alpha,\nonumber
+\end{align}
+for $\vr$ being the randomness of the parties. The first inequality is by \cref{eq:main:Arb:01,eq:main:Arb:02}, and the second one by \cref{eq:main:Arb:03}.
+
+Consider the adversary that samples $d\gets (h)$, corrupts the parties in $\cP \cup \cL^\cP_{d+1}$, and acts towards a uniform random subset of the honest parties according to $\PP_d$ and to the remaining parties according to $\PP_{d+1}$. \cref{eq:main:Arb:1} yields that the above adversary causes disagreement with probability larger than $(h+1) 2\alpha/2(h+1) = \alpha$. Since it corrupts at most $t$ parties, this contradicts the assumption about $\Pi$.
+\end{proof}
+
+
+
+
+\subsection{Public-Randomness Protocols}\label{sec:TwoRoundProtcol:PR}
+We proceed to prove our lower bound for second-round halting of public-randomness protocols.
+
+\begin{theorem}[Lower bound on second-round halting, public-randomness protocols. \cref{thm:SecondRound:PR} restated] \label{thm:SecondRound:PR:Res}
+	\ThmSeconRoundPR
+\end{theorem}
+
+Assume \cref{con:IsoBot} holds. Let $\Pi$ be as in the theorem statement, and assume $\gamma= \epg$ in the case $t \ge (1/3 +\ept)\cdot n$ and $\gamma= \half + \epg$ in the case $t \ge (1/4 +\ept)\cdot n$. Let $\lambda =\epg /10$ and $\sigma= \ept/4$. Recall that $\bot_\cS(\vx)$ is the string resulting by replacing all entries of $\vx$ indexed by $\cS$ with $\bot$.
+\cref{con:IsoBot} yields that there exists $\delta>0$ such that the following holds for large enough $n$: let $\Sigma$ be a finite alphabet and let $\cA_0,\cA_1 \subset \sbn$ be two sets such that for both $b\in \zo$:
+\begin{align*}
+\ppr{\cs\gets \bns}{\ppr{\vr \gets \sn}{\vr,\bot_{\cS}(\vr) \in \cA_b} \ge \lambda} \ge 1-\delta.
+\end{align*}
+
+Then,
+\begin{align}\label{eq:IsoBot}
+\ppr{\vr\gets \sn,\cS \gets \bns}{\forall b\in \zo\colon \set{\vr,\bot_{\cS}(\vr)} \cap \cA_b \neq \emptyset} \ge \delta.
+\end{align}
+
+
+In the following we assume $\alpha = \min\set{\delta\lambda \ept/10, \beta}$ and derive a contradiction, yielding that the agreement error has to be larger than that.
+
+
+Fix $n$ that is large enough for \cref{eq:IsoBot} to hold and that $\ppr{\cs \gets \bns}{\size{\cs} > 2\sigma n} = 2^{- \Theta(n\cdot \sigma^2)} \le \alpha$, \ie $n> \Theta((\log 1/\alpha)/\sigma^2)$. As in the proof of \cref{thm:SecondRound:Arb:Res}, we assume for ease of notation that an honest party that runs more than two round outputs $\perp$, and that the honest parties in $\Pi$ never halt in one round. We also omit the security parameter from the parties input list. We assume \wlg that in the first round, the parties flip
+no coin, since such coins can be added to the setup parameter.
+
+We use the following notation: the setup parameter and second-round randomness of the parties in $\Pi$ are identified with elements of $\cF$ and $\cR$, respectively. We denote by $f_i$ and $r_i$ the setup parameter and the second-round
+randomness of party $\Pc_i$ in $\Pi$, and let $\DF$ be the joint distribution of the parties' setup parameters (by definition, the joint distribution of the second-round randomness is the product distribution $\rn$). For $\vv \in \zn$, $\vf=(f_1,\ldots,f_n) \in \SDF$, and $\vr=(r_1,\ldots,r_n) \in\rn$, let $\Pi(\vv;(\vf,\vr))$ denote the execution of $\Pi$ in which party $\Pc_i$ gets input $v_i$, setup parameter $f_i$ and second-round randomness $r_i$. We naturally apply this notation for the variants of $\Pi$ considered in the proof.
+
+
+
+For $\cs\subseteq[n]$, let $\Pi^\cs$ be the variant of $\Pi$ in which the parties in $\cs$ halt at the end of the first round. Let $k = \ceil{{t-\ept \cdot n}}$ (\ie $k = \ceil{n/3}$ if $t\ge (1/3 + \ept)\cdot n$, and $k = \ceil{n/4}$ if $t\ge (1/4 + \ept)\cdot n$). The heart of the proof lies in the following lemma.
+
+\begin{lemma}[Neighboring executions]\label{lemma:SecondRound:PR}
+Let $\vv,\vv' \in \zn$ be with $\ham(\vv,\vv') \le k$, let $\o\in \zo$, and let $\oS = [n] \setminus \cs$.  Then, with probability at least $\gamma- 7\lambda- \frac{\alpha + \pr{\Pi(\vv) \ne \o^n}}{\lambda}$ over $\vf \gets \DF$, it holds that
+\begin{align*}
+\ppr{\cs \gets \bns}{\ppr{\vr \gets \rn}{\Pi(\vv';(\vf,\vr)) = \o^n \qand \Pi^\cs(\vv';(\vf,\vr))_\oS = \o^{\size{\oS}} } \ge \lambda}\ge 1-\delta.
+\end{align*}
+\end{lemma}
+Namely, in an execution of $\Pi(\vv')$, all honest parties halt after two rounds and output $\o$, regardless of whether a random subset of parties aborts after the first round. \cref{lemma:SecondRound:PR} is proven in \cref{sec:lemma:SecondRound:PR}, but let us first use it to prove \cref{thm:SecondRound:PR}. We make use of the following immediate observation:
+\begin{claim}[Almost pre-agreement]\label{claim:SecondRound:PR:Validity}
+Let $\vv \in \zn$ and $\o \in \zo$ be such that $\ham(\vv,\o^n) \le t$. Then, $\pr{\Pi(\vv) \in \set{\o,\perp}^n } \ge 1 - \alpha - \beta $.
+\end{claim}
+\begin{proof}
+The proof of this claim uses an identical argument as in the proof of \cref{claim:FirstRoundound:Arb:Validity}.	
+\end{proof}
+
+
+\paragraph{Proving \cref{thm:SecondRound:PR}.}
+\begin{proof}[Proof of \cref{thm:SecondRound:PR}]~
+We separately prove the case $t \ge (1/3 + \ept)\cdot n$ and $t \ge (1/4 + \ept)\cdot n$.
+
+\paragraph{The case $t \ge (1/3 + \ept)\cdot n$.}
+Let $\vz= 0^k 1^{\cnk} 0^{\fnk} $ and let $\vo= 1^k 1^{\cnk} 0^{\fnk} $. Note that $\ham(\vz,\vo)=k$ and that for both $\o\in \zo$ it holds that $\ham(\vv_b,\o^n) \le t$. We will use \cref{lemma:SecondRound:PR,claim:SecondRound:PR:Validity} to prove that $\Pi(\vv_1) = 0^n$ with noticeable probability, contradicting the validity of the protocol.
+
+Recall that, in this case, $\gamma = \epg$, that $\lambda = \epg/10$ and $\alpha,\beta \le \epg^2/200 = \lambda^2/2$.  \cref{claim:SecondRound:PR:Validity} yields that for both $\o\in\zo$:
+\begin{align}\label{eq:SecondRound:PR:1}
+\pr{\Pi(\vv_\o) \ne \oo^n }\ge \pr{\Pi(\vv_\o) \in \set{\o,\perp}^n} \ge 1- \alpha - \beta \ge 1- \lambda^2
+\end{align}
+Applying \cref{lemma:SecondRound:PR} \wrt $\vz$ and $\vo$ and $b=0$, yields that with probability at least
+\[
+\gamma- 7\lambda- \frac{\alpha + \pr{\Pi(\vz) \ne 0^n}}{\lambda} \geq 3\lambda- \lambda=2 \lambda
+\]
+over $\vf \gets \DF$, it holds that
+
+\begin{align*}
+\ppr{\vr}{\Pi(\vo;(\vf,\vr)) = 0^n}\ge \lambda
+\end{align*}
+and therefore
+\begin{align*}
+\pr{\Pi(\vo) = 0^n}\ge 2 \lambda^2
+\end{align*}
+in contradiction to \cref{eq:SecondRound:PR:1}.
+
+
+
+\paragraph{The case $t \ge (1/4 + \ept)\cdot n$.} Consider the vectors $\vz= 0^k 0^k 0^k 1^{n-3k}$, $\vo= 1^k 1^k 0^k 1^{n-3k}$ and $\vstar =1^k 0^k 0^k 1^{n-3k}$. Note that for both $\o\in \zo$ it holds that $\ham(\vv_\o,\o^n) \le t$ and that $\ham(\vv_\o,\vstar)=k$. Applying \cref{lemma:SecondRound:PR,claim:SecondRound:PR:Validity} on $\vv_b$ and $\vstar$, for both $\o\in \zo$, yields that $\Pi^\cs(\vstar) = \o^n$ with noticeable probability over the choice of $\cs$. This will allow us to use \cref{con:IsoBot} to lowerbound the protocol's agreement.
+
+Recall that, in this case, $\gamma=1/2+\eps_\gamma$. (Hence, $\lambda=20\gamma$.)
+A similar calculation to the one in the previous case
+yields that by \cref{lemma:SecondRound:PR,claim:SecondRound:PR:Validity}, for both $\o\in \zo$: with probability at least $\frac12 + 2\lambda$ over $\vf \gets \DF $ it holds that
+\begin{align*}
+\ppr{\cs \gets \bns}{\ppr{\vr \gets \rn}{\Pi(\vstar;(\vf,\vr)) = \o^n \qand \Pi^\cs(\vstar;(\vf,\vr))_\oS = \o^{\size{\oS}} } \ge \lambda}\ge 1-\delta.
+\end{align*}
+It follows that there exists a set $\cT \subseteq \SDF$ with $\ppr{\vf \gets \DF}{\cT}\ge 4\lambda$, such that for every $\vf\in \cT$, for \emph{both} $\o\in \zo$:
+\begin{align}\label{eq:mainPR:4}
+\ppr{\cs \gets \bns}{\ppr{\vr \gets \rn}{\Pi(\vstar;(\vf,\vr)) = \o^n \qand \Pi^\cs(\vstar;(\vf,\vr))_\oS = \o^{\size{\oS}} } \ge \lambda}\ge 1-\delta
+\end{align}
+
+We assume \wlg that if a party gets $\perp$ as its second-round random coins, it aborts after the first round. For $\vr \in (\cR\cup\sset{\bot})^n$ let $ \cE(\vr)$ be the indices in $\vr$ of the value $\bot$.
+For $\vf \in \SDF$ and $\o \in \zo$, let
+\begin{align}
+\cA^\vf_\o = \set{\vr \in \rbot \colon \Pi(\vstar;(\vf,\vr))_{\overline{\cE(\vr)}} = \o^{\size{\overline{\cE(\vr)}}}}
+\end{align}
+By \cref{eq:mainPR:4}, for $\vf \in \cT$ and $\o\in \zo$, it holds that
+\begin{align}
+\ppr{\cs\gets \bns}{\ppr{\vr \gets \rn}{\vr,\bot_{\cS}(\vr) \in \cA^\vf_\o} \ge\lambda} \ge 1-\delta
+\end{align}
+Hence by \cref{con:IsoBot}, see \cref{eq:IsoBot}, for $\vf \in \cT$ it holds that
+\begin{align*}
+\ppr{\vr\gets \rn,\cS \gets \bns}{\forall \o \in \zo\colon \set{\vr,\bot_{\cS}(\vr)}\cap \cA_b \neq \emptyset} > \delta.
+\end{align*}
+That is,
+\begin{align}\label{eq:PR:3}
+\ppr{\vr\gets \cR^n,\cS \gets \bns}{\forall \o\in \zo \quad \exists \cs_\o \in \set{\cs,\emptyset} \colon \Pi^{\cS_\o}(\vstar;(\vf,\vr))_{\overline{\cS_\o}}= \o^{ \size{\overline{\cS_\o}}}} >\delta
+\end{align}
+
+{\samepage
+	\noindent
+	Consider the following adversary:
+	
+	\begin{algorithm}[$\Ac$]~
+		
+		\begin{description}
+			\item[Pre-interaction.]
+			Corrupt a random subset $\cS \gets \bns $ conditioned on $\size{\cs} \le 2\sigma n$.
+			
+			\item[First round.] Act according to $\Pi$.
+			\item[Second round.] Sample $\cs_0,\cs_1$ at random from $\set{\emptyset,\cs}$, and act towards some honest parties according to $\Pi^{\cs_0}$ and towards the others according to $\Pi^{\cs_1}$ .
+		\end{description}
+	\end{algorithm}
+}
+Recall that $n$ is chosen so that $\ppr{\cs \gets \bns}{\size{\cs} >2\sigma n} \leq \alpha$ and that $\alpha < \delta/2$.
+By \cref{eq:PR:3}, the above adversary violates the agreement of $\Pi$ on input $\vstar$ with probability larger than $\delta - \ppr{\cs \gets \bns}{\size{\cs} >2\sigma n} \ge \delta - \alpha >\alpha$, in contradiction with the assumed agreement of $\Pi$.
+\end{proof}
+
+
+\newcommand{\VV}{\cV^{\cP}}
+\renewcommand{\PP}{\Pi^{\cP,\cS}}
+\newcommand{\ops}{{\overline{\cP \cup \cS}}}
+
+\subsubsection{Proving \cref{lemma:SecondRound:PR}}\label{sec:lemma:SecondRound:PR}
+Fix $\vv,\vv \in \zn$ and $b\in \zo$ as in the lemma statement. We assume for simplicity that $\ham(\vv,\vv')=k$ (rather than $\le k$).
+Let $\ell= \floor{(t -k)/2}$ and let $h = \ceil{(n-k)/\ell}$. Assume for ease of notation that $h\cdot \ell = n-k $ (\ie no rounding), and for a $k$-size subset of parties $\cP \subset [n]$, let $ \cL^\cP_1,\dots,\cL_h^\cP$ be an arbitrary partition of $\oP = [n] \setminus \cP$ into $\ell$-size subsets. Consider the following protocol family.
+
+
+{ \samepage
+\begin{protocol}[$\PP_d$]\label{prot:main:2} ~
+\begin{description}
+    \item [Parameters:] subsets $\cP,\cS \subseteq [n]$ and an index $d\in (h)$.
+    \item [Input:] Party $\Pc_i$ has a setup parameter $f_i$ and an input bit $v_i$.
+
+	\item [First round:] ~
+	\begin{description}
+		\item[Party $\Pc_i \in \cP$.] ~
+		If $d=0$ [\resp $d=h$], act honestly according to  $\Pi$ \wrt input bit $v_i$ [\resp $1-v_i$].
+		Otherwise,
+		\begin{enumerate}
+			\item Choose random coins honestly (\ie uniformly at random).
+			
+			\item To each party in $\bigcup_{j \in \set{1,\ldots,d}} \cL_j^\cP$: send a message according to input $ 1-v_i$.
+			
+			\item To each party in $\bigcup_{j \in \set{d+1 ,\ldots, h}} \cL_j^\cP$: send a message according to input $v_i$ (real input).
+			
+			\item Send no messages to the other parties in $\cP$.
+		\end{enumerate}
+		
+		\item[Other parties.] Act according to $\Pi$.
+	\end{description}
+	
+	\item [Second round:]~
+	\begin{description}
+		\item[Parties in $\cP \setminus \cs$.] If $d=0$ [\resp $d=h$], act honestly according to $\Pi$ \wrt input bit $v_i$ [\resp $1-v_i$]; otherwise, abort.
+		
+		\item[Parties in $\cS$.] Abort.
+		
+
+		
+		\item[Other parties.] Act according to $\Pi$.
+	\end{description}
+\end{description}
+\end{protocol}
+}
+Namely, the ``pivot'' parties in $\cP$ shift their inputs from their real input to the flipped one according to parameter $d$. The ``aborting'' parties in $\cs$ abort at the end of the first round. Note that protocol $\PP_{0}$ is the same as protocol $\Pi^\cs$, and $\PP_h(\vv)$ acts like $\Pi^\cs(\vv')$, for $\vv'$ being $\vv$ with the coordinates in $\cP$ flipped.
+
+For $\cP, \cS \subseteq [n]$, let $\ops = [n] \setminus (\cP \cup \cs)$, let $d\in (h)$, let $c\in \zo$, and let
+\[
+\VV_{d,c} = \set{(\vf,\cs,\vr) \colon \quad \PP_d(\vv;(\vf,\vr))_\ops = c^{\size{\ops}}}
+\]
+Namely, $\VV_{d,c}$ are the sets, setup parameters and random strings on which honest parties in $\PP_{d}$ halt in the second round and output $c$. Let $\chi = \pr{ \Pi(\vv) \ne \o^n}$ and let
+\[
+\cT_{d,c}^\cP = \set{\vf \colon \ppr{\cs \gets \bns}{\ppr{\vr \gets \rn}{(\vf,\cS,\vr),(\vf,\emptyset,\vr) \in \VV_{d,c} } \ge \lambda } \ge 1-\delta}
+\]
+The proof of  \cref{lemma:SecondRound:PR} immediately follows by the next lemma.
+\begin{lemma}\label{lemma:SecondRound:PRR}
+For every $k$-size subset $\cP \subset [n]$ and $d\in [h]$,
+it holds that
+\begin{align*}
+\ppr{ \DF}{\cT_{d,\o}^\cP} \ge \gamma- 7\lambda- \frac{\chi + \alpha }{\lambda}
+\end{align*}
+\end{lemma}
+\begin{proof}[Proof of \cref{lemma:SecondRound:PR}]
+Immediate by \cref{lemma:SecondRound:PRR}.
+\end{proof}
+\newcommand{\tV}{\widetilde{\cV}}
+\newcommand{\tT}{{\widetilde{\cT}}}
+
+
+The rest of this subsection is devoted for proving \cref{lemma:SecondRound:PRR}. Fix a $k$-size subset $\cP \subset [n]$ and omit it from the notation when clear from the context.
+Let
+\[
+\tV_{d,c} = \set{(\vf,\cs,\vr) \colon \forall a\in \zo \quad \PP_{d+a}(\vv;(\vf,\vr))_\ops = c^{\size{\ops}}}
+\]
+Namely, $\tV_{d,c} \subseteq \cV_{d,c}$ are the sets, setup parameters and random strings, on which honest parties in $\PP_{d+a}$ halt in the second round and output $c$, \emph{regardless} whether the parties in $\cS$ abort \emph{and} whether the parties in $\cP$ act toward those in $\cL_{d+1}$ according to input $0$ or $1$.
+Let
+\[
+\tT_{d,c} = \set{\vf \colon \ppr{\cs \gets \bns}{\ppr{\vr \gets \rn}{(\vf,\cS,\vr),(\vf,\emptyset,\vr) \in \tV_{d,c} } \ge \lambda} \ge 1-\delta},
+\]
+let $\tT_{d} = \tT_{d,0}\cup \tT_{d,1}$, and let $\tT = \bigcap_{i \in (h-1)}\tT_{d}$. \cref{lemma:SecondRound:PRR} is proved via the following claims (the following probabilities are taken over $\vf \gets \DF$).
+
+
+\begin{claim}\label{claim:PR:0}
+	$\pr{\cT_{d+1,\o} \mid \tT} < \eta$ implies $\pr{\cT_{d,\oo} \mid \tT} \ge 1- \eta$.
+\end{claim}
+\begin{proof}[Proof of \cref{claim:PR:0}]
+By definition, $\pr{\tT_{d+1} \mid \tT} =1$.	 Hence, $\pr{\tT_{d+1,\o} \mid \tT}< \eta$ implies $\pr{\tT_{d+1,\oo} \mid \tT}> 1 -\eta$, and the latter implies that $\pr{\cT_{d,\oo} \mid \tT}>  1 -\eta$.
+\end{proof}
+
+
+\begin{claim}\label{claim:PR:00}
+$\pr{\tT} \ge \gamma- 6\lambda$.
+\end{claim}
+
+
+\begin{claim}\label{claim:PR:01}
+$\pr{\cT_{1,\o} \mid \tT} \ge 1- (\chi + \alpha)/(\Pr[\tT]\cdot \lambda)$.
+\end{claim}
+
+
+
+
+
+\begin{claim}\label{claim:PR:1}
+For every $d \in [h-1]$.
+\[
+\pr{\cT_{d,0} \mid \tT} + \pr{\cT_{d,1} \mid \tT} \le 1 + \frac{\lambda}{h\cdot\Pr[\tT]}
+\]
+\end{claim}
+
+We prove \cref{claim:PR:00,claim:PR:01,claim:PR:1} below, but first use the above claims for proving \cref{lemma:SecondRound:PR}.
+
+
+\paragraph{Proving \cref{lemma:SecondRound:PRR}.}
+
+
+\begin{proof}[Proof of \cref{lemma:SecondRound:PRR}.]
+We first prove that for every $d\in [h]$:
+\begin{align}\label{eq:SecondRound:PRR}
+\pr{\cT_{d,\o} \mid \tT} \ge 1- \frac{ \chi + \alpha}{\Pr[\tT]\cdot \lambda} - \frac{d\lambda}{h\cdot\Pr[\tT]}
+\end{align}	
+The proof is by induction on $d$. The base case, $d=1$, is by \cref{claim:PR:01}. The induction steps follows by the combination of \cref{claim:PR:0,claim:PR:1}. Applying \cref{eq:SecondRound:PRR} for $d=h$, yields that
+\begin{align*}
+\pr{\cT_{h,\o} } \ge \Pr[\tT]- \frac{ \chi +\alpha}{\lambda} - \lambda,
+\end{align*}	
+and the proof follows by \cref{claim:PR:00}.
+\end{proof}
+
+
+\newcommand{\PPP}{\Pi^{\cS}}
+
+
+So it is left to prove \cref{claim:PR:00,claim:PR:01,claim:PR:1}. Note that the following adversaries corrupt at most $k + \ell + 2\sigma n \le t$ and thus they make a valid attack. Since our security model consider rushing adversaries, and $\Pi$ has
+pubic randomness, we assume the adversary knows $\vf = (f_1,\ldots,f_n)$ \emph{before} sending its first-round messages. In the following we let $\PPP_d = \PP_d$ and $\Pi_d = \Pi^{\emptyset}_d$.
+\paragraph{Proving \cref{claim:PR:00}.}
+This is the only part in proof where we exploit the fact that the protocol is secure against \emph{adaptive} adversaries.
+\begin{proof}[Proof of \cref{claim:PR:00}.]
+	
+
+Consider the following \emph{rushing adaptive} adversary.
+
+{ \samepage
+\begin{algorithm}[$\Ac$]\label{alg:PR:00}~
+		
+\begin{description}
+	
+\item[Pre interaction:]~
+Corrupt the parties in $\cP$.
+
+\item[First round.] ~
+Let $\vf$ be the parties' setup parameters.
+
+Do $1/\lambda\delta$ times:
+\begin{enumerate}
+	\item  Sample  $\cS \gets \bns $ conditioned on $ \size{\cs} \le 2\sigma n$.
+	\item  	For each   $i\in (h-1)$: estimate $\xi_i =  \ppr{\vr \gets \rn}{(\vf,\cs,\vr),(\vf,\emptyset,\vr)  \in \tV_{i}}$ by taking $\Theta( \log (h/ \lambda))$ samples of $\vr$.
+	
+	\item Let $d = \argmin_{i\in (h-1)} \set{\xi_i}$.
+			
+	\item If $\xi_d < 2\lambda$, break the loop.
+
+\end{enumerate}
+			
+        Corrupt the parties in $\cs \cup \cL_{d+1}$ ($\cs$ is the set sampled in the last loop), and act according to $\Pi_d$.
+		
+		\item[Second round.]~
+		
+		Let $\vr$ be the parties' second-round randomness.
+		
+		
+		If $(\vf,\emptyset,\vr) \notin \cV_{d+a}$ for some $a\in \zo$,
+		
+		\quad act according to $\Pi_{d+a}$.
+		
+		Else,
+		
+		\quad Let $a\in \zo$ be such that $(\vf,\cs,\vr) \notin \cV_{d+a}$, set to $0$ if no such value exists.
+		
+		\quad Act according to $\Pi^{\cs}_{d+a}$.
+			
+	
+\end{description}			
+	\end{algorithm}
+}
+
+Let $D$ be the value of $d$ chosen by the adversary $\Ac$ (at the first round of the protocol).
+Since $\ppr{\cs \gets \bns}{ \size{\cs} > 2\sigma n} \le \alpha < \delta/2$,
+if $\vf \notin \tT$ then except with probability $\lambda$ it holds that $\xi_D \le 2\lambda$. Where if $\xi_D \le 2\lambda$, then in the interaction with $\Ac$ the honest parties both halt in the second round and output the same value with probability at most $5\lambda$. Where since $\alpha < \lambda$, the honest parties halt in the second round of such interaction with probability smaller than $6\lambda$. We conclude that the honest parties halt in the second round under the above attack with probability smaller than $\Pr[\tT] + \Pr[\neg \tT]\cdot 6\lambda \le \Pr[\tT] + 6\lambda$, yielding that $\Pr[\tT] > \gamma- 6\lambda$.
+\end{proof}
+
+
+
+
+\paragraph{Proving \cref{claim:PR:01}.}
+
+
+\newcommand{\oH}{{\overline{\cH}}}
+
+\begin{proof}[Proof of \cref{claim:PR:01}.]
+By definition, for $\vf \in \cT_{1,\o}$ it holds that
+\begin{align*}
+\ppr{\vr \gets \rn}{\Pi_1(\vv;(\vf,\vr))_\oH = \oo^{\size{\oH}} } = \ppr{\vr \gets \rn}{(\vf,\emptyset,\vr) \in \cV_{1,\oo} } \ge \lambda,
+\end{align*}
+letting $\cH = \cP \cup \cL_1$ and $\oH = [n] \setminus\cH$. Let $\eta = \ppr{\vf}{\cT_{1,\oo} \mid \tT}$, clearly,	$\ppr{\vf}{\cT_{1,\o} \mid \tT} = 1 -\eta$. By the above
+\begin{align}
+ \pr{\Pi_1(\vv)_\oH = \oo^{\size{\oH}}} \ge \Pr[\tT]\cdot \eta \cdot \lambda
+\end{align}
+(recall that $\Pi_1(\vv)$ stands for $\Pi_1(\vv;(\vf,\vr))$, for a random choice of $(\vf,\vr))$).
+Finally, we notice that
+\begin{align}
+\pr{\Pi_1(\vv) = \oo^{\size{\cH}}} + \pr{\Pi(\vv) = \o^n} \le 1+ \alpha
+\end{align}
+
+Otherwise, the adversary corrupting the parties in $\cH$, and acting toward the first honest parties according to $\Pi$ and toward the rest according to $\Pi_1$ violates the $\alpha$-agreement of $\Pi$. We conclude that $\Pr[\tT]\cdot \eta \cdot \lambda \le \chi + \alpha $, and therefore $\eta \le (\chi + \alpha)/(\Pr[\tT]\cdot \lambda)$.
+\end{proof}
+
+
+
+\paragraph{Proving \cref{claim:PR:1}.}
+
+
+
+The proof uses \cref{con:IsoBot} in a similar way to the second part of the proof of the theorem.
+
+
+\begin{proof}[Proof of \cref{claim:PR:1}.]
+For $\vr \in (\cR\cup\sset{\bot})^n$ let $ \cE(\vr)$ be the indices in $\vr$ of the value $\bot$.
+We assume \wlg that a party aborts upon getting $\perp$ as its second round random coins. For $\vf \in \SDF$, for $d\in [h-1]$, and for $\o \in \zo$, let
+\begin{align}
+\cA^\vf_\o = \set{\vr \in \rbot \colon \Pi_d(\vv;(\vf,\vr))_{\overline{\cP \cup \cL_d \cup \cE(\vr)}} = \o^{\size{\overline{\cP \cup \cL_d \cup \cE(\vr)}}}}
+\end{align}
+By definition, for $\vf \in \cT_{d,0} \cap \cT_{d,1}$ and $\o\in \zo$, it holds that
+\begin{align}
+\ppr{\cs\gets \bns}{\ppr{\vr \gets \rn}{\vr,\bot_{\cS}(\vr) \in \cA^\vf_\o} \ge \lambda} \ge 1-\delta
+\end{align}
+By \cref{con:IsoBot}, see \cref{eq:IsoBot}, for $\vf \in \cT_{d,0} \cap \cT_{d,1}$ it holds that
+\begin{align*}
+\ppr{\vr\gets \rn,\cS \gets \bns}{\forall \o \in \zo \colon \set{\vr,\bot_{\cS}(\vr)}\cap \cA^f_b \neq \emptyset} > \delta
+\end{align*}
+That is,
+\begin{align}\label{eq:PR:1:4}
+\ppr{\vr\gets \cR^n,\cS \gets \bns}{\forall \o\in \zo \quad \exists \cs_\o \in \set{\cs,\emptyset} \colon \Pi^{\cS_\o}_{d}(\vv;(\vf,\vr))_{ \overline{\cP \cup \cL_d \cup\cS_\o} }= \o^{ \size{\overline{ \cP \cup \cL_d \cup\cS_\o}}}} >\delta
+\end{align}
+In pursuit of contradiction, assume that $\pr{\cT_{d,0} \mid \tT} + \pr{\cT_{d,1} \mid \tT} \ge 1 + \lambda/(h\cdot \Pr[\tT])$ for some $d \in [h-1]$. It follows that
+\begin{align}\label{eq:PR:1:5}
+\lefteqn{\ppr{\stackrel{\vf \gets \DF}{\vr\gets \cR^n,\cS \gets \bns}}{\forall \o\in \zo \quad \exists \cs_\o \in \set{\cs,\emptyset}\colon \Pi^{ \cs_\o}_{d}(\vv;(\vf,\vr))_{ \overline{\cP \cup \cL_d \cup \cs_\o} }= \o^{ \size{\overline{ \cP \cup \cL_d \cup \cs_\o}}}}}\\
+&> \pr{\cT_{d,0} \cap \cT_{d,1}}\cdot \delta \hskip30em \nonumber\\
+&\ge \Pr[\tT]\cdot \Pr[\cT_{d,0} \cap \cT_{d,1} \mid \tT] \cdot \delta \nonumber\\
+&\ge \Pr[\tT]\cdot \frac{\lambda}{h\cdot \Pr[\tT]} \cdot \delta \nonumber\\
+&= \lambda\delta /h \nonumber\\
+&> 8\alpha.\nonumber
+\end{align}
+The first inequality is by \cref{eq:PR:1:4}, the second one by the assumption that $\Pr[\cT_{d,0} \mid \tT] + \Pr[\cT_{d,1} \mid \tT] \ge 1 + \lambda/(h\cdot \Pr[\tT])$, and the last one by the definition of $\alpha$.
+
+{\samepage
+\noindent
+Consider the following rushing adversary:
+
+\begin{algorithm}[$\Ac$]~
+
+\begin{description}
+\item[Pre-interaction.] ~
+		
+	\begin{enumerate}
+		\item For each $i\in [h-1]$, estimate
+		
+		\[
+        \xi_i = \ppr{\vr\gets \cR^n,\cS \gets \bns}{\forall \o\in \zo \quad \exists \cs_\o \in \set{\cs,\emptyset} \colon \Pi^{\cs_\o}_{d}(\vv;(\vf,\vr))_{\overline{ \cP \cup \cL_d \cup \cs_\o}}= \o^{ \size{\overline{ \cP \cup \cL_d \cup \cs_\o}}}}
+         \]
+         by taking $\Theta(\log (h/\alpha)/\alpha$ samples. Let $d = \argmax_{i\in [h-1]}\set{\xi_i}$.
+		
+		\item Sample a random $\cS \gets \bns $ conditioned on $\size{\cs} \le 2\sigma n$.
+	\end{enumerate}
+	
+	 Corrupt the parties in $\cP \cup \cS\cup \cL_d$.
+	
+	\item[First round.] Act according to $\Pi_d$.
+	
+	\item[Second round.] Sample $\cs_0,\cs_1$ at random from $\set{\emptyset,\cs}$, and act towards some honest parties according to $\Pi^{\cs_0}_{d,0}$ and towards the others according to $\Pi^{\cs_1}_{d,1}$ .
+\end{description}
+\end{algorithm}
+}
+By \cref{eq:PR:1:5} and since $\ppr{\cs \gets \bns}{\cs \ge 2\sigma n} \le \alpha$, the above adversary violates the agreement of $\Pi$ on input $\vv$ with probability larger than $\alpha$, contradicting the assumed agreement of $\Pi$.
+\end{proof}

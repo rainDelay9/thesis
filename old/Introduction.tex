@@ -1,0 +1,27 @@
+\section{Introduction}\label{sec:intro}
+
+The \emph{Byzantine agreement (BA)} problem~\cite{PSL80,LSP82} is arguably one of the most important problems in theoretical computer science. In a $t$-resilient, $n$-party BA, a set of $n$ parties, $t$ of which might be corrupted, wish to agree on a common output bit that is one of the honest parties' input bits. Byzantine agreement originally started as a central concept in distributed computing~\cite{PSL80,LSP82}, and soon after became an important ingredient in \emph{secure multiparty computation}~\cite{Yao82,GMW87}. In recent years BA has gained renewed interest due to its impact on crypto-currencies~\cite{Micali16,GHMVZ17,PS17}.
+
+
+
+\subsection{Our Result}\label{sec:intro:ourResult}
+In the following pages we will show several lower bounds for randomized Byzantine agreement protocols in various models, culminating in \cref{mainThm}.
+
+\mnote{I don't know how to write this conjecture without defining a projection for strings}
+
+\begin{conjecture}\label{mainConjecture}
+	Let $\gamma > 0$, $s \in \Theta(n)$ and $C \subset \zo^{n\cdot k}$ such that for all but a negligible fraction of $S \in {\binom{[n]}{s}}$ it holds that $\size{C|^k_{S}} < \gamma \cdot 2^s$. Then, $\size{C} \in o(1)$.
+\end{conjecture}
+(See Preliminaries for the definition of $C|^k_{S}$)
+
+\begin{theorem}\label{mainThm}
+	Let $\Pi$ be an \batwo{n}{t}, where $t$ is any constant fraction of $n$, and let $\delta$ be a lower-bound for the probability that for any input all honest parties halt after two rounds, regardless of adversarial behavior. Then, if \cref{mainConjecture} holds, $\delta \in o(1)$. \mnote{Parties must commit to randomness?}
+\end{theorem}
+
+\subsection{Our Techniques}\label{sec:intro:technique}
+
+\subsection{Additional Related Work}\label{sec:relatedWork}
+
+\subsection{Open Questions}
+
+\subsection*{Paper Organization}

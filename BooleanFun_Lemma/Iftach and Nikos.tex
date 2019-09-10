@@ -1,0 +1,285 @@
+\documentclass[11pt,fleqn]{article}
+\usepackage{amsfonts, epsfig, amssymb, amsmath}
+\usepackage[normalem]{ulem}
+\usepackage{color}
+\setlength{\evensidemargin}{0in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\textwidth}{6.25in}
+\setlength{\textheight}{8.5in}
+\setlength{\topmargin}{0in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\itemsep}{-\parsep}
+\renewcommand{\topfraction}{.9}
+\renewcommand{\textfraction}{.1}
+\newcommand{\ol}{\setlength{\itemsep}{0pt.}\begin{enumerate}}
+\newcommand{\eol}{\end{enumerate}\setlength{\itemsep}{-\parsep}}
+\newcommand{\ignore}[1]{}
+\setlength{\parskip}{\medskipamount}
+
+%\title{}
+%\author{Alex Samorodnitsky}
+
+
+\begin{document}
+\date{}
+%\maketitle
+
+%  THEOREM-LIKE ENVIRONMENTS
+
+\newtheorem{THEOREM}{Theorem}[section]
+\newenvironment{theorem}{\begin{THEOREM} \hspace{-.85em} {\bf :}
+}%
+                        {\end{THEOREM}}
+\newtheorem{LEMMA}[THEOREM]{Lemma}
+\newenvironment{lemma}{\begin{LEMMA} \hspace{-.85em} {\bf :} }%
+                      {\end{LEMMA}}
+\newtheorem{COROLLARY}[THEOREM]{Corollary}
+\newenvironment{corollary}{\begin{COROLLARY} \hspace{-.85em} {\bf
+:} }%
+                          {\end{COROLLARY}}
+\newtheorem{PROPOSITION}[THEOREM]{Proposition}
+\newenvironment{proposition}{\begin{PROPOSITION} \hspace{-.85em}
+{\bf :} }%
+                            {\end{PROPOSITION}}
+\newtheorem{DEFINITION}[THEOREM]{Definition}
+\newenvironment{definition}{\begin{DEFINITION} \hspace{-.85em} {\bf
+:} \rm}%
+                            {\end{DEFINITION}}
+\newtheorem{EXAMPLE}[THEOREM]{Example}
+\newenvironment{example}{\begin{EXAMPLE} \hspace{-.85em} {\bf :}
+\rm}%
+                            {\end{EXAMPLE}}
+\newtheorem{CONJECTURE}[THEOREM]{Conjecture}
+\newenvironment{conjecture}{\begin{CONJECTURE} \hspace{-.85em}
+{\bf :} \rm}%
+                            {\end{CONJECTURE}}
+\newtheorem{MAINCONJECTURE}[THEOREM]{Main Conjecture}
+\newenvironment{mainconjecture}{\begin{MAINCONJECTURE} \hspace{-.85em}
+{\bf :} \rm}%
+                            {\end{MAINCONJECTURE}}
+\newtheorem{PROBLEM}[THEOREM]{Problem}
+\newenvironment{problem}{\begin{PROBLEM} \hspace{-.85em} {\bf :}
+\rm}%
+                            {\end{PROBLEM}}
+\newtheorem{QUESTION}[THEOREM]{Question}
+\newenvironment{question}{\begin{QUESTION} \hspace{-.85em} {\bf :}
+\rm}%
+                            {\end{QUESTION}}
+\newtheorem{REMARK}[THEOREM]{Remark}
+\newenvironment{remark}{\begin{REMARK} \hspace{-.85em} {\bf :}
+\rm}%
+                            {\end{REMARK}}
+%\newenvironment{proof}{\noindent {\bf Proof:} \hspace{.677em}}%
+%                      {}
+
+%theorem
+\newcommand{\thm}{\begin{theorem}}
+%lemma
+\newcommand{\lem}{\begin{lemma}}
+%proposition
+\newcommand{\pro}{\begin{proposition}}
+%definition
+\newcommand{\dfn}{\begin{definition}}
+%remark
+\newcommand{\rem}{\begin{remark}}
+%example
+\newcommand{\xam}{\begin{example}}
+%conjecture
+\newcommand{\cnj}{\begin{conjecture}}
+%main_conjecture
+\newcommand{\mcnj}{\begin{mainconjecture}}
+%problem
+\newcommand{\prb}{\begin{problem}}
+%question
+\newcommand{\que}{\begin{question}}
+%corollary
+\newcommand{\cor}{\begin{corollary}}
+%proof
+\newcommand{\prf}{\noindent{\bf Proof:} }
+%end theorem
+\newcommand{\ethm}{\end{theorem}}
+%end lemma
+\newcommand{\elem}{\end{lemma}}
+%end proposition
+\newcommand{\epro}{\end{proposition}}
+%end definition
+\newcommand{\edfn}{\bbox\end{definition}}
+%end remark
+\newcommand{\erem}{\bbox\end{remark}}
+%end example
+\newcommand{\exam}{\bbox\end{example}}
+%end conjecture
+\newcommand{\ecnj}{\bbox\end{conjecture}}
+%end main_conjecture
+\newcommand{\emcnj}{\bbox\end{mainconjecture}}
+%end problem
+\newcommand{\eprb}{\bbox\end{problem}}
+%end question
+\newcommand{\eque}{\bbox\end{question}}
+%end corollary
+\newcommand{\ecor}{\end{corollary}}
+%end proof
+\newcommand{\eprf}{\bbox}
+%begin equation
+\newcommand{\beqn}{\begin{equation}}
+%end equation
+\newcommand{\eeqn}{\end{equation}}
+% white box
+\newcommand{\wbox}{\mbox{$\sqcap$\llap{$\sqcup$}}}
+%black box
+\newcommand{\bbox}{\vrule height7pt width4pt depth1pt}
+\newcommand{\qed}{\bbox}
+% \sup will be used for superscript.
+\def\sup{^}
+
+\def\H{\{0,1\}^n}
+
+\def\S{S(n,w)}
+
+\def\g{g_{\ast}}
+\def\xop{x_{\ast}}
+\def\y{y_{\ast}}
+\def\z{z_{\ast}}
+
+\def\f{\tilde f}
+
+\def\n{\lfloor \frac n2 \rfloor}
+
+
+\def \E{\mathop{{}\mathbb E}}
+\def \R{\mathbb R}
+\def \Z{\mathbb Z}
+\def \F{\mathbb F}
+\def \T{\mathbb T}
+
+\def \x{\textcolor{red}{x}}
+\def \r{\textcolor{red}{r}}
+\def \Rc{\textcolor{red}{R}}
+
+\def \noi{{\noindent}}
+
+
+\def \iff{~~~~\Leftrightarrow~~~~}
+
+\def \queq {\quad = \quad}
+
+\def\<{\left<}
+\def\>{\right>}
+\def \({\left(}
+\def \){\right)}
+
+\def \e{\epsilon}
+\def \l{\lambda}
+
+
+% Defining Tchebyshef polynomial
+\def\Tp{Tchebyshef polynomial}
+\def\Tps{TchebysDeto be the maximafine $A(n,d)$ l size of a code with distance $d$hef polynomials}
+%right arrow
+\newcommand{\rarrow}{\rightarrow}
+%left arrow
+
+\newcommand{\larrow}{\leftarrow}
+%right arrow
+
+\overfullrule=0pt
+\def\setof#1{\lbrace #1 \rbrace}
+
+%\begin{abstract}
+%\end{abstract}
+
+
+\noi We will assume that $f$ is a monotone increasing boolean function such that the following holds for some absolute constants $0 < \alpha < 1$, $0 < \delta < 1$, and for $\e = o_n(1)$:
+
+\begin{enumerate}
+
+\item
+
+\[
+\E f \queq \alpha,
+\]
+
+\item
+
+\[
+\textrm{Pr}_{S,|S| = \frac{n}{4}} \Big\{~\textrm{Pr}_{B: S \subseteq B} \{~f(B) = 1\} \le 1 - \delta \Big\} \quad \ge \quad 1 - \e,
+\]
+
+\end{enumerate}
+
+\noi and try to reach contradiction.
+
+\noi Let ${\cal F} = \{B: f(B) = 1\}$.  We start with observing that the second assumption has the following corollary:
+\lem
+\label{lem:levels}
+Let $L_m$ denote the $m$'th level of the discrete cube $\H$. There exists a constant $\delta' \lesssim \delta$ such that for all $\frac{n}{4} \le m \le \frac{5n}{8} - \omega\(\sqrt{n}\)$ holds
+\[
+|{\cal F} \cap L_m| ~\le~ \(1 - \delta'\) \cdot {n \choose m}.
+\]
+\elem
+\prf
+Let ${\cal F}_m = {\cal F} \cap L_m$. Let $P_m = \Big\{(S,B): |S| = \frac{n}{4},~S \subseteq B, B \in {\cal F}_m\Big\}$. We will estimate $P_m$ in two ways. 
+
+\noi First, we introduce some more notation. Let $S$ be of cardinality $\frac{n}{4}$ and let $C_S = \{B, S \subseteq B\}$ be the $\frac{3n}{4}$-dimensional subcube containing the supersets of $S$. By the second assumption above, for $(1-\e)$ fraction of the sets $S$ holds $|C_S \cap {\cal F}| \le (1-\delta) \cdot 2^{\frac{3n}{4}}$. Let $S$ be one of these sets. The main observation means that for some $\delta' \lesssim \delta$ and for all $m$ which are sufficiently below the height of the middle level of $C_S$ (which is $\frac{5n}{8}$, and the choice $m \le \frac{5n}{8} - \omega\(\sqrt{n}\)$ works fine) the set $C_S \cap {\cal F}_m$ should be of cardinality at most $\(1-\delta'\) \cdot {{\frac{3n}{4}} \choose {m - \frac{n}{4}}}$. Indeed, assume to the contrary that this does not hold. Then for all $m \le t \le n$ we have, as a simple corollary of the monotonicity of $C_S \cap {\cal F}$, that
+\[
+| C_S \cap {\cal F}_m | ~\ge~ \(1-\delta'\) \cdot {{\frac{3n}{4}} \choose {t - \frac{n}{4}}},
+\]
+which implies $|C_S \cap {\cal F}| > (1-\delta) \cdot 2^{\frac{3n}{4}}$, for an appropriate choice of $\delta'$, contradicting the choice of $S$. 
+
+\noi So, for $(1-\e)$ fraction of the sets $S$ of cardinality $\frac{n}{4}$ holds $C_S \cap {\cal F}_m \le \(1-\delta'\) \cdot {{\frac{3n}{4}} \choose {m - \frac{n}{4}}}$. This means 
+\[
+|P_m| ~\le~ (1-\e) \cdot \(1-\delta'\) \cdot {n \choose {\frac{n}{4}}} {{\frac{3n}{4}} \choose {m - \frac{n}{4}}} + \e \cdot {n \choose {\frac{n}{4}}} {{\frac{3n}{4}} \choose {m - \frac{n}{4}}} ~\approx~ \(1-\delta'\) \cdot {n \choose {\frac{n}{4}}} {{\frac{3n}{4}} \choose {m - \frac{n}{4}}}.
+\]
+
+\noi On the other hand, any $B \in {\cal F}_m$ contributes ${m \choose {\frac{n}{4}}}$ pairs to $P_m$. And hence 
+\[
+|{\cal F}_m| ~\lesssim~ \(1-\delta'\) \cdot  \frac{{n \choose {\frac{n}{4}}} {{\frac{3n}{4}} \choose {m - \frac{n}{4}}}}{{m \choose {\frac{n}{4}}}} ~=~ \(1-\delta'\) \cdot {n \choose m}.
+\]
+
+\eprf
+
+\noi We now introduce some more notation. For $0 < p < 1$ let $\mu_p$ denote the product measure which assigns probability $p$ to $1$ in each coordinate, independently for different coordinates. Let $M(p) = \mu_p({\cal F})$ and observe that $M\(\frac12\) = \E f = \alpha$. We recall the following facts: For a monotone increasing set ${\cal F}$ the function $M$ is increasing, and moreover (Russo's formula):
+\[
+\frac{d M}{d p} \queq \frac{1}{p(1-p)} \sum_{i=1}^n I_{p,i}\({\cal F}\),  
+\]
+where $I_{p,i}\({\cal F}\)$ is the $i$'th influence w.r.t. $\mu_p$ of $f$, that is $I_{i,p}(f) = \mu_p\big(\left\{x : f(x) \not = f\(x + e_i\)\right\}\big)$.
+
+\noi Note that most of the mass in the $\mu_p$ measure is concentrated on sets of weight $pn \pm O_p\(\sqrt{n}\)$, and hence it is an immediate corollary of Lemma~\ref{lem:levels} that for any $p < \frac34$ holds 
+\[
+M(p) = \mu_p\({\cal F}\) \lesssim \(1-\delta'\) \approx 1 - \delta.
+\]
+
+\noi From this, for some $\frac12 < p < \frac34$, and for some absolute constant $K$ holds
+\[
+\sum_{i=1}^n I_{p,i}\({\cal F}\) ~=~ p(1-p) \frac{d M}{d p} ~\le~ K.
+\]
+
+\noi From now on we fix this $p$. Note that $\mu_p\({\cal F}\) \ge \E f = \alpha$. Next, we choose a small constant $\gamma$, so that $\gamma \ll \alpha$ and $\gamma \ll \delta$, and recall that by a result of Friedgut, since $\sum_{i=1}^n I_{p,i}\({\cal F}\) \le K$, for some absolute constant $c$, there a subset $I$ of cardinality at most $c_1 = c^{\frac{K}{\gamma}}$ coordinates, and a boolean function $g$ ("junta") depending only on coordinates in $I$ such that $\mu_p\(\{f \not = g\}\) \le \gamma$. Moreover, if $f$ is monotone, so is $g$.
+
+\noi Let now ${\cal C}$ be the $c_1$-codimensional subcube in which all coordinates in $I$ are $1$. From now on we restrict our discussion to ${\cal C}$, in particular we restrict ${\cal F}$ and $\mu_p$ to ${\cal C}$, denoting them with superscript ${\cal C}$. 
+
+\noi We first claim that $\mu_p^{{\cal C}}\({\cal F}^{{\cal C}}\) \ge 1 - \frac{\gamma}{\alpha - \gamma}$. To see that, note that on ${\cal C}$ the function $g$ equals $1$ (clearly), and that the restriction of $f$ to ${\cal C}$ is as close as possible in the $\mu_p$ measure to the all-$1$ function (among all $c_1$-codimensional subcubes on which $g=1$, whose total measure is at least $\alpha - \gamma$).
+
+\noi Next, we claim that, by the total expectation formula, the second assumption above holds for ${\cal C}$ and for ${\cal F}^{{\cal C}}$ with $\e$ replaced by $\e_1 \approx 4^{c_1} \cdot \e$ (since a random subset $S$ of $[n]$ of cardinality $\frac{n}{4}$ contains $I$ with probability about $\(\frac14\)^{c_1}$). 
+Hence, reproving Lemma~\ref{lem:levels} for ${\cal C}$ shows that for any $q < \frac34$ holds $\mu_q^{{\cal C}}\({\cal F}^{{\cal C}}\) \lesssim 1 - \delta$. But since $p < \frac34$ we can choose $q > p$ and hence, by the above 
+\[
+\mu_q^{{\cal C}}\({\cal F}^{{\cal C}}\) ~\ge~ \mu_p^{{\cal C}}\({\cal F}^{{\cal C}}\) ~\ge~ 1 - \frac{\gamma}{\alpha - \gamma},
+\]
+reaching contradiction, by our assumptions on $\gamma$. \eprf
+
+
+
+
+
+
+
+
+
+
+
+%\begin{thebibliography}{99}
+
+
+%\end{thebibliography}
+\end{document} 

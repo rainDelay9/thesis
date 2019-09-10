@@ -1,0 +1,13 @@
+We initiate the study of lowerbounding the round complexity of randomized Byzantine agreement (BA) protocols, bounding the halting probability of such protocols after one and two rounds.
+In particular, we show that:
+
+(1) BA protocols resilient against n/3 [resp., n/4] corruptions terminate (under attack) at the end of the first round with probability at most o(1) [resp., 1/2+ o(1)].
+
+(2) BA protocols resilient against n/4 corruptions terminate at the end of the second round with probability at most 1-\Theta(1).
+
+(3) For a large class of protocols (including all BA protocols used in practice) and under a plausible combinatorial conjecture, BA protocols resilient against n/3 [resp., n/4] corruptions
+terminate at the end of the second round with probability at most o(1) [resp., 1/2 + o(1)].
+
+The above bounds hold even when the parties use a trusted setup phase, e.g., a public-key infrastructure (PKI).
+
+The third bound essentially matches the recent protocol of Micali (ITCS'17) that tolerates up to n/3 corruptions and terminates at the end of the third round with constant probability.
